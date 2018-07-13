@@ -1,26 +1,272 @@
-﻿
-/* Set padding to keep content from hitting the edges */
-.body-content {
-    padding-left: 15px;
-    padding-right: 15px;
+﻿@import url('https://fonts.googleapis.com/css?family=Montserrat:400,700');
+body, html{height: 100%;}
+body{
+    margin: 0;
+    font-family: 'Montserrat', sans-serif;
+    display: grid;
+
+    grid-template-rows: auto 50px;
+    /* 12px para la primera columna correspondiente al sidebar */
+    grid-template-columns: 15% auto; 
+    grid-template-areas:
+    "sidebar right"
+    "footer footer";
 }
 
-/* Override the default bootstrap behavior where horizontal description lists 
-   will truncate terms that are too long to fit in the left column 
-*/
-.dl-horizontal dt {
-    white-space: normal;
+a { text-decoration: none; }
+ul { list-style-type: none; float:right; }
+ul li {
+    display:inline;
+}
+ul li a { color: #fff; padding: 15px; }
+
+table {
+    width: 100%;
+    border: none;
+    background: #f1f1f1;
 }
 
-/* Set width on the form input elements since they're 100% wide by default */
-input,
-select,
-textarea {
-    max-width: 280px;
+th, td {
+    border-bottom: 1px solid #ddd;
+    padding: 15px;
+    text-align: left;
 }
 
+.logo {
+    padding: 15px;
+    margin-left: 15px;
+    background-color: #F3F1C7;
+    color: #298383;
+    text-align:center;
+    font-weight: bold;
+    display: inline-block;
+}
+header{
+    background-color: #41c7c7;
+    grid-area: head;
+    display: grid;
+    grid-template-columns: [logo-start]fit-content(20%) [nav-start] auto [nav-end];
+    /* grid-template-columns: 20% 80%; */
+    /* grid-template-columns: repeat(2, auto); dos fracciones del mismo ancho*/
+}
 
-.login-form, login-form card{
+.hero{
+    background-color: #36ADAD;
+    padding: 2em;
+    border-top: 5px solid #2Ea0a0;
+    grid-area: hero;
+    display: grid;
+    /* Divide el grid en dos columnas iguales */
+    grid-template-columns: repeat(2, auto);
+    color: #333;
+}
+
+.hero h1{
+    text-transform: uppercase;
+    color: #fffbc5;
+}
+
+.sidebar{
+    grid-area: sidebar;
+    background: #1c9090;
+    color: #fff;
+}
+
+.sidebar ul{
+    float:none; 
+    margin-left: 2px;
+}
+
+.sidebar li{
+    margin-left: 2px;
+}
+
+.sidebar li a{
+    display: block;
     margin: 0 auto;
-    padding: 3em;
+    padding: 10px; 
+}
+
+.main{
+    grid-area: right;
+    grid-template-rows: 51px 100% auto;
+    /* grid-template-columns:    200px 200px; */
+    /* justify-content: center; */
+    /* justify-content: space-evenly; */
+    display: grid;
+    grid-template-areas: 
+        "head"
+        "hero"
+        "inventions"
+        "features";
+}
+
+.container{
+    background: #f2f2f2;
+    padding: 0em;
+    margin: 0 auto;
+}
+.row{
+    padding: 0.5em;
+    display:block;
+}
+
+.row label{
+    position:absolute;
+    margin:0 auto;
+}
+
+.request-control-icon{
+    float:right;
+    padding: 1em;
+}
+
+.row input, .row select,
+.row textarea{
+    background: inherit;
+    border: none;
+    border-bottom: 1px solid #2Ea0a0;
+    margin-top:1.5em;
+    padding: .5em;
+}
+
+.row option{
+    background-color:inherit;
+}
+.row input[type=submit]{
+    background: #36ADAD;
+    font-size: 1em;
+    border: 2px solid #2Ea0a0;
+    color: #fffbc5;
+    padding: .5em;
+    width: 100px;
+    bottom: 5px;
+}
+
+
+.quality-control-details{
+    
+    display: grid;
+    grid-gap: 2px;
+    grid-template-rows: 50%;
+    grid-template-columns: 60% 40%;
+    grid-template-areas:
+    "quality-control product"
+    "quality-control defect"; 
+}
+
+.title-section
+{
+    margin-top: 5px;
+    padding: 0.3em;
+    color: #298383;
+    text-align:center;
+    font-weight: bold;
+    display: inline-block;
+}
+
+.control-details{
+    background-color: #f2f2f2;
+    grid-area: quality-control;
+}
+
+.product-details{
+    background-color: #d3d3d3;
+    grid-area: product;
+}
+.defect-details{
+    background-color: #e6e6e6;
+    grid-area: defect;
+}
+.row .create-section:nth-child(1), 
+.row .modification-section:nth-child(1)
+{
+    float: left;
+    margin-left: 1em;
+    margin-right:.5em;
+    margin-top:.5em;
+}
+.row .create-section:nth-child(2), 
+.row .modification-section:nth-child(2)
+{
+    float: left;
+    margin-top:.5em;
+}
+
+footer{
+    grid-area: footer;
+    background-color: lightgray;
+}
+@media screen and (max-width: 60em){
+    .sidebar{
+        display: none;
+    }
+    body{
+        grid-template-columns: auto; 
+        grid-template-areas:
+        "right"
+        "footer";
+    }
+    .main{
+        grid-template-areas: 
+        "head"
+        "hero"
+        "features"
+        "inventions";
+    }
+}
+@media screen and (max-width: 40em){
+    .main{
+        grid-template-rows: auto fit-content(30%) 40% auto;
+    }
+    header{
+        grid-template-columns: auto;
+        grid-template-rows: repeat(2,auto);
+    }
+
+    .logo{
+        margin-left: 0;
+    }
+    nav ul{
+        float: none;
+        padding: 0;
+        margin: 0;
+
+    }
+    nav ul li a{
+        width: calc(25% - 35px);
+        display: inline-block;
+        font-size: .9em;
+    }
+
+    .hero, .info{
+        grid-template-columns: auto;
+        text-align: center;
+    }
+
+    .main{
+        grid-template-areas: 
+        "head"
+        "hero"
+        "inventions"
+        "features";
+    }
+    h1, h2{
+        font-size: 1.2em;
+    }
+    .content p, .content-two p{
+        font-size: .9em;
+    }
+
+
+    footer{
+        background-color: #41c7c7;
+    }
+
+    footer p {
+        color: #fff;
+        text-align: center;
+    }
+
+
 }

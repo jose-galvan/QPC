@@ -23,7 +23,8 @@ namespace QPC.Web
                       "~/Scripts/materialize/materialize.min.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
-                      "~/Content/materialize-css/materialize.min.css",
+                     //"~/Content/materialize-css/materialize.min.css",
+                     "~/Content/Icons.css",
                       "~/Content/site.css"));
         }
     }
