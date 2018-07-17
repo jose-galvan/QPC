@@ -1,0 +1,45 @@
+﻿@model QPC.Core.ViewModels.InstructionViewModel
+@using QPC.Web.Models
+@{
+    ViewBag.Title = "Add Instruction";
+}
+<section class="hero">
+    <div class="content instructions">
+        <div class="title">
+            <h1>@ViewBag.Title</h1>
+            <hr />
+            @Html.Partial("ProgressBar", new Progress { ControlId = Model.QualityControlId })            
+        </div>
+        <div class="container">
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                @Html.HiddenFor(m => m.QualityControlId);
+                <div class="row">
+                    @Html.LabelFor(model => model.Name)
+                    @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @type = "text", @Placeholder = "Instruction..." } })
+                    @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                </div>
+                <div class="row">
+                    @Html.LabelFor(model => model.Description)
+                    @Html.TextAreaFor(model => model.Description, new { htmlAttributes = new { @type = "text", @Placeholder = "Description..." } })
+                    @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                </div>
+                <div class="row">
+                    @Html.LabelFor(model => model.Comments)
+                    @Html.TextAreaFor(model => model.Comments, new { htmlAttributes = new { @type = "text", @Placeholder = "Comments..." } })
+                    @Html.ValidationMessageFor(model => model.Comments, "", new { @class = "text-danger" })
+                </div>
+                <div class="row">
+                    <input type="submit" value="Add" />
+                    <a href="@Url.Action("Index")" class="cancel">Cancel</a>
+                </div>
+            }
+        </div>
+        @Html.Partial("Instructions", Model.Instructions)
+    </div>
+</section>
+
+
+

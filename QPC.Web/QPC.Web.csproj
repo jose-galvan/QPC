@@ -263,18 +263,25 @@
     <Compile Include="Controllers\Api\DefectsController.cs" />
     <Compile Include="Controllers\Api\DesicionsController.cs" />
     <Compile Include="Controllers\Api\InstructionController.cs" />
+    <Compile Include="Controllers\InstructionsController.cs" />
     <Compile Include="Controllers\ControllerHelpers.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\InspectionsController.cs" />
     <Compile Include="Controllers\QualityControlController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\QualityControlFactory.cs" />
     <Compile Include="Identity\IdentityRole.cs" />
     <Compile Include="Identity\IdentityUser.cs" />
     <Compile Include="Identity\RoleStore.cs" />
     <Compile Include="Identity\UserStore.cs" />
+    <Compile Include="Infrastructure\RazorWorkFlowExtensions.cs" />
+    <Compile Include="Infrastructure\WorkFlowFilter.cs" />
+    <Compile Include="Infrastructure\WorkFlowValues.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\Progress.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -345,9 +352,14 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\QualityControl\Index.cshtml" />
     <Content Include="Views\QualityControl\RequestControl.cshtml" />
-    <Content Include="Views\QualityControl\ViewDetailAsync.cshtml" />
+    <Content Include="Views\QualityControl\UpdateControl.cshtml" />
+    <Content Include="Views\Shared\ProgressBar.cshtml" />
+    <Content Include="Views\Instructions\AddInstruction.cshtml" />
+    <Content Include="Views\Instructions\Instructions.cshtml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Views\Inspections\" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

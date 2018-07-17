@@ -1,0 +1,18 @@
+﻿@model QPC.Web.Models.Progress
+<div class="tab">
+    <div class="tab-item">
+        <a href="@Url.Action("UpdateControl", "QualityControl", new {id = Model.ControlId})">
+            Details
+        </a>
+    </div>
+    <div class="tab-item">
+        <a href="@Url.Action("AddInstruction", "Instructions", new {id = Model.ControlId})">
+            Instructions
+        </a>
+    </div>
+    <div class="tab-item">
+        <a href="@Url.Action("UpdateInspection", "Inspections", new {id = Model.ControlId})">
+            Inspection
+        </a>
+    </div>
+</div>

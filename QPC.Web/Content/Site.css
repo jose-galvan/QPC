@@ -1,5 +1,9 @@
 ﻿@import url('https://fonts.googleapis.com/css?family=Montserrat:400,700');
 body, html{height: 100%;}
+input, textarea{
+    font-family: 'Montserrat', sans-serif;
+}
+
 body{
     margin: 0;
     font-family: 'Montserrat', sans-serif;
@@ -45,25 +49,23 @@ header{
     background-color: #41c7c7;
     grid-area: head;
     display: grid;
-    grid-template-columns: [logo-start]fit-content(20%) [nav-start] auto [nav-end];
+    grid-template-columns: 20% auto;
     /* grid-template-columns: 20% 80%; */
     /* grid-template-columns: repeat(2, auto); dos fracciones del mismo ancho*/
 }
 
 .hero{
-    background-color: #36ADAD;
+    /*background-color: #36ADAD;*/
     padding: 2em;
     border-top: 5px solid #2Ea0a0;
     grid-area: hero;
-    display: grid;
-    /* Divide el grid en dos columnas iguales */
-    grid-template-columns: repeat(2, auto);
-    color: #333;
 }
 
-.hero h1{
+.hero h1, .tab-item a{
     text-transform: uppercase;
-    color: #fffbc5;
+        color: #298383;
+    /*color: #fffbc5;*/
+    margin-left: .5em;
 }
 
 .sidebar{
@@ -89,7 +91,7 @@ header{
 
 .main{
     grid-area: right;
-    grid-template-rows: 51px 100% auto;
+    grid-template-rows: 10% 90%;
     /* grid-template-columns:    200px 200px; */
     /* justify-content: center; */
     /* justify-content: space-evenly; */
@@ -101,9 +103,13 @@ header{
         "features";
 }
 
+hr{
+    width: 90%;
+    margin: .5em auto;
+}
+
 .container{
     background: #f2f2f2;
-    padding: 0em;
     margin: 0 auto;
 }
 .row{
@@ -113,7 +119,7 @@ header{
 
 .row label{
     position:absolute;
-    margin:0 auto;
+    margin-left: .3em;
 }
 
 .request-control-icon{
@@ -122,12 +128,15 @@ header{
 }
 
 .row input, .row select,
-.row textarea{
+.row textarea {
     background: inherit;
     border: none;
     border-bottom: 1px solid #2Ea0a0;
-    margin-top:1.5em;
+    margin-top: 1.5em;
     padding: .5em;
+    width:80%;
+    margin-left: .5em;
+
 }
 
 .row option{
@@ -143,6 +152,15 @@ header{
     bottom: 5px;
 }
 
+.cancel{
+    background: inherit;
+    font-size: 1em;
+    border: 2px solid #d3d3d3;
+    color: #333;
+    padding: .5em;
+    width: 100px;
+    bottom: 5px;
+}
 
 .quality-control-details{
     
@@ -178,21 +196,46 @@ header{
     background-color: #e6e6e6;
     grid-area: defect;
 }
-.row .create-section:nth-child(1), 
-.row .modification-section:nth-child(1)
+
+.row .row:nth-child(1)
 {
+    width: 45%;
     float: left;
-    margin-left: 1em;
-    margin-right:.5em;
-    margin-top:.5em;
 }
-.row .create-section:nth-child(2), 
-.row .modification-section:nth-child(2)
+.row .row:nth-child(2)
 {
     float: left;
-    margin-top:.5em;
 }
 
+/*Tab section*/
+.tab .tab-item{
+    display: inline-block;
+    padding: 1em;
+    text-decoration: none;
+    border-bottom: 1px solid #2Ea0a0;
+    margin-bottom: .5em;
+}
+
+
+.instructions {
+    display: grid;
+    grid-template-rows:auto;
+    grid-template-columns:auto;
+    grid-template-areas:
+    "title title"
+    "instruction grid";
+}
+
+.title{
+    grid-area: title;
+}
+
+.instructions .container:nth-child(1){
+    grid-area: grid;
+}
+.instructions .container:nth-child(2){
+    grid-area: instruction;
+}
 footer{
     grid-area: footer;
     background-color: lightgray;

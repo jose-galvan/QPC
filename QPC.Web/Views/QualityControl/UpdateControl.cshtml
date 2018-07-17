@@ -1,0 +1,94 @@
+﻿@model QPC.Core.ViewModels.QualityControlDetailViewModel
+@using QPC.Web.Models
+@{
+    ViewBag.Title = "Quality Control Details";
+}
+
+
+
+<section class="hero">
+    <div class="content">
+        <h1>@ViewBag.Title</h1>
+        <hr />
+@Html.Partial("ProgressBar",  new Progress { ControlId = Model.Id } )
+@using (Html.BeginForm("UpdateControl", "QualityControl", FormMethod.Post, new {@class="quality-control-details"}))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(c => c.Id)
+        <div class="control-details">
+            <span class="title-section">Details</span>
+            <hr>
+            <div class="row">
+                @Html.LabelFor(c => c.Name)
+                @Html.EditorFor(c => c.Name)
+            </div>
+            <div class="row">
+                @Html.LabelFor(c => c.Description)
+                @Html.TextAreaFor(c => c.Description)
+            </div>
+            <div class="row">
+                <div class="row">
+                    @Html.LabelFor(c => c.Serial)
+                    @Html.EditorFor(c => c.Serial)
+                </div>
+                <div class="row">
+                    @Html.LabelFor(c => c.Status)
+                    @Html.EditorFor(c => c.Status)
+                </div>
+            </div>
+            <hr />
+            <div class="row">
+                <div class="row">
+                    <label for="requested-by">Requested By</label>
+                    @Html.EditorFor(c => c.UserCreated, new { htmlAttributes = new { @type = "text", @disabled ="true" } })
+                </div>
+                <div class="row">
+                    <label for="requested-on">Requested On</label>
+                    @Html.EditorFor(c => c.CreateDate, new { htmlAttributes = new {@disabled = "true" } })
+                </div>
+            </div>
+            <div class="row">
+                <div class="row">
+                    <label for="modified-by">Modified By</label>
+                    @Html.EditorFor(c => c.LastModificationUser, new { htmlAttributes = new { @type = "text", @disabled = "true" } })
+                </div>
+                <div class="row">
+                    <label for="last-modification">Last Modification</label>
+                    @Html.EditorFor(c => c.LastModificationDate, new { htmlAttributes = new { @disabled = "true" } })
+                </div>
+            </div>
+            <hr />
+            <div class="row">
+                <input type="submit" value="Update" class="btn btn-default" />
+                <a href="@Url.Action("Index")" class="cancel">Cancel</a>
+            </div>
+        </div>
+        <div class="product-details">
+            <span class="title-section">Product</span>
+            <hr>
+            <div class="row">
+                <label for="product-name">Name</label>
+                @Html.EditorFor(c => c.Product, new { htmlAttributes = new { @disabled = "true" } })
+            </div>
+            <div class="row">
+                <label for="defect-description">Description</label>
+                @Html.TextAreaFor(c => c.ProductDescription, new { htmlAttributes = new { @disabled = "true" } })
+            </div>
+        </div>
+        <div class="defect-details">
+            <span class="title-section">Defect</span>
+            <hr>
+            <div class="row">
+                <label for="product-name">Name</label>
+                @Html.EditorFor(c => c.Defect, new { htmlAttributes = new { @disabled = "true" } })
+            </div>
+            <div class="row">
+                <label for="defect-description">Description</label>
+                @Html.EditorFor(c => c.DefectDescription, new { htmlAttributes = new { @disabled = "true" } })
+            </div>
+        </div>
+}
+    </div>
+</section>
+

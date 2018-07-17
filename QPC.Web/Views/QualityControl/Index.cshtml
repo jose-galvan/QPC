@@ -1,0 +1,59 @@
+﻿@model QPC.Core.ViewModels.QualityControlsViewModel
+
+@{
+    ViewBag.Title = "Index";
+}
+
+
+
+
+
+<section class="hero">
+    <div class="content">
+        <h1>Quality Controls</h1>
+        <hr />
+        <div class="row">
+            @using (Html.BeginForm("Index", "QualityControl", FormMethod.Post, new {role = "form" }))
+            {
+                    @Html.TextBoxFor(m => m.SearchCriteria, new { @id = "search", @type = "search", @placeholer ="search by name or description" })
+                    <span class="search icon"></span>
+            }
+        </div>
+        <div class="row">
+            <div class="request-control-icon">
+                <a href="@Url.Action("RequestControl")">
+                    <div class='plus icon'></div>
+                </a>
+            </div>
+        </div>
+        <div class="row">
+            <table>
+                <tr>
+                    <th>Control</th>
+                    <th>Product</th>
+                    <th>Description</th>
+                </tr>
+                @foreach (var item in Model.Controls)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Product.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Description)
+                        </td>
+                        <td>
+                            <a href="@Url.Action("UpdateControl", "QualityControl", new { id = item.Id })">
+                                <div class="edit-solid icon"></div>
+                            </a>
+
+                        </td>
+                    </tr>
+                }
+            </table>            
+        </div>
+    </div>
+</section>
