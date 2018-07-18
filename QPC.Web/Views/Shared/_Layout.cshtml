@@ -14,7 +14,7 @@
     <div class="sidebar">
         <nav>
             <ul>
-                <li><a href="#">Request Control</a></li>
+                <li>@Html.ActionLink("Request Control", "RequestControl", "QualityControl")</li>
                 <li>@Html.ActionLink("Quality Controls", "Index", "QualityControl")</li>
                 <li><a href="#">Dashboard</a></li>
                 <li><a href="#">Admin</a></li>
@@ -26,7 +26,7 @@
             <a href="" class="logo">QCP </a>
             <nav>
                 <ul>
-                    <li><a href="#">Home</a></li>
+                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
                     <li>@Html.ActionLink("Quality Controls", "Index", "QualityControl")</li>
                     <li><a href="#">About</a></li>
                     <li><a href="#">Contact</a></li>
@@ -40,6 +40,7 @@
         <p>Some footer information</p>
     </footer>
     @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/app")
     @RenderSection("scripts", required: false)
 
 </body>

@@ -12,10 +12,12 @@ namespace QPC.Web.Controllers.Api
     public class InstructionController : ApiController
     {
         private IUnitOfWork _unitOfWork;
-
+        public Func<Guid> GetUserId;
+        
         public InstructionController(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
+            GetUserId = () => ControllerHelpers.GetGuid(User.Identity.GetUserId());
         }
 
         [HttpPost]
@@ -26,7 +28,7 @@ namespace QPC.Web.Controllers.Api
             if (qualityControl == null)
                 return NotFound();
 
-            var user = await _unitOfWork.UserRepository.FindByIdAsync(User.Identity.GetUserId());
+            var user = await _unitOfWork.UserRepository.FindByIdAsync(GetUserId());
             
             try { 
                 //qualityControl.AddInstruction(dto, user);
@@ -40,17 +42,16 @@ namespace QPC.Web.Controllers.Api
         }
 
         [HttpPut, HttpPatch]
-        public async Task<IHttpActionResult> UpdateInstructionAsync([FromBody]InstructionDto dto)
+        public async Task<IHttpActionResult> UpdateInstructionAsync([FromUri]int id)
         {
-            var instruction = await _unitOfWork.InstructionRepository.FindByIdAsync(dto.Id);
+            var instruction = await _unitOfWork.InstructionRepository.GetWithQualityControl(id);
             if (instruction == null)
                 return NotFound();
-
-            var user = await _unitOfWork.UserRepository.FindByIdAsync(User.Identity.GetUserId());
             
             try
             {
-                instruction.Update(dto, user);
+                var user = await _unitOfWork.UserRepository.FindByIdAsync(GetUserId());
+                instruction.Update(user);
                 await _unitOfWork.SaveChangesAsync();
             }
             catch (Exception ex)
@@ -67,7 +68,7 @@ namespace QPC.Web.Controllers.Api
             if (instruction == null)
                 return NotFound();
 
-            var user = await _unitOfWork.UserRepository.FindByIdAsync(User.Identity.GetUserId());
+            var user = await _unitOfWork.UserRepository.FindByIdAsync(GetUserId());
 
             try
             {

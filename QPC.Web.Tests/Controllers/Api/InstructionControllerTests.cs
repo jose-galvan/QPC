@@ -98,7 +98,6 @@ namespace QPC.Web.Tests.Controllers.Api
         public async Task UpdateInstruction_ValidInstruction_ShouldReturnOk()
         {
             // Arrange
-            var dto = new InstructionDto {Id =1, Name = "Dimensional Control", Description = "Control Dimensions DI010 and DI0320", QualityControlId = 1 };
             var instruction = new Instruction {Id =1, Name = "CMM Control", Description = "remeasure DI010 and DI0320", QualityControlId = 1};
             var quaityControl = new QualityControl { Name = "High tolerances", Defect = new Defect { Name = "Dimensional" }, Status = QualityControlStatus.Open };
             instruction.QualityControl = quaityControl;
@@ -109,7 +108,7 @@ namespace QPC.Web.Tests.Controllers.Api
             _mockUserRepository.Setup(r => r.FindByIdAsync(It.IsAny<int>())).Returns(Task.FromResult(user));
 
             // Act
-            var result = await _controller.UpdateInstructionAsync(dto);
+            var result = await _controller.UpdateInstructionAsync(1);
 
             // Assert
             result.Should().BeOfType<OkResult>();
@@ -119,7 +118,6 @@ namespace QPC.Web.Tests.Controllers.Api
         public async Task UpdateInstruction_PerformedInstruction_ShouldReturnBadRquest()
         {
             // Arrange
-            var dto = new InstructionDto { Id = 1, Name = "Dimensional Control", Description = "Control Dimensions DI010 and DI0320", QualityControlId = 1};
             var instruction = new Instruction { Id = 1, Name = "CMM Control", Description = "remeasure DI010 and DI0320", QualityControlId = 1, Status = InstructionStatus.Performed };
             var quaityControl = new QualityControl { Name = "High tolerances", Defect = new Defect { Name = "Dimensional" }, Status = QualityControlStatus.Open };
             instruction.QualityControl = quaityControl;
@@ -130,7 +128,7 @@ namespace QPC.Web.Tests.Controllers.Api
             _mockUserRepository.Setup(r => r.FindByIdAsync(It.IsAny<int>())).Returns(Task.FromResult(user));
 
             // Act
-            var result = await _controller.UpdateInstructionAsync(dto);
+            var result = await _controller.UpdateInstructionAsync(1);
 
             // Assert
             result.Should().BeOfType<BadRequestErrorMessageResult>();
@@ -140,7 +138,6 @@ namespace QPC.Web.Tests.Controllers.Api
         public async Task UpdateInstruction_InstructionInClosedControl_ShouldReturnBadRquest()
         {
             // Arrange
-            var dto = new InstructionDto { Id = 1, Name = "Dimensional Control", Description = "Control Dimensions DI010 and DI0320", QualityControlId = 1 };
             var instruction = new Instruction { Id = 1, Name = "CMM Control", Description = "remeasure DI010 and DI0320", QualityControlId = 1, Status = InstructionStatus.Pending};
             var quaityControl = new QualityControl { Name = "High tolerances", Defect = new Defect { Name = "Dimensional" }, Status = QualityControlStatus.Closed };
             instruction.QualityControl = quaityControl;
@@ -151,7 +148,7 @@ namespace QPC.Web.Tests.Controllers.Api
             _mockUserRepository.Setup(r => r.FindByIdAsync(It.IsAny<int>())).Returns(Task.FromResult(user));
 
             // Act
-            var result = await _controller.UpdateInstructionAsync(dto);
+            var result = await _controller.UpdateInstructionAsync(1);
 
             // Assert
             result.Should().BeOfType<BadRequestErrorMessageResult>();
@@ -161,13 +158,12 @@ namespace QPC.Web.Tests.Controllers.Api
         public async Task UpdateInstruction_NonExistingInstruction_ShouldReturnNotFound()
         {
             // Arrange
-            var dto = new InstructionDto { Id = 1, Name = "Dimensional Control", Description = "Control Dimensions DI010 and DI0320", QualityControlId = 1 };
             Instruction instruction = null;
             
             _mockInstructionRepository.Setup(r => r.FindByIdAsync(It.IsAny<int>())).Returns(Task.FromResult(instruction));
 
             // Act
-            var result = await _controller.UpdateInstructionAsync(dto);
+            var result = await _controller.UpdateInstructionAsync(1);
 
             // Assert
             result.Should().BeOfType<NotFoundResult>();

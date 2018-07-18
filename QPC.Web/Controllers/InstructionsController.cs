@@ -26,7 +26,7 @@ namespace QPC.Web.Controllers
         [HttpGet]
         public async Task<ActionResult> AddInstruction(int id)
         {
-            Expression<Func<Instruction, bool>> expr = (i => i.QualityControlId == 1);
+            Expression<Func<Instruction, bool>> expr = (i => i.QualityControlId == id);
             var instructions = await _unitOfWork.InstructionRepository.GetAsync(expr);
 
             var control = await _unitOfWork.QualityControlRepository.FindByIdAsync(id);

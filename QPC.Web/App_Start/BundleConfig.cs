@@ -8,6 +8,12 @@ namespace QPC.Web
         // For more information on bundling, visit http://go.microsoft.com/fwlink/?LinkId=301862
         public static void RegisterBundles(BundleCollection bundles)
         {
+            bundles.Add(new ScriptBundle("~/bundles/app").Include(
+                "~/Scripts/app/Helpers/ErrorHelper.js",
+                "~/Scripts/app/Instruction/InstructionService.js",
+                "~/Scripts/app/Instruction/InstructionController.js"
+            ));
+
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
                         "~/Scripts/jquery-{version}.js"));
 

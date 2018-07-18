@@ -1,16 +1,18 @@
 ﻿@model IEnumerable<QPC.Core.Models.Instruction>
 
 <div class="container">
-    <table>
+    <table id="instructions">
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Name)
+                Instruction
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Description)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Comments)
+            </th>
+            <th>
             </th>
         </tr>
 
@@ -25,6 +27,20 @@
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Comments)
+                </td>
+                <td>
+                    @if (item.Status == QPC.Core.Models.InstructionStatus.Performed)
+                    {
+                        <button id="@item.Id" class="js-toggle-instruction-status btn-performed">
+                            Perfomed
+                        </button>
+                    }
+                    else
+                    {
+                        <button id="@item.Id" class= "js-toggle-instruction-status btn-pending">
+                            Perfomed?
+                        </button>
+                    }
                 </td>
             </tr>
         }

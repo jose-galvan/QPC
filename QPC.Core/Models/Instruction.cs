@@ -15,7 +15,7 @@ namespace QPC.Core.Models
         public QualityControl QualityControl { get; set; }
 
 
-        public void Update(InstructionDto dto, User user)
+        public void Update(User user)
         {
             if (Status == InstructionStatus.Performed)
                 throw new Exception("Current Instruction status does not allow modifications");
@@ -23,14 +23,7 @@ namespace QPC.Core.Models
             if(QualityControl.Status == QualityControlStatus.Closed)
                 throw new Exception("Current status does not allow to update instructions.");
 
-
-            Name = dto.Name;
-            Description = dto.Description;
-            Comments = dto.Comments;
-
-            if (dto.Status.HasValue)
-                Status = dto.Status.Value;
-            
+            Status = InstructionStatus.Performed;
             SetTraceabilityValues(user);
             QualityControl.SetTraceabilityValues(user);
         }

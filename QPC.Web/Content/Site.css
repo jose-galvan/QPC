@@ -9,9 +9,9 @@ body{
     font-family: 'Montserrat', sans-serif;
     display: grid;
 
-    grid-template-rows: auto 50px;
+    grid-template-rows: auto 5%;
     /* 12px para la primera columna correspondiente al sidebar */
-    grid-template-columns: 15% auto; 
+    grid-template-columns: 14% auto; 
     grid-template-areas:
     "sidebar right"
     "footer footer";
@@ -73,21 +73,23 @@ header{
     background: #1c9090;
     color: #fff;
 }
-
 .sidebar ul{
-    float:none; 
-    margin-left: 2px;
+    float: none;
+    margin-left: -2em;
+    padding-top: 3em;
 }
 
-.sidebar li{
-    margin-left: 2px;
-}
-
-.sidebar li a{
+.sidebar ul li{
     display: block;
-    margin: 0 auto;
-    padding: 10px; 
+    padding-top: 1.5em;
 }
+
+.sidebar a:hover{
+    color: #41c7c7;
+    text-decoration: underline;
+}
+
+
 
 .main{
     grid-area: right;
@@ -216,26 +218,55 @@ hr{
     margin-bottom: .5em;
 }
 
-
-.instructions {
+.instructions{
     display: grid;
-    grid-template-rows:auto;
-    grid-template-columns:auto;
+    grid-template-rows: 15% auto;
+    grid-template-columns: 30% 70%;
     grid-template-areas:
-    "title title"
-    "instruction grid";
+        "title title"
+        "instruction table"
 }
 
-.title{
+.instructions .title{
     grid-area: title;
 }
 
 .instructions .container:nth-child(1){
-    grid-area: grid;
-}
-.instructions .container:nth-child(2){
     grid-area: instruction;
 }
+.instructions .container{
+    margin: 2px;
+}
+
+.instructions .container:nth-child(2){
+    grid-area: table;
+}
+
+
+.btn-performed{
+    padding: .5em;
+    background-color: #00CC00;
+
+    font-size: 1em;
+    border: 2px solid #d3d3d3;
+    color: #333;
+    padding: .5em;
+    width: 100px;
+    bottom: 5px;
+}
+
+.btn-pending{
+    padding: .5em;
+    background-color: #2173C9;
+
+    font-size: 1em;
+    border: 2px solid #d3d3d3;
+    color: #333;
+    padding: .5em;
+    width: 100px;
+    bottom: 5px;
+}
+
 footer{
     grid-area: footer;
     background-color: lightgray;
