@@ -23,13 +23,14 @@
     </div>
     <div class="main">
         <header>
-            <a href="" class="logo">QCP </a>
-            <nav>
+            <a href="@Url.Action("Index", "Home")" class="logo">QCP </a>
+            <nav class="menu">
                 <ul>
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
                     <li>@Html.ActionLink("Quality Controls", "Index", "QualityControl")</li>
-                    <li><a href="#">About</a></li>
-                    <li><a href="#">Contact</a></li>
+                    <li>
+                        @Html.Partial("_LoginPartial")
+                    </li>
                 </ul>
             </nav>
         </header>

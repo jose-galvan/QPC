@@ -104,7 +104,7 @@ namespace QPC.Web.Tests.Controllers.Api
 
             var user = new User { UserId = ControllerExtensions.GetGuid("1571"), UserName = "user@mail.com" };
             
-            _mockInstructionRepository.Setup(r => r.FindByIdAsync(It.IsAny<int>())).Returns(Task.FromResult(instruction));
+            _mockInstructionRepository.Setup(r => r.GetWithQualityControl(It.IsAny<int>())).Returns(Task.FromResult(instruction));
             _mockUserRepository.Setup(r => r.FindByIdAsync(It.IsAny<int>())).Returns(Task.FromResult(user));
 
             // Act
@@ -124,7 +124,7 @@ namespace QPC.Web.Tests.Controllers.Api
 
             var user = new User { UserId = ControllerExtensions.GetGuid("1571"), UserName = "user@mail.com" };
 
-            _mockInstructionRepository.Setup(r => r.FindByIdAsync(It.IsAny<int>())).Returns(Task.FromResult(instruction));
+            _mockInstructionRepository.Setup(r => r.GetWithQualityControl(It.IsAny<int>())).Returns(Task.FromResult(instruction));
             _mockUserRepository.Setup(r => r.FindByIdAsync(It.IsAny<int>())).Returns(Task.FromResult(user));
 
             // Act
@@ -144,7 +144,7 @@ namespace QPC.Web.Tests.Controllers.Api
 
             var user = new User { UserId = ControllerExtensions.GetGuid("1571"), UserName = "user@mail.com" };
 
-            _mockInstructionRepository.Setup(r => r.FindByIdAsync(It.IsAny<int>())).Returns(Task.FromResult(instruction));
+            _mockInstructionRepository.Setup(r => r.GetWithQualityControl(It.IsAny<int>())).Returns(Task.FromResult(instruction));
             _mockUserRepository.Setup(r => r.FindByIdAsync(It.IsAny<int>())).Returns(Task.FromResult(user));
 
             // Act

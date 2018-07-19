@@ -9,11 +9,7 @@ namespace QPC.Core.ViewModels
     {
         public QualityControlDetailViewModel()
         {
-            Desicions = new List<Desicion>
-            {
-                Desicion.Acepted, Desicion.Rejected, Desicion.Rework
-            };
-
+            
         }
         public int Id { get; set; }
 
@@ -39,11 +35,6 @@ namespace QPC.Core.ViewModels
 
         public string LastModificationUser { get; set; }
         public string LastModificationDate { get; set; }
-
-        public List<Instruction> Instructions { get; set; }
-        public string FinalDesicion { get; set; }
         
-        
-        public IEnumerable<Desicion> Desicions { get; set; }
     }
 }

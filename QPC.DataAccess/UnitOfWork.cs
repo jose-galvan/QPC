@@ -20,6 +20,8 @@ namespace QPC.DataAccess
         private ILogRepository _logRepository;
         private IDefectRepository _defectRepository;
         private IProductRepository _productRepository;
+        private IInspectionRepository _inspectionRepository;
+        private IDesicionRepository _desicionRepository;
         #endregion
 
         #region Constructors
@@ -83,6 +85,20 @@ namespace QPC.DataAccess
             }
         }
 
+        public IInspectionRepository InspectionRepository
+        {
+            get
+            {
+                return _inspectionRepository ?? (_inspectionRepository = new InspectionRepository(_context));
+            }
+        }
+        public IDesicionRepository DesicionRepository
+        {
+            get
+            {
+                return _desicionRepository ?? (_desicionRepository = new DesicionRepository(_context));
+            }
+        }
         public int SaveChanges()
         {
             return _context.SaveChanges();

@@ -2,8 +2,8 @@
 using QPC.Core.Models;
 using QPC.Core.Repositories;
 using QPC.Core.ViewModels;
+using QPC.Web.Helpers;
 using System;
-using System.Collections;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using System.Web.Mvc;
@@ -35,7 +35,9 @@ namespace QPC.Web.Controllers
             var vm = new InstructionViewModel
             {
                 QualityControlId = id,
-                Instructions = instructions
+                Instructions = instructions,
+                CanSave = control.Status ==
+                        QualityControlStatus.Closed ? false : true
             };
             return View(vm);
         }
@@ -55,7 +57,8 @@ namespace QPC.Web.Controllers
             var user = await _unitOfWork.UserRepository.FindByIdAsync(GetUserId());
             try
             {
-                control.AddInstruction(vm, user);
+                var instruction = QualityControlFactory.Create(vm);
+                control.AddInstruction(instruction, user);
                 await _unitOfWork.SaveChangesAsync();
                 vm.Name = vm.Description = 
                         vm.Comments = string.Empty;

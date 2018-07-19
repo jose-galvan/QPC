@@ -1,15 +1,16 @@
-﻿using QPC.Core.Models;
+﻿using QPC.Core.DTOs;
+using QPC.Core.Models;
 using QPC.Core.ViewModels;
 using System;
 using System.ComponentModel;
+using System.Linq;
 using System.Reflection;
 
 namespace QPC.Web.Helpers
 {
     public class QualityControlFactory
     {
-
-        //Use reflection to get properties' values for wich the property name is the same
+        
         public static QualityControlDetailViewModel Create(QualityControl control)
         {
             return new QualityControlDetailViewModel
@@ -25,7 +26,6 @@ namespace QPC.Web.Helpers
                 DefectDescription = control.Defect.Description,
                 Product = control.Product.Name,
                 ProductDescription = control.Product.Description,
-                //FinalDesicion = GetDescription(control.Desicion.Desicion),
                 LastModificationDate = control.LastModificationDate.ToString(),
                 CreateDate = control.CreateDate.ToString(),
                 UserCreated = control.UserCreated.UserName,
@@ -43,6 +43,61 @@ namespace QPC.Web.Helpers
             control.Description = model.Description;
             control.Status = QualityControlStatus.Open;
             return control;
+        }
+
+        public static Instruction Create(InstructionViewModel model)
+        {
+            return new Instruction
+            {
+                QualityControlId = model.QualityControlId,
+                Name = model.Name,
+                Description = model.Description,
+                Comments = model.Comments,
+                Status = InstructionStatus.Pending
+            };
+        }
+        public static Instruction Create(InstructionDto model)
+        {
+            return new Instruction
+            {
+                QualityControlId = model.QualityControlId,
+                Name = model.Name,
+                Description = model.Description,
+                Comments = model.Comments,
+                Status = InstructionStatus.Pending
+            };
+        }
+
+        public static Inspection Create(InspectionViewModel vm)
+        {
+            return new Inspection
+            {
+                Desicion = vm.Desicions.Single(d => d.Id == vm.FinalDesicison),
+                Comments = vm.Comments
+            };
+        }
+
+        public static Inspection Create(InspectionDto dto)
+        {
+            return new Inspection
+            {
+                Comments = dto.Comments
+            };
+        }
+
+        public static ListItemViewModel CreateItem(QualityControl control)
+        {
+            return new ListItemViewModel
+            {
+                Id = control.Id,
+                Name = control.Name,
+                Description = control.Description,
+                Status = GetDescription(control.Status),
+                Product = control.Product.Name,
+                Defect = control.Defect.Name,
+                Desicion = control.Inspection != null 
+                    ? control.Inspection.Desicion.Name : string.Empty
+            };
         }
 
         public static string GetDescription<T>(T enumerationValue)

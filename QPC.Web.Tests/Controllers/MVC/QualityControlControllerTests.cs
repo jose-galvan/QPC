@@ -158,15 +158,27 @@ namespace QPC.Web.Tests.Controllers.Mvc
         public async Task Index_Returns_All_Controls_In_DB()
         {
             //Arrange
+            var desicion = new Desicion { Id = 1, Name = "Rejected" };
+
             var controls = new List<QualityControl>
                             {
-                                new QualityControl {Name ="High tolerances" },
-                                new QualityControl {Name ="Documental deviation" }
+                                new QualityControl {Name ="High tolerances",
+                                        Description ="Dimensional control",
+                                        Product = new Product {Name ="Compressor Shaft" }, 
+                                        Defect = new Defect {Name  = "Non-conforming tolerances" },
+                                        Inspection = new Inspection { Desicion = desicion }
+                                },
+                                new QualityControl {Name ="Documental deviation",
+                                        Description ="Prox p40",
+                                        Product = new Product {Name ="CFM Fan Blade" },
+                                        Defect = new Defect {Name  = "DEQ" },
+                                        Inspection = new Inspection { Desicion = desicion }
+                                }
                             };
-            _mockUnitOfWork.Setup(uw => uw.QualityControlRepository.GetAllWithProductsAsync()).Returns(Task.FromResult(controls));
+            _mockUnitOfWork.Setup(uw => uw.QualityControlRepository.GetAllWithDetailsAsync()).Returns(Task.FromResult(controls));
             //Act 
             var viewResult = await _controller.Index();
-            var model = viewResult.Model as QualityControlsViewModel;
+            var model = viewResult.Model as QualityControlIndexViewModel;
             //Assert
             Assert.AreEqual(2, model.Controls.ToList().Count);
         }

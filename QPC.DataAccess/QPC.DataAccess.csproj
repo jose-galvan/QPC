@@ -137,11 +137,25 @@
     <Compile Include="Migrations\201807121734261_deleteQualityControlDesicionId.Designer.cs">
       <DependentUpon>201807121734261_deleteQualityControlDesicionId.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201807181719217_RemoveUnecessaryPropsFromFinalDesicion.cs" />
+    <Compile Include="Migrations\201807181719217_RemoveUnecessaryPropsFromFinalDesicion.Designer.cs">
+      <DependentUpon>201807181719217_RemoveUnecessaryPropsFromFinalDesicion.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201807181933043_renameFinalDesicionToInspection.cs" />
+    <Compile Include="Migrations\201807181933043_renameFinalDesicionToInspection.Designer.cs">
+      <DependentUpon>201807181933043_renameFinalDesicionToInspection.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201807181941543_AddDesicionEntity.cs" />
+    <Compile Include="Migrations\201807181941543_AddDesicionEntity.Designer.cs">
+      <DependentUpon>201807181941543_AddDesicionEntity.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ApplicationDbContext.cs" />
     <Compile Include="Repositories\DefectRepository.cs" />
+    <Compile Include="Repositories\DesicionRepository.cs" />
     <Compile Include="Repositories\ExternalLoginRepository.cs" />
+    <Compile Include="Repositories\InspectionRepository.cs" />
     <Compile Include="Repositories\InstructionRepository.cs" />
     <Compile Include="Repositories\LogRepository.cs" />
     <Compile Include="Repositories\ProductRepository.cs" />
@@ -191,6 +205,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201807121734261_deleteQualityControlDesicionId.resx">
       <DependentUpon>201807121734261_deleteQualityControlDesicionId.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201807181719217_RemoveUnecessaryPropsFromFinalDesicion.resx">
+      <DependentUpon>201807181719217_RemoveUnecessaryPropsFromFinalDesicion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201807181933043_renameFinalDesicionToInspection.resx">
+      <DependentUpon>201807181933043_renameFinalDesicionToInspection.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201807181941543_AddDesicionEntity.resx">
+      <DependentUpon>201807181941543_AddDesicionEntity.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

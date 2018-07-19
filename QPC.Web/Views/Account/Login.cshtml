@@ -3,45 +3,38 @@
 @{
     ViewBag.Title = "Log in";
 }
-<div class="container login-form">
-    <div class="row">
-        <div class="col s8  push-4">
-            <div class="card z-depth-3 ">
-                <div class="card-content">
-                    <span class="card-title">@ViewBag.Title</span>
-                    <hr />
-                    @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "container", role = "form" }))
-                    {
-                        @Html.AntiForgeryToken()
-                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                        <div class="row">
-                            <div class="input-field col s12">
-                                @Html.LabelFor(m => m.Email)
-                                @Html.TextBoxFor(m => m.Email, new { @class = "validate", @type = "email", @id = "email" })
-                                @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="input-field col s12">
-                                @Html.LabelFor(m => m.Password)
-                                @Html.PasswordFor(m => m.Password, new { @class = "validate", @type = "password", @id = "password" })
-                                @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col s10 offset-2">
-                                <input type="submit" value="Log in" class="btn" />
-                            </div>
-                        </div>
-                        <p>
-                            @Html.ActionLink("Register as a new user", "Register")
-                        </p>
-                    }
+
+<section class="hero login-form">
+    <div class="content">
+        <h1>@ViewBag.Title</h1>
+        <hr />
+        <div class="container">
+
+            @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { role = "form" }))
+            {
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                <div class="row">
+                    @Html.LabelFor(model => model.Email)
+                    @Html.TextBoxFor(model => model.Email, new { htmlAttributes = new { @type = "email", @Placeholder = "Email...", @id="email" } })
+                    @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
                 </div>
-            </div>
+                <div class="row">
+                    @Html.LabelFor(model => model.Password)
+                    @Html.PasswordFor(model => model.Password, new { htmlAttributes = new { @type = "password", @Placeholder = "Password...", @id = "password" } })
+                    @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                </div>
+                <div class="row">
+                    <input type="submit" value="Log In" />
+                    <a href="@Url.Action("Register")" class="cancel">New Account</a>
+                </div>
+            }
         </div>
     </div>
-</div>
+</section>
+
+
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }

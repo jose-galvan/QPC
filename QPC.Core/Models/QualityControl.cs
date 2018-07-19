@@ -26,6 +26,15 @@ namespace QPC.Core.Models
         [Required, StringLength(15, ErrorMessage ="{0} Should be at least 10 caracters long.")]
         public string Serial { get; set; }
 
+
+
+        [Required, StringLength(50)]
+        public string Name { get; set; }
+
+        [StringLength(250)]
+        public string Description { get; set; }
+
+
         public QualityControlStatus Status { get; set; }
 
         [Required]
@@ -38,27 +47,17 @@ namespace QPC.Core.Models
 
         public virtual ICollection<Instruction> Instructions { get; set; }
         
-        public FinalDesicion Desicion { get; set; }
+        public Inspection Inspection { get; set; }
 
 
-        public void AddInstruction(InstructionViewModel vm, User user)
+        public void AddInstruction(Instruction instruction, User user)
         {
             if (Status == QualityControlStatus.Closed)
                 throw new Exception("Current status does not allow to add more instructions.");
-
-            var instruction = new Instruction
-            {
-                QualityControlId = Id,
-                Name = vm.Name,
-                Description = vm.Description,
-                Comments = vm.Comments,
-                Status = InstructionStatus.Pending
-            };
-
+            
             SetTraceabilityValues(user);
             instruction.SetTraceabilityValues(user);
             Status = QualityControlStatus.InProgress;
-
             Instructions.Add(instruction);
         }
 
@@ -67,22 +66,20 @@ namespace QPC.Core.Models
             if (Status == QualityControlStatus.Closed)
                 throw new Exception("Current status does not allow to add more instructions.");
             Name = vm.Name;
-            Description = vm.Name;
+            Description = vm.Description;
             SetTraceabilityValues(user);
         }
 
-        public void SetFinalDesicion(DesicionDto dto, User user)
+        public void SetInspection(Inspection inspection, User user)
         {
             if (Status == QualityControlStatus.Closed)
                 throw new Exception("Current status does not allow to add more instructions.");
 
+            if (Instructions.Any(i => i.Status == InstructionStatus.Pending))
+                throw new Exception("All instructions should be performed before final inspection.");
+            
             Status = QualityControlStatus.Closed;
-            var finalDesicion = new FinalDesicion
-            {
-                Comments = dto.Comments,
-                Desicion = dto.Desicion
-            };
-            Desicion = finalDesicion;
+            Inspection = inspection;
             SetTraceabilityValues(user);
         }
     }

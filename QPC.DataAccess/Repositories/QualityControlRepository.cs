@@ -3,6 +3,7 @@ using QPC.Core.Repositories;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Threading.Tasks;
+using System;
 
 namespace QPC.DataAccess.Repositories
 {
@@ -12,9 +13,15 @@ namespace QPC.DataAccess.Repositories
         {
         }
 
-        public async Task<List<QualityControl>> GetAllWithProductsAsync()
+        public async Task<List<QualityControl>> GetAllWithDetailsAsync()
         {
-            return await Set.Include(qc => qc.Product).ToListAsync();
+            return await Set.Include(c => c.Product)
+                            .Include(c => c.Defect)
+                            .Include(c => c.UserCreated)
+                            .Include(c => c.Inspection)
+                            .Include(c => c.Inspection.Desicion)
+                            .Include(c => c.LastModificationUser)
+                            .ToListAsync();
         }
 
         public async Task<QualityControl> GetWithDetails(int id)
@@ -23,7 +30,7 @@ namespace QPC.DataAccess.Repositories
                             .Include(c => c.Defect)
                             .Include(c => c.Instructions)
                             .Include(c => c.UserCreated)
-                            .Include(c => c.Desicion)
+                            .Include(c => c.Inspection)
                             .Include(c => c.LastModificationUser)
                             .SingleOrDefaultAsync(c =>c.Id ==id);
         }

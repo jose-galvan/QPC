@@ -22,7 +22,8 @@ namespace QPC.DataAccess
         public DbSet<Product> Products { get; set; }
         public DbSet<Defect> Defects { get; set; }
         public DbSet<Instruction> Instructions { get; set; }
-        public DbSet<FinalDesicion> Desicions { get; set; }
+        public DbSet<Inspection> Inspections { get; set; }
+        public DbSet<Desicion> Desicion { get; set; }
 
         public DbSet<Log> Logs { get; set; }
 

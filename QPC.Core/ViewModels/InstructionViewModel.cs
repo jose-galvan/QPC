@@ -17,5 +17,7 @@ namespace QPC.Core.ViewModels
         public int QualityControlId { get; set; }
 
         public IEnumerable<Instruction> Instructions { get; set; }
+
+        public bool CanSave { get; set; }
     }
 }

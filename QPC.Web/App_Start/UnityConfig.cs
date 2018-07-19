@@ -8,9 +8,6 @@ using System.Web.Mvc;
 using Unity;
 using Unity.Injection;
 using Unity.Lifetime;
-using Unity.Mvc5;
-using Unity.WebApi;
-
 namespace QPC.Web
 {
     public static class UnityConfig

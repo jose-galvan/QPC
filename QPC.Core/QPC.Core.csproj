@@ -41,12 +41,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DTOs\DesicionDto.cs" />
+    <Compile Include="DTOs\InspectionDto.cs" />
     <Compile Include="DTOs\InstructionDto.cs" />
     <Compile Include="DTOs\QualityControlDto.cs" />
     <Compile Include="Models\Claim.cs" />
     <Compile Include="Models\Defect.cs" />
-    <Compile Include="Models\FinalDesicion.cs" />
+    <Compile Include="Models\Desicion.cs" />
+    <Compile Include="Models\Inspection.cs" />
     <Compile Include="Models\ExternalLogin.cs" />
     <Compile Include="Models\Instruction.cs" />
     <Compile Include="Models\Log.cs" />
@@ -57,7 +58,9 @@
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\IDefectRepository.cs" />
+    <Compile Include="Repositories\IDesicionRepository.cs" />
     <Compile Include="Repositories\IExternalLoginRepository.cs" />
+    <Compile Include="Repositories\IInspectionRepository.cs" />
     <Compile Include="Repositories\IInstructionRepository.cs" />
     <Compile Include="Repositories\ILogRepository.cs" />
     <Compile Include="Repositories\IProductRepository.cs" />
@@ -66,9 +69,11 @@
     <Compile Include="Repositories\IRoleRepository.cs" />
     <Compile Include="Repositories\IUnitOfWork.cs" />
     <Compile Include="Repositories\IUserRepository.cs" />
+    <Compile Include="ViewModels\InspectionViewModel.cs" />
     <Compile Include="ViewModels\InstructionViewModel.cs" />
+    <Compile Include="ViewModels\ListItemViewModel.cs" />
     <Compile Include="ViewModels\QualityControlDetailViewModel.cs" />
-    <Compile Include="ViewModels\QualityControlsViewModel.cs" />
+    <Compile Include="ViewModels\QualityControlIndexViewModel.cs" />
     <Compile Include="ViewModels\QualityControlViewModel.cs" />
   </ItemGroup>
   <ItemGroup />

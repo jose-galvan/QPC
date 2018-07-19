@@ -13,11 +13,12 @@ using System.Web.Http.Results;
 namespace QPC.Web.Tests.Controllers.Api
 {
     [TestClass]
-    public class DesicionControllerTests
+    public class InspectionsControllerTests
     {
         private Mock<IUnitOfWork> _mockUnitOfWork;
         private Mock<IQualityControlRepository> _mockRepository;
-        private DesicionsController _controller;
+        private Mock<IDesicionRepository> _mockDesicionRepository;
+        private InspectionsController _controller;
         private Mock<IUserRepository> _mockUserRepository;
         private string _userId;
 
@@ -28,57 +29,65 @@ namespace QPC.Web.Tests.Controllers.Api
             //Fields Initialization;
             _mockUnitOfWork = new Mock<IUnitOfWork>();
             _mockRepository = new Mock<IQualityControlRepository>();
+            _mockDesicionRepository = new Mock<IDesicionRepository>();
             _mockUserRepository = new Mock<IUserRepository>();
-            _controller = new DesicionsController(_mockUnitOfWork.Object);
+            _controller = new InspectionsController(_mockUnitOfWork.Object);
 
             //Mocks SetUp
             _mockUnitOfWork.SetupGet(uw => uw.QualityControlRepository).Returns(_mockRepository.Object);
             _mockUnitOfWork.SetupGet(uw => uw.UserRepository).Returns(_mockUserRepository.Object);
+            _mockUnitOfWork.SetupGet(uw => uw.DesicionRepository).Returns(_mockDesicionRepository.Object);
             //Mock User Identity
             _userId = "1";
             _controller.MockCurrentUser(_userId, "user@mail.com");
         }
 
         [TestMethod]
-        public async Task SetDesicion_ValidDesicion_ShouldReturnOk()
+        public async Task Inspection_ValidDesicion_ShouldReturnOk()
         {
             //Arrange
-            var desicion = new DesicionDto { QualityControlId = 1, Comments = "Instructions' results OK", Desicion = Desicion.Acepted };
+            var desicion = new Desicion { Id = 1, Name = "Acepted" };
+            var inspection = new InspectionDto { QualityControlId = 1, Comments = "Instructions' results OK", Desicion = 1 };
             var quaityControl = new QualityControl { Name = "High tolerances", Defect = new Defect { Name = "Dimensional" }, Status = QualityControlStatus.Open };
             _mockRepository.Setup(r => r.FindByIdAsync(It.IsAny<int>())).Returns(Task.FromResult(quaityControl));
+            _mockDesicionRepository.Setup(r => r.FindByIdAsync(It.IsAny<int>())).Returns(Task.FromResult(desicion));
 
             //Act
-            var result = await _controller.AddDesicion(desicion);
+            var result = await _controller.AddDesicion(inspection);
             //Assert
 
             result.Should().BeOfType<OkResult>();
         }
 
         [TestMethod]
-        public async Task SetDesicion_NonExistingDesicion_ShouldReturnNotFound()
+        public async Task Inspection_NonExistingDesicion_ShouldReturnNotFound()
         {
             //Arrange
-            var desicion = new DesicionDto { QualityControlId = 1, Comments = "Instructions' results OK", Desicion = Desicion.Acepted };
+            var desicion = new Desicion { Id = 1, Name = "Acepted" };
+            var inspection = new InspectionDto { QualityControlId = 1, Comments = "Instructions' results OK", Desicion = 2  };
             QualityControl quaityControl =null;
             _mockRepository.Setup(r => r.FindByIdAsync(It.IsAny<int>())).Returns(Task.FromResult(quaityControl));
+            _mockDesicionRepository.Setup(r => r.FindByIdAsync(It.IsAny<int>())).Returns(Task.FromResult(desicion));
 
             //Act
-            var result = await _controller.AddDesicion(desicion);
+            var result = await _controller.AddDesicion(inspection);
             //Assert
 
             result.Should().BeOfType<NotFoundResult>();
         }
 
         [TestMethod]
-        public async Task SetDesicion_ClosedControl_ShouldReturnBadRequest()
+        public async Task Inspection_ClosedControl_ShouldReturnBadRequest()
         {
             //Arrange
-            var desicion = new DesicionDto { QualityControlId = 1, Comments = "Instructions' results OK", Desicion = Desicion.Acepted };
+            var desicion = new Desicion { Id = 1, Name = "Acepted" };
+            var inspection = new InspectionDto { QualityControlId = 1, Comments = "Instructions' results OK", Desicion =1 };
             var quaityControl = new QualityControl { Name = "High tolerances", Defect = new Defect { Name = "Dimensional" }, Status = QualityControlStatus.Closed };
             _mockRepository.Setup(r => r.FindByIdAsync(It.IsAny<int>())).Returns(Task.FromResult(quaityControl));
+            _mockDesicionRepository.Setup(r => r.FindByIdAsync(It.IsAny<int>())).Returns(Task.FromResult(desicion));
 
             //Act
-            var result = await _controller.AddDesicion(desicion);
+            var result = await _controller.AddDesicion(inspection);
             //Assert
 
             result.Should().BeOfType<BadRequestErrorMessageResult>();

@@ -6,7 +6,7 @@ namespace QPC.Core.Repositories
 {
     public interface IQualityControlRepository: IRepository<QualityControl>
     {
-        Task<List<QualityControl>> GetAllWithProductsAsync();
         Task<QualityControl> GetWithDetails(int id);
+        Task<List<QualityControl>> GetAllWithDetailsAsync();
     }
 }

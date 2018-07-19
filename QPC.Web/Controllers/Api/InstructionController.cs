@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using QPC.Core.Models;
 using Microsoft.AspNet.Identity;
 using System;
+using QPC.Web.Helpers;
 
 namespace QPC.Web.Controllers.Api
 {
@@ -30,8 +31,9 @@ namespace QPC.Web.Controllers.Api
 
             var user = await _unitOfWork.UserRepository.FindByIdAsync(GetUserId());
             
-            try { 
-                //qualityControl.AddInstruction(dto, user);
+            try {
+                var instruction = QualityControlFactory.Create(dto);
+                qualityControl.AddInstruction(instruction, user);
                 await _unitOfWork.SaveChangesAsync();
             }
             catch(Exception ex)

@@ -14,7 +14,11 @@ namespace QPC.DataAccess.Migrations
 
         protected override void Seed(QPC.DataAccess.ApplicationDbContext context)
         {
-            
+            context.Desicion.AddOrUpdate(d => d.Name,
+                new Core.Models.Desicion { Name = "Acepted" },
+                new Core.Models.Desicion { Name = "Rejected" },
+                new Core.Models.Desicion { Name = "Rework" }
+                );
         }
     }
 }

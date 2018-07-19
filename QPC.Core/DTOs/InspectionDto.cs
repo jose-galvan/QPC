@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 
 namespace QPC.Core.DTOs
 {
-    public  class DesicionDto
+    public  class InspectionDto
     {
         public int? Id { get; set; }
-        public Desicion Desicion { get; set; }
+        public int Desicion { get; set; }
         public string Comments { get; set; }
 
         public int QualityControlId { get; set; }

@@ -25,17 +25,19 @@ namespace QPC.Web.Controllers
         // GET: QC
         public async Task<ViewResult> Index(string searchCriteria = null)
         {
-            var controls = await _unitOfWork.QualityControlRepository.GetAllWithProductsAsync();
-            var viewModel = new QualityControlsViewModel();
-            viewModel.Controls = controls;
+            var controls = await _unitOfWork.QualityControlRepository.GetAllWithDetailsAsync();
+            var viewModel = new QualityControlIndexViewModel();
+
+            if(!string.IsNullOrEmpty(searchCriteria))
+                controls = controls
+                                .Where(c => c.Name.Contains(searchCriteria)
+                                    || c.Description.Contains(searchCriteria))
+                                .ToList();
+
             viewModel.Header = "Results for: " + searchCriteria ?? "Quality Controls";
             viewModel.SearchCriteria = searchCriteria;
-
-            if(string.IsNullOrEmpty(searchCriteria))
-                return View(viewModel);
-
-            viewModel.Controls = controls.Where(c => c.Name.Contains(searchCriteria) || c.Description.Contains(searchCriteria))
-                            .ToList();
+            viewModel.Controls = controls
+                    .Select(qc => QualityControlFactory.CreateItem(qc));
 
             return View(viewModel);
         }
@@ -78,7 +80,7 @@ namespace QPC.Web.Controllers
             return View(viewModel);
         }
         
-        [HttpPut, HttpPatch]
+        [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> UpdateControl(QualityControlDetailViewModel model)
         {

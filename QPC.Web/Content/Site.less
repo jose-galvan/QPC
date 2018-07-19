@@ -1,4 +1,6 @@
-﻿@import url('https://fonts.googleapis.com/css?family=Montserrat:400,700');
+﻿body {
+}
+@import url('https://fonts.googleapis.com/css?family=Montserrat:400,700');
 body, html{height: 100%;}
 input, textarea{
     font-family: 'Montserrat', sans-serif;
@@ -44,28 +46,14 @@ th, td {
     text-align:center;
     font-weight: bold;
     display: inline-block;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-
 }
-
-
 header{
     background-color: #41c7c7;
     grid-area: head;
     display: grid;
     grid-template-columns: 20% auto;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-
-}
-
-header  form{
-    display: inline-block;
-}
-
-header a:hover {
-
-    color: #2Ea0a0;
-
+    /* grid-template-columns: 20% 80%; */
+    /* grid-template-columns: repeat(2, auto); dos fracciones del mismo ancho*/
 }
 
 .hero{
@@ -86,8 +74,6 @@ header a:hover {
     grid-area: sidebar;
     background: #1c9090;
     color: #fff;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-
 }
 .sidebar ul{
     float: none;
@@ -118,7 +104,7 @@ header a:hover {
 
 hr{
     width: 90%;
-    margin: .5em;
+    margin: .5em auto;
 }
 
 .container{
@@ -263,35 +249,26 @@ hr{
 
 .btn-performed{
     padding: .5em;
-    background-color: #4CAF50;
+    background-color: #00CC00;
 
     font-size: 1em;
+    border: 2px solid #d3d3d3;
     color: #333;
-    width: 7em;
+    padding: .5em;
+    width: 100px;
     bottom: 5px;
-    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-
 }
 
 .btn-pending{
-    background-color: #41c7c7;
+    padding: .5em;
+    background-color: #2173C9;
+
     font-size: 1em;
+    border: 2px solid #d3d3d3;
     color: #333;
     padding: .5em;
-    width: 7em;
+    width: 100px;
     bottom: 5px;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-
-}
-input[type="submit"]:disabled {
-    background: #ddd;
-    color: #333;
-    border: inherit;
-}
-
-.login-form{
-    margin: 0 auto;
-    width: 40%;
 }
 
 footer{

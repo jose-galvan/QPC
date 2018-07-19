@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace QPC.DataAccess.Repositories
 {
-    class DefectRepository : Repository<Defect>, IDefectRepository
+    internal class DefectRepository : Repository<Defect>, IDefectRepository
     {
         public DefectRepository(ApplicationDbContext context) : base(context)
         {

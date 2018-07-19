@@ -56,6 +56,10 @@
       <HintPath>..\packages\Unity.5.2.0\lib\net45\CommonServiceLocator.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="dotless.Core, Version=1.4.0.0, Culture=neutral, PublicKeyToken=96b446c9e63eae34, processorArchitecture=MSIL">
+      <HintPath>..\packages\dotless.1.4.0.0\lib\dotless.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.AI.Agent.Intercept, Version=1.2.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.ApplicationInsights.Agent.Intercept.1.2.1\lib\net45\Microsoft.AI.Agent.Intercept.dll</HintPath>
       <Private>True</Private>
@@ -265,7 +269,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\Api\DefectsController.cs" />
-    <Compile Include="Controllers\Api\DesicionsController.cs" />
+    <Compile Include="Controllers\Api\InspectionsController.cs" />
     <Compile Include="Controllers\Api\InstructionController.cs" />
     <Compile Include="Controllers\InstructionsController.cs" />
     <Compile Include="Controllers\ControllerHelpers.cs" />
@@ -293,8 +297,6 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Icons.css" />
-    <Content Include="Content\materialize-css\materialize.css" />
-    <Content Include="Content\materialize-css\materialize.min.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -309,6 +311,7 @@
     <Content Include="Scripts\app\Instruction\InstructionService.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Content\Site.less" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -317,8 +320,6 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
-    <Content Include="Scripts\materialize\materialize.js" />
-    <Content Include="Scripts\materialize\materialize.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
@@ -363,10 +364,9 @@
     <Content Include="Views\Shared\ProgressBar.cshtml" />
     <Content Include="Views\Instructions\AddInstruction.cshtml" />
     <Content Include="Views\Instructions\Instructions.cshtml" />
+    <Content Include="Views\Inspections\Inspect.cshtml" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Views\Inspections\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="packages.config" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

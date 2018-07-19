@@ -1,13 +1,8 @@
-﻿@model QPC.Core.ViewModels.QualityControlsViewModel
+﻿@model QPC.Core.ViewModels.QualityControlIndexViewModel
 
 @{
     ViewBag.Title = "Index";
 }
-
-
-
-
-
 <section class="hero">
     <div class="content">
         <h1>Quality Controls</h1>
@@ -27,29 +22,41 @@
             </div>
         </div>
         <div class="row">
-            <table>
+            <table class="container">
                 <tr>
                     <th>Control</th>
-                    <th>Product</th>
                     <th>Description</th>
+                    <th>Status</th>
+                    <th>Product</th>
+                    <th>Defect</th>
+                    <th>Desicion</th>
+                    <th></th>
                 </tr>
-                @foreach (var item in Model.Controls)
+                @foreach(var item in Model.Controls)
                 {
                     <tr>
                         <td>
                             @Html.DisplayFor(modelItem => item.Name)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.Product.Name)
+                            @Html.DisplayFor(modelItem => item.Description)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.Description)
+                            @Html.DisplayFor(modelItem => item.Status)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Product)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Defect)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Desicion)
                         </td>
                         <td>
                             <a href="@Url.Action("UpdateControl", "QualityControl", new { id = item.Id })">
                                 <div class="edit-solid icon"></div>
                             </a>
-
                         </td>
                     </tr>
                 }

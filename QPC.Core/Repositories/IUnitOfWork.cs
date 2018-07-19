@@ -15,6 +15,8 @@ namespace QPC.Core.Repositories
         IInstructionRepository InstructionRepository { get;}
         IDefectRepository DefectRepository { get; }
         IProductRepository ProductRepository { get; }
+        IInspectionRepository InspectionRepository { get; }
+        IDesicionRepository DesicionRepository { get; }
         #endregion
 
         #region Methods
