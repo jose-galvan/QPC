@@ -1,6 +1,8 @@
 using Microsoft.AspNet.Identity;
 using QPC.Core.Repositories;
 using QPC.DataAccess;
+using QPC.Web.Controllers;
+using QPC.Web.Helpers;
 using QPC.Web.Identity;
 using System;
 using System.Web.Http;
@@ -23,6 +25,7 @@ namespace QPC.Web
 
 
             container.RegisterType<IUnitOfWork, UnitOfWork>(new HierarchicalLifetimeManager(), new InjectionConstructor());
+            container.RegisterType<QualityControlFactory, QualityControlFactory>(new HierarchicalLifetimeManager(), new InjectionConstructor());
             container.RegisterType<IUserStore<IdentityUser, Guid>, UserStore>(new TransientLifetimeManager());
             container.RegisterType<RoleStore>(new TransientLifetimeManager());
 

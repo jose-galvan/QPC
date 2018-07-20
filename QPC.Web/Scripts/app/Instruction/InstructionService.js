@@ -4,8 +4,7 @@
 
         $.ajax({
             url: '/api/instruction/' + instruction,
-            method: 'PUT',
-            headers: { "Authorization": localStorage.getItem('token') }
+            method: 'PUT'
 
         })
         .done(done)

@@ -11,7 +11,7 @@
             @using (Html.BeginForm("Index", "QualityControl", FormMethod.Post, new {role = "form" }))
             {
                     @Html.TextBoxFor(m => m.SearchCriteria, new { @id = "search", @type = "search", @placeholer ="search by name or description" })
-                    <span class="search icon"></span>
+                    <button type="submit" class="search icon" />
             }
         </div>
         <div class="row">

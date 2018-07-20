@@ -1,20 +1,24 @@
 ﻿.search.icon {
   color: #000;
   position: absolute;
-  margin-top: 1.5em;
+  margin-top: 2em;
   margin-left: 7px;
-  width: 12px;
-  height: 12px;
+  width: 15px;
+  height: 15px;
   border: solid 1px currentColor;
   border-radius: 100%;
   -webkit-transform: rotate(-45deg);
+  -o-transform: rotate(-45deg);
+  -ms-transform: rotate(-45deg);
+  -moz-transform: rotate(-45deg);
           transform: rotate(-45deg);
   float:right;
+  background-color: inherit;
 }
 .search.icon:before {
   content: '';
   position: absolute;
-  top: 12px;
+  top: 14px;
   left: 5px;
   height: 6px;
   width: 1px;
@@ -29,6 +33,9 @@
   border: solid 1px currentColor;
   background-color: currentColor;
   -webkit-transform: rotate(-45deg);
+  -o-transform: rotate(-45deg);
+  -ms-transform: rotate(-45deg);
+  -moz-transform: rotate(-45deg);
           transform: rotate(-45deg);
 }
 
@@ -37,8 +44,8 @@
   position: absolute;
   left: -12px;
   top: -1px;
-  width: 0px;
-  height: 0px;
+  width: 0;
+  height: 0;
   border-left: solid 5px transparent;
   border-right: solid 5px currentColor;
   border-top: solid 2px transparent;
@@ -46,7 +53,7 @@
 }
 
 .plus.icon {
-  
+  margin: -1em;
   color: #000;
   position: absolute;
 }
@@ -67,6 +74,9 @@
   height: 1px;
   background-color: currentColor;
   -webkit-transform: rotate(90deg);
+  -o-transform: rotate(90deg);
+  -ms-transform: rotate(90deg);
+  -moz-transform: rotate(90deg);
           transform: rotate(90deg);
   border: 1px solid black;
 

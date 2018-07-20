@@ -2,23 +2,19 @@
 using QPC.Core.DTOs;
 using System.Web.Http;
 using System.Threading.Tasks;
-using QPC.Core.Models;
-using Microsoft.AspNet.Identity;
 using System;
 using QPC.Web.Helpers;
 
 namespace QPC.Web.Controllers.Api
 {
     [Authorize]
-    public class InstructionController : ApiController
+    public class InstructionController : QualityControlWebApiBaseController
     {
-        private IUnitOfWork _unitOfWork;
-        public Func<Guid> GetUserId;
         
-        public InstructionController(IUnitOfWork unitOfWork)
+
+        public InstructionController(IUnitOfWork unitOfWork, QualityControlFactory factory)
+            :base(unitOfWork, factory)
         {
-            _unitOfWork = unitOfWork;
-            GetUserId = () => ControllerHelpers.GetGuid(User.Identity.GetUserId());
         }
 
         [HttpPost]
@@ -29,15 +25,16 @@ namespace QPC.Web.Controllers.Api
             if (qualityControl == null)
                 return NotFound();
 
-            var user = await _unitOfWork.UserRepository.FindByIdAsync(GetUserId());
+            var user = await GetUserAsync();
             
             try {
-                var instruction = QualityControlFactory.Create(dto);
+                var instruction = _factory.Create(dto);
                 qualityControl.AddInstruction(instruction, user);
                 await _unitOfWork.SaveChangesAsync();
             }
             catch(Exception ex)
             {
+                await LogExceptionAsync(ex);
                 return BadRequest(ex.Message);
             }
             return Ok();
@@ -52,12 +49,13 @@ namespace QPC.Web.Controllers.Api
             
             try
             {
-                var user = await _unitOfWork.UserRepository.FindByIdAsync(GetUserId());
+                var user = await GetUserAsync();
                 instruction.Update(user);
                 await _unitOfWork.SaveChangesAsync();
             }
             catch (Exception ex)
             {
+                await LogExceptionAsync(ex);
                 return BadRequest(ex.Message);
             }
             return Ok();
@@ -70,15 +68,16 @@ namespace QPC.Web.Controllers.Api
             if (instruction == null)
                 return NotFound();
 
-            var user = await _unitOfWork.UserRepository.FindByIdAsync(GetUserId());
 
             try
             {
+                var user = await GetUserAsync();
                 instruction.Cancel(user);
                 await _unitOfWork.SaveChangesAsync();
             }
             catch (Exception ex)
             {
+                await LogExceptionAsync(ex);
                 return BadRequest(ex.Message);
             }
             return Ok();

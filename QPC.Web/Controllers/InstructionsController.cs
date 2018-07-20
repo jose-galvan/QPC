@@ -11,15 +11,13 @@ using System.Web.Mvc;
 namespace QPC.Web.Controllers
 {
     [Authorize]
-    public class InstructionsController : Controller
+    public class InstructionsController : QualityControlMvcController
     {
-        private IUnitOfWork _unitOfWork;
-        public Func<Guid> GetUserId;
 
-        public InstructionsController(IUnitOfWork unitOfWork)
+        public InstructionsController(IUnitOfWork unitOfWork, QualityControlFactory factory)
+            :base(unitOfWork, factory)
         {
-            _unitOfWork = unitOfWork;
-            GetUserId = () => ControllerHelpers.GetGuid(User.Identity.GetUserId());
+
         }
 
         //receives id of control as parameter
@@ -57,7 +55,7 @@ namespace QPC.Web.Controllers
             var user = await _unitOfWork.UserRepository.FindByIdAsync(GetUserId());
             try
             {
-                var instruction = QualityControlFactory.Create(vm);
+                var instruction = _factory.Create(vm);
                 control.AddInstruction(instruction, user);
                 await _unitOfWork.SaveChangesAsync();
                 vm.Name = vm.Description = 
@@ -65,6 +63,7 @@ namespace QPC.Web.Controllers
             }
             catch (Exception ex)
             {
+                await LogExceptionAsync(ex);
                 ModelState.AddModelError("Exception", ex);
             }
 

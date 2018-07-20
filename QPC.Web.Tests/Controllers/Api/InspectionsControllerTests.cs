@@ -9,6 +9,7 @@ using QPC.Core.DTOs;
 using QPC.Core.Models;
 using FluentAssertions;
 using System.Web.Http.Results;
+using QPC.Web.Helpers;
 
 namespace QPC.Web.Tests.Controllers.Api
 {
@@ -20,6 +21,7 @@ namespace QPC.Web.Tests.Controllers.Api
         private Mock<IDesicionRepository> _mockDesicionRepository;
         private InspectionsController _controller;
         private Mock<IUserRepository> _mockUserRepository;
+        private Mock<QualityControlFactory> _mockFactory;
         private string _userId;
 
 
@@ -31,7 +33,10 @@ namespace QPC.Web.Tests.Controllers.Api
             _mockRepository = new Mock<IQualityControlRepository>();
             _mockDesicionRepository = new Mock<IDesicionRepository>();
             _mockUserRepository = new Mock<IUserRepository>();
-            _controller = new InspectionsController(_mockUnitOfWork.Object);
+            _mockFactory = new Mock<QualityControlFactory>();
+
+
+            _controller = new InspectionsController(_mockUnitOfWork.Object, _mockFactory.Object);
 
             //Mocks SetUp
             _mockUnitOfWork.SetupGet(uw => uw.QualityControlRepository).Returns(_mockRepository.Object);

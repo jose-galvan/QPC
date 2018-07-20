@@ -75,10 +75,9 @@ header a:hover {
     grid-area: hero;
 }
 
-.hero h1, .tab-item a{
+.hero h1, .tab-item a, th{
     text-transform: uppercase;
         color: #298383;
-    /*color: #fffbc5;*/
     margin-left: .5em;
 }
 
@@ -292,6 +291,17 @@ input[type="submit"]:disabled {
 .login-form{
     margin: 0 auto;
     width: 40%;
+}
+
+.chart{
+    margin: 0 auto;
+    width: 60%;
+    height: 60%
+}
+
+option{
+    background-color: inherit;
+    color: inherit;
 }
 
 footer{

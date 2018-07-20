@@ -5,13 +5,20 @@ using System;
 using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
+using Microsoft.AspNet.Identity;
+using QPC.Core.Repositories;
 
 namespace QPC.Web.Helpers
 {
     public class QualityControlFactory
     {
-        
-        public static QualityControlDetailViewModel Create(QualityControl control)
+        private IUnitOfWork _unitOfWork;
+
+        public QualityControlFactory(IUnitOfWork unitOfWork)
+        {
+            _unitOfWork = unitOfWork;
+        }
+        public QualityControlDetailViewModel Create(QualityControl control)
         {
             return new QualityControlDetailViewModel
             {
@@ -33,7 +40,7 @@ namespace QPC.Web.Helpers
             };
         }
 
-        public static QualityControl Create(QualityControlViewModel model, User user)
+        public QualityControl Create(QualityControlViewModel model, User user)
         {
             var control = new QualityControl(user);
             control.ProductId = model.Product;
@@ -45,7 +52,7 @@ namespace QPC.Web.Helpers
             return control;
         }
 
-        public static Instruction Create(InstructionViewModel model)
+        public Instruction Create(InstructionViewModel model)
         {
             return new Instruction
             {
@@ -56,7 +63,7 @@ namespace QPC.Web.Helpers
                 Status = InstructionStatus.Pending
             };
         }
-        public static Instruction Create(InstructionDto model)
+        public Instruction Create(InstructionDto model)
         {
             return new Instruction
             {
@@ -68,7 +75,7 @@ namespace QPC.Web.Helpers
             };
         }
 
-        public static Inspection Create(InspectionViewModel vm)
+        public Inspection Create(InspectionViewModel vm)
         {
             return new Inspection
             {
@@ -77,7 +84,7 @@ namespace QPC.Web.Helpers
             };
         }
 
-        public static Inspection Create(InspectionDto dto)
+        public Inspection Create(InspectionDto dto)
         {
             return new Inspection
             {
@@ -85,7 +92,7 @@ namespace QPC.Web.Helpers
             };
         }
 
-        public static ListItemViewModel CreateItem(QualityControl control)
+        public ListItemViewModel CreateItem(QualityControl control)
         {
             return new ListItemViewModel
             {
@@ -100,7 +107,7 @@ namespace QPC.Web.Helpers
             };
         }
 
-        public static string GetDescription<T>(T enumerationValue)
+        private string GetDescription<T>(T enumerationValue)
         where T : struct
         {
             Type type = enumerationValue.GetType();

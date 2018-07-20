@@ -5,6 +5,7 @@ using QPC.Core.DTOs;
 using QPC.Core.Models;
 using QPC.Core.Repositories;
 using QPC.Web.Controllers.Api;
+using QPC.Web.Helpers;
 using QPC.Web.Tests.Extensions;
 using System.Threading.Tasks;
 using System.Web.Http.Results;
@@ -19,6 +20,8 @@ namespace QPC.Web.Tests.Controllers.Api
         private Mock<IInstructionRepository> _mockInstructionRepository;
         private InstructionController _controller;
         private Mock<IUserRepository> _mockUserRepository;
+        private Mock<QualityControlFactory> _mockFactory;
+
         private string _userId;
 
         [TestInitialize]
@@ -29,7 +32,8 @@ namespace QPC.Web.Tests.Controllers.Api
             _mockRepository = new Mock<IQualityControlRepository>();
             _mockUserRepository = new Mock<IUserRepository>();
             _mockInstructionRepository = new Mock<IInstructionRepository>();
-            _controller = new InstructionController(_mockUnitOfWork.Object);
+            _mockFactory = new Mock<QualityControlFactory>();
+            _controller = new InstructionController(_mockUnitOfWork.Object, _mockFactory.Object);
 
             //Mocks SetUp
             _mockUnitOfWork.SetupGet(uw => uw.QualityControlRepository).Returns(_mockRepository.Object);

@@ -2,7 +2,6 @@
 using QPC.Core.Repositories;
 using QPC.Core.ViewModels;
 using QPC.Web.Helpers;
-using QPC.Web.Models;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
@@ -11,15 +10,13 @@ using System.Web.Mvc;
 namespace QPC.Web.Controllers
 {
     [Authorize]
-    public class QualityControlController : Controller
+    public class QualityControlController : QualityControlMvcController
     {
-        private IUnitOfWork _unitOfWork;
-        public Func<Guid> GetUserId;
 
-        public QualityControlController(IUnitOfWork unitOfWork)
+
+        public QualityControlController(IUnitOfWork unitOfWork, QualityControlFactory factory)
+            : base(unitOfWork, factory)
         {
-            _unitOfWork = unitOfWork;
-            GetUserId =() => ControllerHelpers.GetGuid(User.Identity.GetUserId());
         }
 
         // GET: QC
@@ -37,7 +34,7 @@ namespace QPC.Web.Controllers
             viewModel.Header = "Results for: " + searchCriteria ?? "Quality Controls";
             viewModel.SearchCriteria = searchCriteria;
             viewModel.Controls = controls
-                    .Select(qc => QualityControlFactory.CreateItem(qc));
+                    .Select(qc => _factory.CreateItem(qc));
 
             return View(viewModel);
         }
@@ -62,8 +59,8 @@ namespace QPC.Web.Controllers
                 return View(model);
             }
 
-            var user = await _unitOfWork.UserRepository.FindByIdAsync(GetUserId());
-            var control = QualityControlFactory.Create(model, user);
+            var user = await GetUserAsync();
+            var control = _factory.Create(model, user);
             _unitOfWork.QualityControlRepository.Add(control);
             await _unitOfWork.SaveChangesAsync();
             return RedirectToAction("Index", "QualityControl");
@@ -76,7 +73,7 @@ namespace QPC.Web.Controllers
             if (qc == null)
                 return HttpNotFound();
 
-            var viewModel = QualityControlFactory.Create(qc);
+            var viewModel = _factory.Create(qc);
             return View(viewModel);
         }
         
@@ -94,8 +91,9 @@ namespace QPC.Web.Controllers
                 control.Update(model, user);
                 await _unitOfWork.SaveChangesAsync();
             }
-            catch
+            catch(Exception ex)
             {
+                await LogExceptionAsync(ex);
                 return View(model);
             }
             return RedirectToAction("Index", "QualityControl");

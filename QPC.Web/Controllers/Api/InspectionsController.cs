@@ -12,9 +12,11 @@ namespace QPC.Web.Controllers.Api
     public class InspectionsController : ApiController
     {
         private IUnitOfWork _unitOfWork;
+        private QualityControlFactory _factory;
 
-        public InspectionsController(IUnitOfWork unitOfWork)
+        public InspectionsController(IUnitOfWork unitOfWork, QualityControlFactory factory)
         {
+            _factory = factory;
             _unitOfWork = unitOfWork;
         }
 
@@ -34,7 +36,7 @@ namespace QPC.Web.Controllers.Api
             
             try
             {
-                var inspection = QualityControlFactory.Create(dto);
+                var inspection = _factory.Create(dto);
                 inspection.Desicion = desicion;
                 qualityControl.SetInspection(inspection, user);
                 await _unitOfWork.SaveChangesAsync();

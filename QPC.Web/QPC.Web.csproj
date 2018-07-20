@@ -268,13 +268,16 @@
     <Compile Include="App_Start\UnityConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\Api\DefectsController.cs" />
     <Compile Include="Controllers\Api\InspectionsController.cs" />
     <Compile Include="Controllers\Api\InstructionController.cs" />
+    <Compile Include="Controllers\Api\QualityControlWebApiBaseController.cs" />
+    <Compile Include="Controllers\DashBoardController.cs" />
     <Compile Include="Controllers\InstructionsController.cs" />
-    <Compile Include="Controllers\ControllerHelpers.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InspectionsController.cs" />
+    <Compile Include="Controllers\QualityControlMvcController.cs" />
     <Compile Include="Controllers\QualityControlController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -365,8 +368,12 @@
     <Content Include="Views\Instructions\AddInstruction.cshtml" />
     <Content Include="Views\Instructions\Instructions.cshtml" />
     <Content Include="Views\Inspections\Inspect.cshtml" />
+    <Content Include="Views\DashBoard\Index.cshtml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Views\Admin\" />
+    <Folder Include="Views\QPCBase\" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

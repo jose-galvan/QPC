@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
     <title>QPC</title>
@@ -14,10 +15,10 @@
     <div class="sidebar">
         <nav>
             <ul>
-                <li>@Html.ActionLink("Request Control", "RequestControl", "QualityControl")</li>
-                <li>@Html.ActionLink("Quality Controls", "Index", "QualityControl")</li>
-                <li><a href="#">Dashboard</a></li>
-                <li><a href="#">Admin</a></li>
+                <li><a href="@Url.Action("RequestControl", "QualityControl")"><i class="far fa-file-alt"></i> Request Control</a></li>
+                <li><a href="@Url.Action("Index", "QualityControl")"><i class="fas fa-table"></i> Quality Controls</a></li>
+                <li><a href="@Url.Action("Index", "DashBoard")"><i class="fas fa-chart-line"></i> Dashboard</a></li>
+                <li><a href="#"><i class="fas fa-toolbox"></i>  Admin</a></li>
             </ul>
         </nav>
     </div>

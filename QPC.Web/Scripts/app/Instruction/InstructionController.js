@@ -3,7 +3,7 @@
     var fail = helper.fail;
     var done = function () {
         var text = button.text() === "Performed" ? "Performed?" : "Performed";
-        button.toggleClass('btn-performed').text(text);
+        button.removeClass('btn-pending').addClass('btn-performed').text(text);
     };
 
     var toggleStatus = function (e) {
