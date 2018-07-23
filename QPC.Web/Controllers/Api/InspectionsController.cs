@@ -32,11 +32,11 @@ namespace QPC.Web.Controllers.Api
             if (desicion == null)
                 return BadRequest();
 
-            var user = await _unitOfWork.UserRepository.FindByIdAsync(User.Identity.GetUserId());
             
             try
             {
-                var inspection = _factory.Create(dto);
+                var user = await _unitOfWork.UserRepository.FindByIdAsync(User.Identity.GetUserId());
+                var inspection = _factory.Create(dto, user);
                 inspection.Desicion = desicion;
                 qualityControl.SetInspection(inspection, user);
                 await _unitOfWork.SaveChangesAsync();

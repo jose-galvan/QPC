@@ -1,0 +1,56 @@
+﻿@model QPC.Core.ViewModels.ProductViewModel
+
+@{
+    ViewBag.Title = "Products";
+}
+
+<section class="hero">
+    <div class="content instructions">
+        <div class="title">
+            <h1>@ViewBag.Title</h1>
+            <hr />
+        </div>
+        <div class="container">
+            <div class="row">
+                @using (Html.BeginForm("Product", "Products", FormMethod.Get, new { role = "form" }))
+                {
+                    @Html.TextBoxFor(m => m.SearchCriteria, new { @id = "search", @type = "search", @placeholer = "search by name or description" })
+                    <button type="submit" class="search icon" />
+                }
+            </div>
+            @Html.Partial("Products", Model.Products)
+        </div>
+        <div class="container">
+
+            <div class="container">
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <div class="row">
+                        <label>Instruction</label>
+                        @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @type = "text", @Placeholder = "Instruction..." } })
+                        @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="row">
+                        @Html.LabelFor(model => model.Description)
+                        @Html.TextAreaFor(model => model.Description)
+                        @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="row">
+                        <input type="submit" value="Save" />
+                        <a href="@Url.Action("Product", "Products")" class="cancel">Cancel</a>
+                    </div>
+                }
+            </div>
+            @if (Model.Id.HasValue)
+            {
+                <div class="container">
+                        @Html.Partial("DefectsProduct", Model.Defects)
+                </div>
+            }
+        </div>
+    </div>
+</section>
+
+

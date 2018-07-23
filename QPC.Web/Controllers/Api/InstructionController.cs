@@ -25,10 +25,10 @@ namespace QPC.Web.Controllers.Api
             if (qualityControl == null)
                 return NotFound();
 
-            var user = await GetUserAsync();
             
             try {
-                var instruction = _factory.Create(dto);
+                var user = await GetUserAsync();
+                var instruction = _factory.Create(dto, user);
                 qualityControl.AddInstruction(instruction, user);
                 await _unitOfWork.SaveChangesAsync();
             }

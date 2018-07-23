@@ -12,12 +12,7 @@ namespace QPC.Web.Helpers
 {
     public class QualityControlFactory
     {
-        private IUnitOfWork _unitOfWork;
 
-        public QualityControlFactory(IUnitOfWork unitOfWork)
-        {
-            _unitOfWork = unitOfWork;
-        }
         public QualityControlDetailViewModel Create(QualityControl control)
         {
             return new QualityControlDetailViewModel
@@ -36,25 +31,29 @@ namespace QPC.Web.Helpers
                 LastModificationDate = control.LastModificationDate.ToString(),
                 CreateDate = control.CreateDate.ToString(),
                 UserCreated = control.UserCreated.UserName,
-                LastModificationUser = control.LastModificationUser.UserName
+                LastModificationUser = control.LastModificationUser.UserName,
+                CanSave = !control.Instructions
+                            .Any(i => i.Status == InstructionStatus.Pending) &&
+                          control.Status != QualityControlStatus.Closed ? true : false
             };
         }
 
         public QualityControl Create(QualityControlViewModel model, User user)
         {
-            var control = new QualityControl(user);
-            control.ProductId = model.Product;
-            control.DefectId = model.Defect;
-            control.Name = model.Name;
-            control.Serial = model.Serial;
-            control.Description = model.Description;
-            control.Status = QualityControlStatus.Open;
-            return control;
+            return new QualityControl(user)
+            {
+                ProductId = model.Product,
+                DefectId = model.Defect,
+                Name = model.Name,
+                Serial = model.Serial,
+                Description = model.Description,
+                Status = QualityControlStatus.Open,
+            };
         }
 
-        public Instruction Create(InstructionViewModel model)
+        public Instruction Create(InstructionViewModel model, User user)
         {
-            return new Instruction
+            return new Instruction(user)
             {
                 QualityControlId = model.QualityControlId,
                 Name = model.Name,
@@ -63,9 +62,9 @@ namespace QPC.Web.Helpers
                 Status = InstructionStatus.Pending
             };
         }
-        public Instruction Create(InstructionDto model)
+        public Instruction Create(InstructionDto model, User user)
         {
-            return new Instruction
+            return new Instruction(user)
             {
                 QualityControlId = model.QualityControlId,
                 Name = model.Name,
@@ -75,20 +74,30 @@ namespace QPC.Web.Helpers
             };
         }
 
-        public Inspection Create(InspectionViewModel vm)
+        public Inspection Create(InspectionViewModel viewmodel, User user)
         {
-            return new Inspection
+            return new Inspection(user)
             {
-                Desicion = vm.Desicions.Single(d => d.Id == vm.FinalDesicison),
-                Comments = vm.Comments
+                Desicion = viewmodel.Desicions.Single(d => d.Id == viewmodel.FinalDesicison),
+                Comments = viewmodel.Comments
             };
         }
 
-        public Inspection Create(InspectionDto dto)
+        public Inspection Create(InspectionDto dto, User user)
         {
-            return new Inspection
+            return new Inspection(user)
             {
                 Comments = dto.Comments
+            };
+        }
+
+
+        public Product Create(ProductViewModel viewModel, User user)
+        {
+            return new Product(user)
+            {
+                Name = viewModel.Name,
+                Description = viewModel.Description
             };
         }
 

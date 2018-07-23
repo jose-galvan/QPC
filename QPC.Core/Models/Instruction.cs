@@ -5,9 +5,15 @@ using System.ComponentModel.DataAnnotations;
 
 namespace QPC.Core.Models
 {
-    public class Instruction: QPCBaseClass
+    public class Instruction: QPCBaseModel
     {
+        public Instruction()
+        {
 
+        }
+        public Instruction(User user):base(user)
+        {
+        }
 
         [Required, StringLength(50)]
         public string Name { get; set; }

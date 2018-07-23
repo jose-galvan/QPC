@@ -48,6 +48,7 @@ namespace QPC.Web.Controllers
             try
             {
                 _unitOfWork.LogRepository.Add(log);
+                await _unitOfWork.SaveChangesAsync();
             }
             catch
             {

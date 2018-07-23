@@ -62,7 +62,7 @@
             </div>
             <hr />
             <div class="row">
-                <input type="submit" value="Update"/>
+                <input type="submit" @( !Model.CanSave ? "disabled" : "" ) value="Update"/>
                 <a href="@Url.Action("Index")" class="cancel">Cancel</a>
             </div>
         </div>

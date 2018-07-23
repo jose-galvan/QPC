@@ -1,0 +1,16 @@
+﻿@model IEnumerable<QPC.Core.Models.Defect>
+
+<table class="table">
+    <tr>
+        <th>
+            Defects
+        </th>
+    </tr>
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+    </tr>
+}
+</table>

@@ -9,17 +9,16 @@ using System.Linq;
 
 namespace QPC.Core.Models
 {
-    public class QualityControl: QPCBaseClass
+    public class QualityControl: QPCBaseModel
     {
         public QualityControl()
         {
             Instructions = new Collection<Instruction>();
         }
 
-        public QualityControl(User user)
+        public QualityControl(User user):base(user)
         {
             Instructions = new Collection<Instruction>();
-            SetTraceabilityValues(user);
             Status = QualityControlStatus.Open;
         }
 
@@ -56,7 +55,6 @@ namespace QPC.Core.Models
                 throw new Exception("Current status does not allow to add more instructions.");
             
             SetTraceabilityValues(user);
-            instruction.SetTraceabilityValues(user);
             Status = QualityControlStatus.InProgress;
             Instructions.Add(instruction);
         }

@@ -35,6 +35,8 @@ namespace QPC.Core.ViewModels
 
         public string LastModificationUser { get; set; }
         public string LastModificationDate { get; set; }
-        
+
+        public bool CanSave { get; set; }
+
     }
 }

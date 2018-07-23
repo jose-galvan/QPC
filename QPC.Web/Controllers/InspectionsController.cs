@@ -5,6 +5,7 @@ using QPC.Core.ViewModels;
 using QPC.Web.Helpers;
 using System;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 
@@ -20,16 +21,19 @@ namespace QPC.Web.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult> Inspect(int id)
+        public async Task<ActionResult> Inspect(int? id)
         {
-            var control = await _unitOfWork.QualityControlRepository.GetWithDetails(id);
+            if(!id.HasValue)
+                return RedirectToAction("Index", "QualityControl");
+
+            var control = await _unitOfWork.QualityControlRepository.GetWithDetails(id.Value);
 
             if (control == null)
                 return HttpNotFound();
 
             var vm = new InspectionViewModel
             {
-                QualityControlId = id, 
+                QualityControlId = id.Value, 
                 Desicions = await _unitOfWork.DesicionRepository.GetAllAsync()
             };
 
@@ -37,7 +41,7 @@ namespace QPC.Web.Controllers
             {
                 vm.Comments = control.Inspection.Comments;
                 vm.FinalDesicison = control.Inspection.Desicion.Id;
-                vm.CanInspect = control.Instructions.Any(i => i.Status == InstructionStatus.Pending);
+                vm.CanSave = control.Instructions.Any(i => i.Status == InstructionStatus.Pending);
             }
 
             return View(vm);
@@ -59,15 +63,15 @@ namespace QPC.Web.Controllers
             try
             {
                 vm.Desicions = await _unitOfWork.DesicionRepository.GetAllAsync();
-                var user = await _unitOfWork.UserRepository.FindByIdAsync(GetUserId());
-                var inspection = _factory.Create(vm);
+                var user = await GetUserAsync();
+                var inspection = _factory.Create(vm, user);
                 control.SetInspection(inspection, user);
                 await _unitOfWork.SaveChangesAsync();
             }
             catch (Exception ex)
             {
                 await LogExceptionAsync(ex);
-                ModelState.AddModelError("", ex);
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, ex.Message);
             }
             return View(vm);
         }

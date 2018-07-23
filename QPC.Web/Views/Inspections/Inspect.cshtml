@@ -29,7 +29,7 @@
                 @Html.ValidationMessageFor(model => model.Comments, "", new { @class = "text-danger" })
             </div>
             <div class="row">
-                <input type="submit" disabled="@Model.CanInspect" value="Save" />
+                <input type="submit" @( !Model.CanSave ? "disabled" : "" ) value="Save" />
                 <a href="@Url.Action("Index", "QualityControl")" class="cancel">Cancel</a>
             </div>
         }

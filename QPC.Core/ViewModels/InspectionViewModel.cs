@@ -20,6 +20,6 @@ namespace QPC.Core.ViewModels
         public List<Desicion> Desicions { get; set; }
 
 
-        public bool CanInspect { get; set; }
+        public bool CanSave { get; set; }
     }
 }

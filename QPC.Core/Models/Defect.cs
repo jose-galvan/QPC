@@ -2,8 +2,16 @@
 
 namespace QPC.Core.Models
 {
-    public class Defect: QPCBaseClass
+    public class Defect: QPCBaseModel
     {
+        public Defect()
+        {
+
+        }
+
+        public Defect(User user) : base(user)
+        {
+        }
 
         [Required, StringLength(50)]
         public string Name { get; set; }

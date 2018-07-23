@@ -6,8 +6,16 @@ using System.Threading.Tasks;
 
 namespace QPC.Core.Models
 {
-    public class Desicion:QPCBaseClass
+    public class Desicion:QPCBaseModel
     {
+        public Desicion()
+        {
+
+        }
+        public Desicion(User user) : base(user)
+        {
+        }
+
         public string Name { get; set; }
     }
 }

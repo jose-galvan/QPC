@@ -38,7 +38,7 @@ namespace QPC.DataAccess
             modelBuilder.Properties<DateTime>()
                         .Configure(c => c.HasColumnType("datetime2"));
             modelBuilder.Entity<Product>()
-                .HasMany(p => p.Products)
+                .HasMany(p => p.Defects)
                 .WithRequired(d => d.Product)
                 .WillCascadeOnDelete(false);
         }

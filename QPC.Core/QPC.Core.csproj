@@ -52,7 +52,7 @@
     <Compile Include="Models\Instruction.cs" />
     <Compile Include="Models\Log.cs" />
     <Compile Include="Models\Product.cs" />
-    <Compile Include="Models\QPCBaseClass.cs" />
+    <Compile Include="Models\QPCBaseModel.cs" />
     <Compile Include="Models\QualityControl.cs" />
     <Compile Include="Models\Role.cs" />
     <Compile Include="Models\User.cs" />
@@ -69,7 +69,7 @@
     <Compile Include="Repositories\IRoleRepository.cs" />
     <Compile Include="Repositories\IUnitOfWork.cs" />
     <Compile Include="Repositories\IUserRepository.cs" />
-    <Compile Include="ViewModels\AdminViewModel.cs" />
+    <Compile Include="ViewModels\ProductViewModel.cs" />
     <Compile Include="ViewModels\InspectionViewModel.cs" />
     <Compile Include="ViewModels\InstructionViewModel.cs" />
     <Compile Include="ViewModels\ListItemViewModel.cs" />

@@ -4,6 +4,7 @@ using QPC.Core.ViewModels;
 using QPC.Web.Helpers;
 using System;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 
@@ -59,10 +60,19 @@ namespace QPC.Web.Controllers
                 return View(model);
             }
 
-            var user = await GetUserAsync();
-            var control = _factory.Create(model, user);
-            _unitOfWork.QualityControlRepository.Add(control);
-            await _unitOfWork.SaveChangesAsync();
+            try
+            {
+                var user = await GetUserAsync();
+                var control = _factory.Create(model, user);
+                _unitOfWork.QualityControlRepository.Add(control);
+                await _unitOfWork.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                await LogExceptionAsync(ex);
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, ex.Message);
+            }
+
             return RedirectToAction("Index", "QualityControl");
         }
 
@@ -94,7 +104,7 @@ namespace QPC.Web.Controllers
             catch(Exception ex)
             {
                 await LogExceptionAsync(ex);
-                return View(model);
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, ex.Message);
             }
             return RedirectToAction("Index", "QualityControl");
         }

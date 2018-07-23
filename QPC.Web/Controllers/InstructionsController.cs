@@ -5,6 +5,7 @@ using QPC.Core.ViewModels;
 using QPC.Web.Helpers;
 using System;
 using System.Linq.Expressions;
+using System.Net;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 
@@ -22,8 +23,12 @@ namespace QPC.Web.Controllers
 
         //receives id of control as parameter
         [HttpGet]
-        public async Task<ActionResult> AddInstruction(int id)
+        public async Task<ActionResult> AddInstruction(int? id)
         {
+            if(!id.HasValue)
+                return RedirectToAction("Index", "QualityControl");
+
+
             Expression<Func<Instruction, bool>> expr = (i => i.QualityControlId == id);
             var instructions = await _unitOfWork.InstructionRepository.GetAsync(expr);
 
@@ -32,7 +37,7 @@ namespace QPC.Web.Controllers
                 return HttpNotFound();
             var vm = new InstructionViewModel
             {
-                QualityControlId = id,
+                QualityControlId = id.Value,
                 Instructions = instructions,
                 CanSave = control.Status ==
                         QualityControlStatus.Closed ? false : true
@@ -52,10 +57,10 @@ namespace QPC.Web.Controllers
             if (control == null)
                 return HttpNotFound();
             
-            var user = await _unitOfWork.UserRepository.FindByIdAsync(GetUserId());
             try
             {
-                var instruction = _factory.Create(vm);
+                var user = await GetUserAsync();
+                var instruction = _factory.Create(vm, user);
                 control.AddInstruction(instruction, user);
                 await _unitOfWork.SaveChangesAsync();
                 vm.Name = vm.Description = 
@@ -64,7 +69,7 @@ namespace QPC.Web.Controllers
             catch (Exception ex)
             {
                 await LogExceptionAsync(ex);
-                ModelState.AddModelError("Exception", ex);
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, ex.Message);
             }
 
             vm.Instructions = control.Instructions;

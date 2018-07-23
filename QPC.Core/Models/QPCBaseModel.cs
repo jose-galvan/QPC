@@ -3,8 +3,18 @@ using System.ComponentModel.DataAnnotations;
 
 namespace QPC.Core.Models
 {
-    public abstract class QPCBaseClass
+    public abstract class QPCBaseModel
     {
+        public QPCBaseModel()
+        {
+
+        }
+
+        public QPCBaseModel(User user)
+        {
+            SetTraceabilityValues(user);
+        }
+
         public int Id { get; set; }
 
         public DateTime CreateDate { get; set; }

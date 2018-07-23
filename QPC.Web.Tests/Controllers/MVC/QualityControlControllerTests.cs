@@ -36,8 +36,8 @@ namespace QPC.Web.Tests.Controllers.Mvc
             _mockUnitOfWork.SetupGet(uw => uw.QualityControlRepository).Returns(_mockRepository.Object);
             _mockUnitOfWork.SetupGet(uw => uw.UserRepository).Returns(_mockUserRepository.Object);
             _controller = new QualityControlController(_mockUnitOfWork.Object, _mockFactory.Object);
+            _controller.GetUserId = () => ControllerExtensions.GetGuid("1571");
 
-            _controller.GetUserId = () => Extensions.ControllerExtensions.GetGuid("1571");
         }
 
         [TestMethod]
@@ -100,6 +100,23 @@ namespace QPC.Web.Tests.Controllers.Mvc
         }
 
         [TestMethod]
+        public async Task Update_NonExistingQualityControl()
+        {
+            // Arrange
+            QualityControl control = null;
+
+            _mockRepository.Setup(r => r.Update(It.IsAny<QualityControl>()));
+            _mockRepository.Setup(r => r.FindByIdAsync(It.IsAny<int>())).Returns(Task.FromResult(control));
+            var dto = new QualityControlDetailViewModel { Id = 0, Name = "No-conforming dimensions", Description = "Dimension DI110 is out of upper tolerance." };
+            
+            // Act
+            var result = await _controller.UpdateControl(dto) as HttpNotFoundResult;
+
+            // Assert            
+            Assert.AreEqual(404, result.StatusCode);
+        }
+
+        [TestMethod]
         public async Task Detail_SearchExistingControl()
         {
             //Arrange
@@ -137,23 +154,6 @@ namespace QPC.Web.Tests.Controllers.Mvc
             var result = await _controller.UpdateControl(1);
             //Assert
             result.Should().BeOfType<HttpNotFoundResult>();
-        }
-
-        [TestMethod]
-        public async Task Update_NonExistingQualityControl()
-        {
-            // Arrange
-            QualityControl control = null;
-
-            _mockRepository.Setup(r => r.Update(It.IsAny<QualityControl>()));
-            _mockRepository.Setup(r => r.FindByIdAsync(It.IsAny<int>())).Returns(Task.FromResult(control));
-            var dto = new QualityControlDetailViewModel { Id = 0, Name = "No-conforming dimensions", Description = "Dimension DI110 is out of upper tolerance." };
-            
-            // Act
-            var result = await _controller.UpdateControl(dto) as HttpNotFoundResult;
-
-            // Assert            
-            Assert.AreEqual(404, result.StatusCode);
         }
 
         [TestMethod]
