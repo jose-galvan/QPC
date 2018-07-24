@@ -3,26 +3,29 @@
 @{
     ViewBag.Title = "Index";
 }
+
 <section class="hero">
     <div class="content">
-        <h1>Quality Controls</h1>
-        <hr />
-        <div class="row">
-            @using (Html.BeginForm("Index", "QualityControl", FormMethod.Post, new {role = "form" }))
-            {
-                    @Html.TextBoxFor(m => m.SearchCriteria, new { @id = "search", @type = "search", @placeholer ="search by name or description" })
+        <div class="title">
+            <h1>@ViewBag.Title</h1>
+            <hr />
+        </div>
+        <div class="container">
+            <div class="row">
+                @using (Html.BeginForm("Index", "QualityControl", FormMethod.Post, new { role = "form" }))
+                {
+                    @Html.TextBoxFor(m => m.SearchCriteria, new { @id = "search", @type = "search", @placeholer = "search by name or description" })
                     <button type="submit" class="search icon" />
-            }
-        </div>
-        <div class="row">
-            <div class="request-control-icon">
-                <a href="@Url.Action("RequestControl")">
-                    <div class='plus icon'></div>
-                </a>
+                }
             </div>
-        </div>
-        <div class="row">
-            <table class="container">
+            <div class="row">
+                <div class="request-control-icon">
+                    <a href="@Url.Action("RequestControl")">
+                        <div class='plus icon'></div>
+                    </a>
+                </div>
+            </div>
+            <table>
                 <tr>
                     <th>Control</th>
                     <th>Description</th>
@@ -32,7 +35,7 @@
                     <th>Desicion</th>
                     <th></th>
                 </tr>
-                @foreach(var item in Model.Controls)
+                @foreach (var item in Model.Controls)
                 {
                     <tr>
                         <td>
@@ -60,7 +63,8 @@
                         </td>
                     </tr>
                 }
-            </table>            
+            </table>        
         </div>
     </div>
 </section>
+

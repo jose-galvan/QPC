@@ -8,10 +8,10 @@ namespace QPC.Core.ViewModels
     public class QualityControlViewModel
     {
 
-        [Required]
+        [Required][StringLength(10)]
         public string Serial { get; set; }
 
-        [Required]
+        [Required][Display(Name ="Control")]
         public string Name { get; set; }
 
         [Required]

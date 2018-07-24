@@ -36,6 +36,16 @@ th, td {
     text-align: left;
 }
 
+.text-danger:not(:empty){
+    display: block;
+    color: #a94442;
+    background-color: #f2dede;
+    border-color: #ebccd1;
+    margin-bottom: 10px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    width: 60%;
+}
 .logo {
     padding: 15px;
     margin-left: 15px;
@@ -88,13 +98,13 @@ header a:hover {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 
 }
-.sidebar ul{
+.sidebar .main-menu{
     float: none;
     margin-left: -2em;
     padding-top: 3em;
 }
 
-.sidebar ul li{
+.sidebar .main-menu li{
     display: block;
     padding-top: 1.5em;
 }
@@ -128,7 +138,6 @@ hr{
 }
 .row{
     padding: 0.5em;
-    display:block;
 }
 
 .row label{
@@ -148,7 +157,7 @@ hr{
     border-bottom: 1px solid #2Ea0a0;
     margin-top: 1.5em;
     padding: .5em;
-    width:80%;
+    width:70%;
     margin-left: .5em;
 
 }
@@ -316,7 +325,13 @@ option{
   border-right: 4px solid transparent;
   border-left: 4px solid transparent;
 }
-    
+   
+
+.admin-menu{
+    padding-top: 0;
+    float:none;
+}
+ 
 
 footer{
     grid-area: footer;

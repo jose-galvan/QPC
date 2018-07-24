@@ -10,22 +10,16 @@
 
 }();
 
-var Helper = function () {
+$(document).ready(function () {
+    console.log('init....');
 
-    var logOff = function () {
-        $.post('/Account/LogOff', null, function () {
-            console.log('success');
-        })
-        .done(function (data) {
-            window.location('index');
-        })
-        .fail(function (status) {
-            console.log('error' + status);
-        });
-    };
+    $('#parent').click(function () {
+        var isVisible = $('.admin-menu').is(":visible");
 
-    return {
-        LoggOff: logOff
-    };
-    
-}();
+        var adminmenu = $('.admin-menu');
+        if (isVisible)
+            adminmenu.fadeOut();
+        else
+            adminmenu.fadeIn();
+    });
+});

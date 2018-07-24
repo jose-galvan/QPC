@@ -14,17 +14,21 @@
 
     <div class="sidebar">
         <nav>
-            <ul>
+            <ul class="main-menu">
                 <li><a href="@Url.Action("RequestControl", "QualityControl")"><i class="far fa-file-alt"></i> Request Control</a></li>
                 <li><a href="@Url.Action("Index", "QualityControl")"><i class="fas fa-table"></i> Quality Controls</a></li>
                 <li><a href="@Url.Action("Index", "DashBoard")"><i class="fas fa-chart-line"></i> Dashboard</a></li>
-                <li>
-                    <a href="#"><i class="fas fa-toolbox"></i>  Admin&nbsp;<b class="caret"></b> </a>
+                <li >
+                    <a id="parent"><i class="fas fa-toolbox"></i>  Admin&nbsp;<b class="caret"></b> </a>
+                    <div>
+                        <ul hidden class="admin-menu submenu">
+                            <li><a href="@Url.Action("Product", "Products")">Products</a></li>
+                            <li>
+                                <a href="@Url.Action("Defect", "Defects")">Defects</a>
+                            </li>
+                        </ul>
+                    </div>
                 </li>
-                <li><a href="@Url.Action("Product", "Products")"><i class="fas fa-chart-line"></i> Products</a></li>
-                <li><a href="@Url.Action("Defect", "Defects")"><i class="fas fa-chart-line"></i> Defects</a></li>
-
-
             </ul>
         </nav>
     </div>
@@ -50,6 +54,5 @@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/app")
     @RenderSection("scripts", required: false)
-
 </body>
 </html>

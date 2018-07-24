@@ -52,17 +52,19 @@ namespace QPC.Web.Controllers
         
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> RequestControl(QualityControlViewModel model)
+        public async Task<ActionResult> RequestControl(QualityControlViewModel viewModel)
         {
             if(!ModelState.IsValid)
             {
-                return View(model);
+                viewModel.Products = await _unitOfWork.ProductRepository.GetAllAsync();
+                viewModel.Defects = await _unitOfWork.DefectRepository.GetAllAsync();
+                return View(viewModel);
             }
 
             try
             {
                 var user = await GetUserAsync();
-                var control = _factory.Create(model, user);
+                var control = _factory.Create(viewModel, user);
                 _unitOfWork.QualityControlRepository.Add(control);
                 await _unitOfWork.SaveChangesAsync();
             }

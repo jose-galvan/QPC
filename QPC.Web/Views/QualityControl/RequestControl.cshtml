@@ -17,12 +17,12 @@
             <div class="row">
                 @Html.LabelFor(m => m.Product)
                 @Html.DropDownListFor(m => m.Product, new SelectList(Model.Products, "Id", "Name"), "")
-                @Html.ValidationMessageFor(m => m.Product)
+                @Html.ValidationMessageFor(m => m.Product, "", new { @class = "text-danger" })
             </div>
             <div class="row">
                 @Html.LabelFor(m => m.Defect)
                 @Html.DropDownListFor(m => m.Defect, new SelectList(Model.Defects, "Id", "Name"), "")
-                @Html.ValidationMessageFor(m => m.Defect)
+                @Html.ValidationMessageFor(m => m.Defect, "", new { @class = "text-danger" })
             </div>
             <div class="row">
                 @Html.LabelFor(model => model.Serial)
