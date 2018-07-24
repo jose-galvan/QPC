@@ -114,6 +114,7 @@
     <Compile Include="Controllers\MVC\ProductControllerTests.cs" />
     <Compile Include="Controllers\MVC\InstructionsControllerTests.cs" />
     <Compile Include="Controllers\MVC\InspectionsControllerTests.cs" />
+    <Compile Include="Controllers\MVC\DefectsControllerTests.cs" />
     <Compile Include="Core\Models\QualityControlTests.cs" />
     <Compile Include="Extensions\ControllerExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

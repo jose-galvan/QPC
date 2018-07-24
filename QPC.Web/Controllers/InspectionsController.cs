@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNet.Identity;
-using QPC.Core.Models;
+﻿using QPC.Core.Models;
 using QPC.Core.Repositories;
 using QPC.Core.ViewModels;
 using QPC.Web.Helpers;

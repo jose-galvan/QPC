@@ -69,6 +69,8 @@
     <Compile Include="Repositories\IRoleRepository.cs" />
     <Compile Include="Repositories\IUnitOfWork.cs" />
     <Compile Include="Repositories\IUserRepository.cs" />
+    <Compile Include="ViewModels\DefectItemViewModel.cs" />
+    <Compile Include="ViewModels\DefectViewModel.cs" />
     <Compile Include="ViewModels\ProductViewModel.cs" />
     <Compile Include="ViewModels\InspectionViewModel.cs" />
     <Compile Include="ViewModels\InstructionViewModel.cs" />

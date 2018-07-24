@@ -5,8 +5,6 @@ using System;
 using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
-using Microsoft.AspNet.Identity;
-using QPC.Core.Repositories;
 
 namespace QPC.Web.Helpers
 {
@@ -90,14 +88,34 @@ namespace QPC.Web.Helpers
                 Comments = dto.Comments
             };
         }
-
-
+        
         public Product Create(ProductViewModel viewModel, User user)
         {
             return new Product(user)
             {
                 Name = viewModel.Name,
                 Description = viewModel.Description
+            };
+        }
+
+        public Defect Create(DefectViewModel viewModel, User user)
+        {
+            return new Defect(user)
+            {
+                Name = viewModel.Name,
+                Description = viewModel.Description,
+                Product = viewModel.Products.Single(p => p.Id == viewModel.Product)
+            };
+        }
+
+        public DefectItemViewModel Create(Defect defect)
+        {
+            return new DefectItemViewModel
+            {
+                Id = defect.Id,
+                Name = defect.Name,
+                Description = defect.Description,
+                Product = defect.Product.Name
             };
         }
 

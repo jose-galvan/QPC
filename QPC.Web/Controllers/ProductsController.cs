@@ -32,7 +32,7 @@ namespace QPC.Web.Controllers
             
             return View(vm);
         }
-        [HttpPost]
+        [HttpPost][ValidateAntiForgeryToken]
         public async Task<ActionResult> SaveProduct(ProductViewModel viewModel)
         {
             viewModel.Products = await _unitOfWork.ProductRepository.GetAllAsync();

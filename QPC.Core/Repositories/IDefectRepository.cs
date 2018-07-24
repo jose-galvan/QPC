@@ -7,5 +7,7 @@ namespace QPC.Core.Repositories
     public interface IDefectRepository: IRepository<Defect>
     {
         Task<List<Defect>> GetByProductAsync(int id);
+        Task<List<Defect>> GetWithProductAsync();
+
     }
 }

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
+using System;
 
 namespace QPC.DataAccess.Repositories
 {
@@ -16,6 +17,11 @@ namespace QPC.DataAccess.Repositories
         public async Task<List<Defect>> GetByProductAsync(int id)
         {
             return await Set.Where(d => d.ProductId == id).ToListAsync();
+        }
+
+        public async Task<List<Defect>> GetWithProductAsync()
+        {
+            return await Set.Include(d => d.Product).ToListAsync();
         }
     }
 }

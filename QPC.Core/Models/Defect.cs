@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace QPC.Core.Models
 {
@@ -22,5 +23,12 @@ namespace QPC.Core.Models
         [Required]
         public int ProductId { get; set; }
         public Product Product { get; set; }
+
+        public void Update(User user, string name, string description)
+        {
+            SetTraceabilityValues(user);
+            Name = name;
+            Description = description;
+        }
     }
 }

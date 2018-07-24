@@ -1,5 +1,4 @@
-﻿using QPC.Core.Models;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace QPC.Core.ViewModels
 {
