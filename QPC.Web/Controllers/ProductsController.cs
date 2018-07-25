@@ -62,7 +62,7 @@ namespace QPC.Web.Controllers
                             || p.Description.ToLower().Contains(viewModel.SearchCriteria.ToLower()))
                         .ToList();
 
-            return View(viewModel);
+            return View("Product", viewModel);
         }
         [HttpGet]
         public async Task<ActionResult> UpdateProduct(int id)
@@ -72,7 +72,6 @@ namespace QPC.Web.Controllers
                 return HttpNotFound();
 
             Expression<Func<Defect, bool>> expr = (d => d.ProductId == id);
-
             var vm = new ProductViewModel
             {
                 Id = id,

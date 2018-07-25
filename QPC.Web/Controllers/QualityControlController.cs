@@ -99,7 +99,7 @@ namespace QPC.Web.Controllers
             var user = await _unitOfWork.UserRepository.FindByIdAsync(GetUserId());
             try
             {
-                control.Update(model, user);
+                control.Update(user, model.Name, model.Description);
                 await _unitOfWork.SaveChangesAsync();
             }
             catch(Exception ex)

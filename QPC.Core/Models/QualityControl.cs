@@ -58,15 +58,16 @@ namespace QPC.Core.Models
             Status = QualityControlStatus.InProgress;
             Instructions.Add(instruction);
         }
-
-        public void Update(QualityControlDetailViewModel vm, User user)
+        
+        public void Update(User user, string name, string description)
         {
             if (Status == QualityControlStatus.Closed)
                 throw new Exception("Current status does not allow to add more instructions.");
-            Name = vm.Name;
-            Description = vm.Description;
+            Name = name;
+            Description = description;
             SetTraceabilityValues(user);
         }
+        
 
         public void SetInspection(Inspection inspection, User user)
         {

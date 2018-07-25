@@ -49,6 +49,19 @@ namespace QPC.Web.Helpers
             };
         }
 
+        public QualityControl Create(QualityControlDto dto, User user)
+        {
+            return new QualityControl(user)
+            {
+                ProductId = dto.Product,
+                DefectId = dto.Defect,
+                Name = dto.Name,
+                Serial = dto.Serial,
+                Description = dto.Description,
+                Status = QualityControlStatus.Open,
+            };
+        }
+
         public Instruction Create(InstructionViewModel model, User user)
         {
             return new Instruction(user)
