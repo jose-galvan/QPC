@@ -16,12 +16,5 @@ namespace QPC.Web.Tests.Extensions
             controller.User = Mock.Of<IPrincipal>(ip => ip.Identity == mockIdentity);
         }
 
-
-        public static Guid GetGuid(string value)
-        {
-            var result = default(Guid);
-            Guid.TryParse(value, out result);
-            return result;
-        }
     }
 }

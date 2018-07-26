@@ -22,24 +22,24 @@ namespace QPC.Web.Controllers.Api
         }
 
         [HttpGet][Route("")]
-        public async Task<IEnumerable<ListItemViewModel>> GetAll()
+        public async Task<List<ListItemViewModel>> GetAll()
         {
             var controls = await _unitOfWork
                     .QualityControlRepository.GetAllWithDetailsAsync();
 
-            return controls.Select(c => _factory.CreateItem(c));
+            return controls.Select(c => _factory.CreateItem(c)).ToList();
         }
 
         [HttpGet][Route("{query:alpha}")]
-        public async Task<IEnumerable<ListItemViewModel>> Get(string query)
+        public async Task<List<ListItemViewModel>> Get(string query)
         {
             var controls = await _unitOfWork
                     .QualityControlRepository.GetAllWithDetailsAsync();
-            controls = controls.Where(c => c.Name.Contains(query)
-                                    || c.Description.Contains(query))
+            controls = controls.Where(c => c.Name.ToLower().Contains(query.ToLower())
+                                    || c.Description.ToLower().Contains(query.ToLower()))
                                 .ToList();
 
-            return controls.Select(c => _factory.CreateItem(c));
+            return controls.Select(c => _factory.CreateItem(c)).ToList();
         }
 
         [HttpGet][Route("~/api/control/{id:int}")]
@@ -47,13 +47,13 @@ namespace QPC.Web.Controllers.Api
         {
             return await _unitOfWork
                     .QualityControlRepository.FindByIdAsync(id);
+
         }
 
         [HttpPost][Route("")]
         public async Task<IHttpActionResult> Create([FromBody] QualityControlDto dto)
         {
             var user = await GetUserAsync();
-
             try
             {
                 var control = _factory.Create(dto, user);

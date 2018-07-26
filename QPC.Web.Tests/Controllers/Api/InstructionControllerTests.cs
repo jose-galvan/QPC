@@ -5,7 +5,6 @@ using QPC.Core.DTOs;
 using QPC.Core.Models;
 using QPC.Core.Repositories;
 using QPC.Web.Controllers.Api;
-using QPC.Web.Helpers;
 using QPC.Web.Tests.Extensions;
 using System.Threading.Tasks;
 using System.Web.Http.Results;
@@ -13,51 +12,71 @@ using System.Web.Http.Results;
 namespace QPC.Web.Tests.Controllers.Api
 {
     [TestClass]
-    public class InstructionControllerTests
+    public class InstructionControllerTests : ControllerBaseTests
     {
-        private Mock<IUnitOfWork> _mockUnitOfWork;
         private Mock<IQualityControlRepository> _mockRepository;
         private Mock<IInstructionRepository> _mockInstructionRepository;
         private InstructionController _controller;
-        private Mock<IUserRepository> _mockUserRepository;
-        private Mock<QualityControlFactory> _mockFactory;
 
         private string _userId;
+        private InstructionDto instructionDto;
+        private Instruction instruction;
+        private QualityControl control;
 
         [TestInitialize]
         public void TestInitialize()
         {
-            //Fields Initialization;
-            _mockUnitOfWork = new Mock<IUnitOfWork>();
+            //Fields Initialization
             _mockRepository = new Mock<IQualityControlRepository>();
-            _mockUserRepository = new Mock<IUserRepository>();
             _mockInstructionRepository = new Mock<IInstructionRepository>();
-            _mockFactory = new Mock<QualityControlFactory>();
+
+
             _controller = new InstructionController(_mockUnitOfWork.Object, _mockFactory.Object);
 
             //Mocks SetUp
             _mockUnitOfWork.SetupGet(uw => uw.QualityControlRepository).Returns(_mockRepository.Object);
-            _mockUnitOfWork.SetupGet(uw => uw.UserRepository).Returns(_mockUserRepository.Object);
             _mockUnitOfWork.SetupGet(uw => uw.InstructionRepository).Returns(_mockInstructionRepository.Object);
             //Mock User Identity
             _userId = "1";
             _controller.MockCurrentUser(_userId, "user@mail.com");
+            _mockUnitOfWork.Setup(uw => uw.InstructionRepository.FindByIdAsync(It.IsAny<int>())).Returns(Task.FromResult(instruction));
+            _mockUnitOfWork.Setup(uw => uw.QualityControlRepository.FindByIdAsync(It.IsAny<int>())).Returns(Task.FromResult(control));
+            _mockUnitOfWork.Setup(uw => uw.InstructionRepository.GetWithQualityControl(It.IsAny<int>())).Returns(Task.FromResult(instruction));
+
+        }
+
+        protected override void InitializeMockData()
+        {
+            instructionDto = new InstructionDto
+                {
+                    Name = "Dimensional Control",
+                    Description = "Control Dimensions DI010 and DI0320",
+                    QualityControlId = 1
+                };
+
+            instruction = new Instruction
+                {
+                    Id = 1,
+                    Name = "CMM Control",
+                    Description = "remeasure DI010 and DI0320",
+                    QualityControlId = 1,
+                    Status = InstructionStatus.Performed
+                };
+            control = new QualityControl
+                {
+                    Id = 1,
+                    Name = "High tolerances",
+                    Defect = new Defect { Name = "Dimensional" },
+                    Status = QualityControlStatus.Open
+                };
+            instruction.QualityControl = control;
         }
 
         [TestMethod]
         public async Task AddInstruction_ValidInstruction_ShouldReturnOk()
         {
-            // Arrange
-            var instruction = new InstructionDto { Name = "Dimensional Control", Description = "Control Dimensions DI010 and DI0320", QualityControlId = 1 };
-            var quaityControl = new QualityControl { Name = "High tolerances", Defect = new Defect { Name = "Dimensional" }, Status = QualityControlStatus.Open };
-            var user = new User { UserId = ControllerExtensions.GetGuid("1571"), UserName = "user@mail.com" };
-
-            _mockRepository.Setup(r => r.FindByIdAsync(It.IsAny<int>())).Returns(Task.FromResult(quaityControl));
-            _mockUserRepository.Setup(r => r.FindByIdAsync(It.IsAny<int>())).Returns(Task.FromResult(user));
-
             // Act
-            var result = await _controller.AddInstructionAsync(instruction);
-
+            var result = await _controller.AddInstructionAsync(instructionDto);
             // Assert
             result.Should().BeOfType<OkResult>();
         }
@@ -66,16 +85,10 @@ namespace QPC.Web.Tests.Controllers.Api
         public async Task AddInstruction_NonExistingControl_ShouldReturnNotFound()
         {
             // Arrange
-            var instruction = new InstructionDto { Name = "Dimensional Control", Description = "Control Dimensions DI010 and DI0320", QualityControlId = 1 };
-            QualityControl quaityControl = null;
-            var user = new User { UserId = ControllerExtensions.GetGuid("1571"), UserName = "user@mail.com" };
-
-            _mockRepository.Setup(r => r.FindByIdAsync(It.IsAny<int>())).Returns(Task.FromResult(quaityControl));
-            _mockUserRepository.Setup(r => r.FindByIdAsync(It.IsAny<int>())).Returns(Task.FromResult(user));
-
+            QualityControl controlNull = null;
+            _mockUnitOfWork.Setup(uw => uw.QualityControlRepository.FindByIdAsync(It.IsAny<int>())).Returns(Task.FromResult(controlNull));
             // Act
-            var result = await _controller.AddInstructionAsync(instruction);
-
+            var result = await _controller.AddInstructionAsync(instructionDto);
             // Assert
             result.Should().BeOfType<NotFoundResult>();
         }
@@ -84,16 +97,9 @@ namespace QPC.Web.Tests.Controllers.Api
         public async Task AddInstruction_ClosedControl_ShouldReturnBadRequest()
         {
             // Arrange
-            var instruction = new InstructionDto { Name = "Dimensional Control", Description = "Control Dimensions DI010 and DI0320", QualityControlId = 1 };
-            var quaityControl = new QualityControl { Name = "High tolerances", Defect = new Defect { Name = "Dimensional" }, Status = QualityControlStatus.Closed };
-            var user = new User { UserId = ControllerExtensions.GetGuid("1571"), UserName = "user@mail.com" };
-
-            _mockRepository.Setup(r => r.FindByIdAsync(It.IsAny<int>())).Returns(Task.FromResult(quaityControl));
-            _mockUserRepository.Setup(r => r.FindByIdAsync(It.IsAny<int>())).Returns(Task.FromResult(user));
-
+            control.Status = QualityControlStatus.Closed;
             // Act
-            var result = await _controller.AddInstructionAsync(instruction);
-
+            var result = await _controller.AddInstructionAsync(instructionDto);
             // Assert
             result.Should().BeOfType<BadRequestErrorMessageResult>();
         }
@@ -102,18 +108,10 @@ namespace QPC.Web.Tests.Controllers.Api
         public async Task UpdateInstruction_ValidInstruction_ShouldReturnOk()
         {
             // Arrange
-            var instruction = new Instruction {Id =1, Name = "CMM Control", Description = "remeasure DI010 and DI0320", QualityControlId = 1};
-            var quaityControl = new QualityControl { Name = "High tolerances", Defect = new Defect { Name = "Dimensional" }, Status = QualityControlStatus.Open };
-            instruction.QualityControl = quaityControl;
-
-            var user = new User { UserId = ControllerExtensions.GetGuid("1571"), UserName = "user@mail.com" };
-            
-            _mockInstructionRepository.Setup(r => r.GetWithQualityControl(It.IsAny<int>())).Returns(Task.FromResult(instruction));
-            _mockUserRepository.Setup(r => r.FindByIdAsync(It.IsAny<int>())).Returns(Task.FromResult(user));
-
+            control.Status = QualityControlStatus.Open;
+            instruction.Status = InstructionStatus.Pending;
             // Act
             var result = await _controller.UpdateInstructionAsync(1);
-
             // Assert
             result.Should().BeOfType<OkResult>();
         }
@@ -122,18 +120,10 @@ namespace QPC.Web.Tests.Controllers.Api
         public async Task UpdateInstruction_PerformedInstruction_ShouldReturnBadRquest()
         {
             // Arrange
-            var instruction = new Instruction { Id = 1, Name = "CMM Control", Description = "remeasure DI010 and DI0320", QualityControlId = 1, Status = InstructionStatus.Performed };
-            var quaityControl = new QualityControl { Name = "High tolerances", Defect = new Defect { Name = "Dimensional" }, Status = QualityControlStatus.Open };
-            instruction.QualityControl = quaityControl;
-
-            var user = new User { UserId = ControllerExtensions.GetGuid("1571"), UserName = "user@mail.com" };
-
-            _mockInstructionRepository.Setup(r => r.GetWithQualityControl(It.IsAny<int>())).Returns(Task.FromResult(instruction));
-            _mockUserRepository.Setup(r => r.FindByIdAsync(It.IsAny<int>())).Returns(Task.FromResult(user));
-
+            instruction.Status = InstructionStatus.Performed;
+            instruction.QualityControl = control;
             // Act
             var result = await _controller.UpdateInstructionAsync(1);
-
             // Assert
             result.Should().BeOfType<BadRequestErrorMessageResult>();
         }
@@ -142,18 +132,11 @@ namespace QPC.Web.Tests.Controllers.Api
         public async Task UpdateInstruction_InstructionInClosedControl_ShouldReturnBadRquest()
         {
             // Arrange
-            var instruction = new Instruction { Id = 1, Name = "CMM Control", Description = "remeasure DI010 and DI0320", QualityControlId = 1, Status = InstructionStatus.Pending};
-            var quaityControl = new QualityControl { Name = "High tolerances", Defect = new Defect { Name = "Dimensional" }, Status = QualityControlStatus.Closed };
-            instruction.QualityControl = quaityControl;
-
-            var user = new User { UserId = ControllerExtensions.GetGuid("1571"), UserName = "user@mail.com" };
-
-            _mockInstructionRepository.Setup(r => r.GetWithQualityControl(It.IsAny<int>())).Returns(Task.FromResult(instruction));
-            _mockUserRepository.Setup(r => r.FindByIdAsync(It.IsAny<int>())).Returns(Task.FromResult(user));
-
+            instruction.Status = InstructionStatus.Pending;
+            control.Status = QualityControlStatus.Closed;
+            instruction.QualityControl = control;
             // Act
             var result = await _controller.UpdateInstructionAsync(1);
-
             // Assert
             result.Should().BeOfType<BadRequestErrorMessageResult>();
         }
@@ -162,13 +145,10 @@ namespace QPC.Web.Tests.Controllers.Api
         public async Task UpdateInstruction_NonExistingInstruction_ShouldReturnNotFound()
         {
             // Arrange
-            Instruction instruction = null;
-            
-            _mockInstructionRepository.Setup(r => r.FindByIdAsync(It.IsAny<int>())).Returns(Task.FromResult(instruction));
-
+            Instruction instructionNull = null;
+            _mockUnitOfWork.Setup(uw => uw.InstructionRepository.GetWithQualityControl(It.IsAny<int>())).Returns(Task.FromResult(instructionNull));
             // Act
             var result = await _controller.UpdateInstructionAsync(1);
-
             // Assert
             result.Should().BeOfType<NotFoundResult>();
         }
@@ -177,15 +157,8 @@ namespace QPC.Web.Tests.Controllers.Api
         public async Task CancelInstruction_ValidInstruction_ShouldReturnOk()
         {
             // Arrange
-            var instruction = new Instruction { Id = 1, Name = "CMM Control", Description = "remeasure DI010 and DI0320", QualityControlId = 1, Status = InstructionStatus.Pending };
-            var quaityControl = new QualityControl { Name = "High tolerances", Defect = new Defect { Name = "Dimensional" }, Status = QualityControlStatus.Open };
-            instruction.QualityControl = quaityControl;
-
-            var user = new User { UserId = ControllerExtensions.GetGuid("1571"), UserName = "user@mail.com" };
-
-            _mockInstructionRepository.Setup(r => r.FindByIdAsync(It.IsAny<int>())).Returns(Task.FromResult(instruction));
-            _mockUserRepository.Setup(r => r.FindByIdAsync(It.IsAny<int>())).Returns(Task.FromResult(user));
-
+            instruction.Status = InstructionStatus.Pending;
+            control.Status = QualityControlStatus.Open;
             // Act
             var result = await _controller.CancelInstructionAsync(1);
 
@@ -197,18 +170,9 @@ namespace QPC.Web.Tests.Controllers.Api
         public async Task CancelInstruction_PerformedInstruction_ShouldReturnBadRequest()
         {
             // Arrange
-            var instruction = new Instruction { Id = 1, Name = "CMM Control", Description = "remeasure DI010 and DI0320", QualityControlId = 1, Status = InstructionStatus.Performed };
-            var quaityControl = new QualityControl { Name = "High tolerances", Defect = new Defect { Name = "Dimensional" }, Status = QualityControlStatus.Open };
-            instruction.QualityControl = quaityControl;
-
-            var user = new User { UserId = ControllerExtensions.GetGuid("1571"), UserName = "user@mail.com" };
-
-            _mockInstructionRepository.Setup(r => r.FindByIdAsync(It.IsAny<int>())).Returns(Task.FromResult(instruction));
-            _mockUserRepository.Setup(r => r.FindByIdAsync(It.IsAny<int>())).Returns(Task.FromResult(user));
-
+            instruction.Status = InstructionStatus.Performed;
             // Act
             var result = await _controller.CancelInstructionAsync(1);
-
             // Assert
             result.Should().BeOfType<BadRequestErrorMessageResult>();
         }
@@ -217,15 +181,8 @@ namespace QPC.Web.Tests.Controllers.Api
         public async Task CancelInstruction_InstructionInClosedControl_ShouldReturnBadRequest()
         {
             // Arrange
-            var instruction = new Instruction { Id = 1, Name = "CMM Control", Description = "remeasure DI010 and DI0320", QualityControlId = 1, Status = InstructionStatus.Pending };
-            var quaityControl = new QualityControl { Name = "High tolerances", Defect = new Defect { Name = "Dimensional" }, Status = QualityControlStatus.Closed };
-            instruction.QualityControl = quaityControl;
-
-            var user = new User { UserId = ControllerExtensions.GetGuid("1571"), UserName = "user@mail.com" };
-
-            _mockInstructionRepository.Setup(r => r.FindByIdAsync(It.IsAny<int>())).Returns(Task.FromResult(instruction));
-            _mockUserRepository.Setup(r => r.FindByIdAsync(It.IsAny<int>())).Returns(Task.FromResult(user));
-
+            instruction.Status = InstructionStatus.Pending;
+            control.Status = QualityControlStatus.Closed;
             // Act
             var result = await _controller.CancelInstructionAsync(1);
 
@@ -237,21 +194,13 @@ namespace QPC.Web.Tests.Controllers.Api
         public async Task CancelInstruction_NonExistingInstruction_ShouldReturnNotFound()
         {
             // Arrange
-            Instruction instruction = null;
-
-            var user = new User { UserId = ControllerExtensions.GetGuid("1571"), UserName = "user@mail.com" };
-
-            _mockInstructionRepository.Setup(r => r.FindByIdAsync(It.IsAny<int>())).Returns(Task.FromResult(instruction));
-            _mockUserRepository.Setup(r => r.FindByIdAsync(It.IsAny<int>())).Returns(Task.FromResult(user));
-
+            Instruction instructionNull = null;
+            _mockUnitOfWork.Setup(uw => uw.InstructionRepository.FindByIdAsync(It.IsAny<int>())).Returns(Task.FromResult(instructionNull));
             // Act
             var result = await _controller.CancelInstructionAsync(1);
-
             // Assert
             result.Should().BeOfType<NotFoundResult>();
         }
-
-
-
+        
     }
 }

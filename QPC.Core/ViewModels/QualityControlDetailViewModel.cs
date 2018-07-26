@@ -4,10 +4,6 @@ namespace QPC.Core.ViewModels
 {
     public class QualityControlDetailViewModel
     {
-        public QualityControlDetailViewModel()
-        {
-            
-        }
         public int Id { get; set; }
 
         [Required, StringLength(50)]

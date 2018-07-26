@@ -1,99 +1,69 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using QPC.Core.Repositories;
-using QPC.Web.Helpers;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
-using QPC.Web.Controllers;
 using QPC.Core.Models;
-using System.Collections.Generic;
+using QPC.Core.Repositories;
 using QPC.Core.ViewModels;
+using QPC.Web.Controllers;
+using QPC.Web.Helpers;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
-using QPC.Web.Tests.Extensions;
-using System.Linq;
 
 namespace QPC.Web.Tests.Controllers.MVC
 {
     [TestClass]
-    public class InstructionsControllerTests
+    public class InstructionsControllerTests: ControllerBaseTests
     {
-        private Mock<IUnitOfWork> _mockUnitOfWork;
         private Mock<IQualityControlRepository> _mockRepository;
         private InstructionsController _controller;
-        private Mock<IUserRepository> _mockUserRepository;
-        private Mock<QualityControlFactory> _mockFactory;
+        private QualityControl control;
+        private InstructionViewModel viewModel;
 
         [TestInitialize]
         public void TestInitialize()
         {
-            _mockUnitOfWork = new Mock<IUnitOfWork>();
             _mockRepository = new Mock<IQualityControlRepository>();
-            _mockUserRepository = new Mock<IUserRepository>();
             _mockFactory = new Mock<QualityControlFactory>();
-
             _mockUnitOfWork.SetupGet(uw => uw.QualityControlRepository).Returns(_mockRepository.Object);
-            _mockUnitOfWork.SetupGet(uw => uw.UserRepository).Returns(_mockUserRepository.Object);
             _controller = new InstructionsController(_mockUnitOfWork.Object, _mockFactory.Object);
-            _controller.GetUserId = () => ControllerExtensions.GetGuid("1571");
+            _controller.GetUserId = () => GetGuid("1571");
+            _mockRepository.Setup(r => r.FindByIdAsync(It.IsAny<int>())).Returns(Task.FromResult(control));
         }
 
-        [TestMethod]
-        public async Task AddInstructon_ValidInstruction()
+        protected override void InitializeMockData()
         {
-            //Arrange
-            var user = new User { UserId = ControllerExtensions.GetGuid("1571"), UserName = "user@mail.com" };
-
-            var control = new QualityControl
+            control = new QualityControl
             {
-                Id =1,
+                Id = 1,
                 Name = "Dimensional Control",
                 Description = "Control dimensions DIM312 in CMM3",
                 Instructions = new List<Instruction>(),
                 Status = QualityControlStatus.Open
             };
-
-            var viewModel = new InstructionViewModel
+            viewModel = new InstructionViewModel
             {
                 QualityControlId = 1,
                 Name = "CMM",
                 Description = "Control dimension DI312",
                 Comments = "N/A"
             };
-            _mockRepository.Setup(r => r.FindByIdAsync(It.IsAny<int>())).Returns(Task.FromResult(control));
-            _mockUserRepository.Setup(r => r.FindByIdAsync(It.IsAny<string>())).Returns(Task.FromResult(user));
+        }
 
+        [TestMethod]
+        public async Task AddInstructon_ValidInstruction()
+        {
             //Act 
             var result = await _controller.AddInstruction(viewModel) as ViewResult;
             var model = result.Model as InstructionViewModel;
             //Assert
             Assert.AreEqual(1, model.Instructions.ToList().Count);
         }
-
         [TestMethod]
         public async Task AddInstructon_ValidInstructionInClosedControl()
         {
             //Arrange
-            var user = new User { UserId = ControllerExtensions.GetGuid("1571"), UserName = "user@mail.com" };
-
-            var control = new QualityControl
-            {
-                Id = 1,
-                Name = "Dimensional Control",
-                Description = "Control dimensions DIM312 in CMM3",
-                Instructions = new List<Instruction>(),
-                Status = QualityControlStatus.Closed
-            };
-
-            var viewModel = new InstructionViewModel
-            {
-                QualityControlId = 1,
-                Name = "CMM",
-                Description = "Control dimension DI312",
-                Comments = "N/A"
-            };
-            _mockRepository.Setup(r => r.FindByIdAsync(It.IsAny<int>())).Returns(Task.FromResult(control));
-            _mockUserRepository.Setup(r => r.FindByIdAsync(It.IsAny<string>())).Returns(Task.FromResult(user));
-
+            control.Status = QualityControlStatus.Closed;
             //Act 
             var result = await _controller.AddInstruction(viewModel) as HttpStatusCodeResult;
             //Assert
@@ -101,27 +71,17 @@ namespace QPC.Web.Tests.Controllers.MVC
             Assert.AreEqual("Current status does not allow to add more instructions.", result.StatusDescription);
 
         }
-
         [TestMethod]
         public async Task AddInstructon_NonExistingControl()
         {
             //Arrange
-            QualityControl control = null;
-
-            var viewModel = new InstructionViewModel
-            {
-                QualityControlId = 1,
-                Name = "CMM",
-                Description = "Control dimension DI312",
-                Comments = "N/A"
-            };
-            _mockRepository.Setup(r => r.FindByIdAsync(It.IsAny<int>())).Returns(Task.FromResult(control));
-
+            QualityControl controlNull = null;
+            _mockRepository.Setup(r => r.FindByIdAsync(It.IsAny<int>())).Returns(Task.FromResult(controlNull));
             //Act 
             var result = await _controller.AddInstruction(viewModel) as HttpNotFoundResult;
-
             // Assert            
             Assert.AreEqual(404, result.StatusCode);
         }
+
     }
 }

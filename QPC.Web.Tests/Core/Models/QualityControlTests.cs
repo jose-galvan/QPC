@@ -17,18 +17,5 @@ namespace QPC.Web.Tests.Core.Models
             //Fields Initialization;
             _qualityControl = new Mock<QualityControl>();
         }
-
-
-        public void AddInstruction_ValidInstruction()
-        {
-            //Arrange
-            var dto = new InstructionDto { Name = "CMM Control", Description = "Measure DI110 CO290" };
-            var user = new User { UserId = Extensions.ControllerExtensions.GetGuid("1571"), UserName = "user@mail.com" };
-
-            //Act 
-            //_qualityControl.Object.AddInstruction(dto, user);
-            //Assert
-
-        }
     }
 }
