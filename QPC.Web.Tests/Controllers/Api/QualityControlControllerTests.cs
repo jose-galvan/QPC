@@ -52,13 +52,14 @@ namespace QPC.Web.Tests.Controllers.Api
                 Defect = 1,
                 Product = 1
             };
-            control = new QualityControl
+            control = new QualityControl(_user)
             {
                 Id = 1,
                 Name = "High tolerances",
                 Description = "Dimensions DI310 and C220 out of upper tolerance.",
                 Defect = new Defect { Name = "Scratch" },
                 Product = new Product { Name = "Blade F23" },
+                Instructions = new List<Instruction>(),
                 Status = QualityControlStatus.InProgress
             };
             secondControl = new QualityControl
@@ -125,22 +126,33 @@ namespace QPC.Web.Tests.Controllers.Api
         public async Task GetControls_ShouldReturnAllcontrols()
         {
             //Act
-            var result =await  _controller.GetAll();
+            var result =await  _controller.Get();
             //Assert
             result.Should().BeOfType<List<ListItemViewModel>>();
             Assert.AreEqual(2, result.Count());
         }
 
         [TestMethod]
+        public async Task GetControls_ShouldReturnOnecontrol()
+        {
+            //Act
+            var result = await _controller.Get("PI");
+            //Assert
+            result.Should().BeOfType<List<ListItemViewModel>>();
+            Assert.AreEqual(1, result.Count());
+            Assert.AreEqual("MPI", result[0].Name);
+        }
+
+        [TestMethod]
         public async Task GetById_ShouldReturnControl()
         {
             //Arrange
-            _mockRepository.Setup(r => r.FindByIdAsync(It.IsAny<int>()))
+            _mockUnitOfWork.Setup(uw => uw.QualityControlRepository.GetWithDetailsAsync(It.IsAny<int>()))
                             .Returns(Task.FromResult(control));
             //Act
             var result = await _controller.GetById(1);
             //Assert
-            result.Should().BeOfType<QualityControl>();
+            result.Should().BeOfType<OkNegotiatedContentResult<QualityControlDetailViewModel>>();
         }
 
         [TestMethod]
@@ -153,7 +165,7 @@ namespace QPC.Web.Tests.Controllers.Api
             //Act
             var result = await _controller.GetById(1);
             //Assert
-            Assert.IsNull(result);
+            result.Should().BeOfType<NotFoundResult>();
         }
     }
 }

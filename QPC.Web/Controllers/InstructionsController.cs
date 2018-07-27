@@ -63,7 +63,7 @@ namespace QPC.Web.Controllers
                 control.AddInstruction(instruction, user);
                 await _unitOfWork.SaveChangesAsync();
                 vm.Name = vm.Description = 
-                        vm.Comments = string.Empty;
+                        vm.Comments = "";
             }
             catch (Exception ex)
             {

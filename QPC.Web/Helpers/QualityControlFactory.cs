@@ -1,4 +1,5 @@
-﻿using QPC.Core.DTOs;
+﻿using QPC.Core;
+using QPC.Core.DTOs;
 using QPC.Core.Models;
 using QPC.Core.ViewModels;
 using System;
@@ -10,31 +11,7 @@ namespace QPC.Web.Helpers
 {
     public class QualityControlFactory
     {
-
-        public QualityControlDetailViewModel Create(QualityControl control)
-        {
-            return new QualityControlDetailViewModel
-            {
-                Id = control.Id,
-
-                Serial = control.Serial,
-                Name = control.Name,
-                Description = control.Description,
-
-                Status = GetDescription(control.Status),
-                Defect = control.Defect.Name,
-                DefectDescription = control.Defect.Description,
-                Product = control.Product.Name,
-                ProductDescription = control.Product.Description,
-                LastModificationDate = control.LastModificationDate.ToString(),
-                CreateDate = control.CreateDate.ToString(),
-                UserCreated = control.UserCreated.UserName,
-                LastModificationUser = control.LastModificationUser.UserName,
-                CanSave = !control.Instructions
-                            .Any(i => i.Status == InstructionStatus.Pending) &&
-                          control.Status != QualityControlStatus.Closed ? true : false
-            };
-        }
+        #region QualityControl Factory Methods
 
         public QualityControl Create(QualityControlViewModel model, User user)
         {
@@ -62,6 +39,49 @@ namespace QPC.Web.Helpers
             };
         }
 
+        public QualityControlDetailViewModel Create(QualityControl control)
+        {
+            return new QualityControlDetailViewModel
+            {
+                Id = control.Id,
+
+                Serial = control.Serial,
+                Name = control.Name,
+                Description = control.Description,
+
+                Status = GetDescription(control.Status),
+                Defect = control.Defect.Name,
+                DefectDescription = control.Defect.Description,
+                Product = control.Product.Name,
+                ProductDescription = control.Product.Description,
+                LastModificationDate = control.LastModificationDate.ToString(),
+                CreateDate = control.CreateDate.ToString(),
+                UserCreated = control.UserCreated.UserName,
+                LastModificationUser = control.LastModificationUser.UserName,
+                CanSave = !control.Instructions
+                            .Any(i => i.Status == InstructionStatus.Pending) &&
+                          control.Status != QualityControlStatus.Closed ? true : false
+            };
+        }
+
+        public ListItemViewModel CreateViewModel(QualityControl control)
+        {
+            return new ListItemViewModel
+            {
+                Id = control.Id,
+                Name = control.Name,
+                Description = control.Description,
+                Status = GetDescription(control.Status),
+                Product = control.Product.Name,
+                Defect = control.Defect.Name,
+                Desicion = control.Inspection != null
+                    ? control.Inspection.Desicion.Name : string.Empty
+            };
+        }
+
+        #endregion
+
+        #region Instruction Factory Methods
         public Instruction Create(InstructionViewModel model, User user)
         {
             return new Instruction(user)
@@ -84,7 +104,9 @@ namespace QPC.Web.Helpers
                 Status = InstructionStatus.Pending
             };
         }
+        #endregion
 
+        #region Inspection Factory Methods
         public Inspection Create(InspectionViewModel viewmodel, User user)
         {
             return new Inspection(user)
@@ -93,7 +115,15 @@ namespace QPC.Web.Helpers
                 Comments = viewmodel.Comments
             };
         }
-
+        public InspectionDto Create(Inspection model)
+        {
+            return new InspectionDto
+            {
+                Id = model.Id,
+                Desicion = model.Desicion.Id,
+                Comments = model.Comments
+            };
+        }
         public Inspection Create(InspectionDto dto, User user)
         {
             return new Inspection(user)
@@ -101,8 +131,10 @@ namespace QPC.Web.Helpers
                 Comments = dto.Comments
             };
         }
-        
-        public Product Create(ProductViewModel viewModel, User user)
+        #endregion
+
+        #region Product Factory Methods
+        public Product Create(BaseModel viewModel, User user)
         {
             return new Product(user)
             {
@@ -111,6 +143,19 @@ namespace QPC.Web.Helpers
             };
         }
 
+        public ProductDto Create(Product product)
+        {
+            return new ProductDto
+            {
+                Id = product.Id,
+                Name = product.Name,
+                Description = product.Description
+            };
+        }
+        #endregion
+
+        #region Defect Factory Methods
+
         public Defect Create(DefectViewModel viewModel, User user)
         {
             return new Defect(user)
@@ -118,6 +163,16 @@ namespace QPC.Web.Helpers
                 Name = viewModel.Name,
                 Description = viewModel.Description,
                 Product = viewModel.Products.Single(p => p.Id == viewModel.Product)
+            };
+        }
+
+        public Defect Create(DefectDto dto, User user)
+        {
+            return new Defect(user)
+            {
+                Name = dto.Name,
+                Description = dto.Description,
+                ProductId = dto.Product
             };
         }
 
@@ -132,21 +187,20 @@ namespace QPC.Web.Helpers
             };
         }
 
-        public ListItemViewModel CreateItem(QualityControl control)
+        public DefectDto CreateDto(Defect defect)
         {
-            return new ListItemViewModel
+            return new DefectDto
             {
-                Id = control.Id,
-                Name = control.Name,
-                Description = control.Description,
-                Status = GetDescription(control.Status),
-                Product = control.Product.Name,
-                Defect = control.Defect.Name,
-                Desicion = control.Inspection != null 
-                    ? control.Inspection.Desicion.Name : string.Empty
+                Id = defect.Id,
+                Name = defect.Name,
+                Description = defect.Description,
+                Product = defect.ProductId
             };
         }
 
+        #endregion
+
+        #region Helpers
         private string GetDescription<T>(T enumerationValue)
         where T : struct
         {
@@ -172,6 +226,6 @@ namespace QPC.Web.Helpers
             //If we have no description attribute, just return the ToString of the enum
             return enumerationValue.ToString();
         }
-
+        #endregion
     }
 }

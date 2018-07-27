@@ -67,7 +67,7 @@ namespace QPC.Web.Tests.Controllers.MVC
         public async Task Inspect_ValidInspection()
         {
             //Arrange
-            _mockRepository.Setup(r => r.GetWithDetails(It.IsAny<int>())).Returns(Task.FromResult(control));
+            _mockRepository.Setup(r => r.GetWithDetailsAsync(It.IsAny<int>())).Returns(Task.FromResult(control));
             //Act 
             var result = await _controller.Inspect(viewModel) as ViewResult;
             //Assert
@@ -79,7 +79,7 @@ namespace QPC.Web.Tests.Controllers.MVC
         {
             //Arrange
             control.Status = QualityControlStatus.Closed;
-            _mockRepository.Setup(r => r.GetWithDetails(It.IsAny<int>())).Returns(Task.FromResult(control));
+            _mockRepository.Setup(r => r.GetWithDetailsAsync(It.IsAny<int>())).Returns(Task.FromResult(control));
             //Act 
             var result = await _controller.Inspect(viewModel) as HttpStatusCodeResult;
             //Assert
@@ -99,7 +99,7 @@ namespace QPC.Web.Tests.Controllers.MVC
                     Name ="CMM",
                     Status = InstructionStatus.Pending }
             };            
-            _mockRepository.Setup(r => r.GetWithDetails(It.IsAny<int>())).Returns(Task.FromResult(control));
+            _mockRepository.Setup(r => r.GetWithDetailsAsync(It.IsAny<int>())).Returns(Task.FromResult(control));
             //Act 
             var result = await _controller.Inspect(viewModel) as HttpStatusCodeResult;
             //Assert
@@ -112,7 +112,7 @@ namespace QPC.Web.Tests.Controllers.MVC
         {
             //Arrange
             QualityControl controlNullable = null;
-            _mockRepository.Setup(r => r.GetWithDetails(It.IsAny<int>())).Returns(Task.FromResult(controlNullable));
+            _mockRepository.Setup(r => r.GetWithDetailsAsync(It.IsAny<int>())).Returns(Task.FromResult(controlNullable));
 
             //Act 
             var result = await _controller.Inspect(viewModel) as HttpNotFoundResult;

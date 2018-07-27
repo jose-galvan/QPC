@@ -4,14 +4,8 @@ using System.ComponentModel.DataAnnotations;
 
 namespace QPC.Core.ViewModels
 {
-    public class InstructionViewModel
+    public class InstructionViewModel: BaseModel
     {
-        [Required, StringLength(50)]
-        public string Name { get; set; }
-
-        [Required, StringLength(250)]
-        public string Description { get; set; }
-
         [Required, StringLength(250)]
         public string Comments { get; set; }
         public int QualityControlId { get; set; }

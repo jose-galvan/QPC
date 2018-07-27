@@ -6,9 +6,6 @@ namespace QPC.Core.ViewModels
 {
     public class InspectionViewModel
     {
-        public InspectionViewModel()
-        {
-        }
 
         public int QualityControlId { get; set; }
 
@@ -18,8 +15,7 @@ namespace QPC.Core.ViewModels
         public string Comments { get; set; }
 
         public List<Desicion> Desicions { get; set; }
-
-
+        
         public bool CanSave { get; set; }
     }
 }

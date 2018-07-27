@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace QPC.Web.Tests.Controllers
 {
+    //Contains the common mocks for all unit test classes ¿
     public abstract class ControllerBaseTests
     {
         public User _user;
@@ -20,7 +21,6 @@ namespace QPC.Web.Tests.Controllers
             _mockUnitOfWork = new Mock<IUnitOfWork>();
             _mockUserRepository = new Mock<IUserRepository>();
             _mockLogRepository = new Mock<ILogRepository>();
-
             _mockFactory = new Mock<QualityControlFactory>();
             _mockUnitOfWork.SetupGet(uw => uw.UserRepository).Returns(_mockUserRepository.Object);
             _mockUnitOfWork.SetupGet(uw => uw.LogRepository).Returns(_mockLogRepository.Object);
@@ -31,6 +31,7 @@ namespace QPC.Web.Tests.Controllers
             InitializeMockData();
         }
 
+        //Should contain all the data that is used to tests in inherited unit tests classes
         protected abstract void InitializeMockData();
 
         protected Guid GetGuid(string value)

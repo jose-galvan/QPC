@@ -39,8 +39,10 @@ namespace QPC.Web.Tests.Controllers.Api
             _userId = "1";
             _controller.MockCurrentUser(_userId, "user@mail.com");
 
-            _mockDesicionRepository.Setup(r => r.FindByIdAsync(It.IsAny<int>())).Returns(Task.FromResult(desicion));
-            _mockRepository.Setup(r => r.FindByIdAsync(It.IsAny<int>())).Returns(Task.FromResult(control));
+            _mockUnitOfWork.Setup(uw  => uw.DesicionRepository
+                    .FindByIdAsync(It.IsAny<int>())).Returns(Task.FromResult(desicion));
+            _mockUnitOfWork.Setup(uw => uw.QualityControlRepository
+                    .FindByIdAsync(It.IsAny<int>())).Returns(Task.FromResult(control));
         }
 
         protected override void InitializeMockData()
@@ -82,11 +84,25 @@ namespace QPC.Web.Tests.Controllers.Api
         }
 
         [TestMethod]
-        public async Task Inspection_NonExistingDesicion_ShouldReturnNotFound()
+        public async Task Inspection_UnexistingDesicion_ShouldReturnNotFound()
+        {
+            //Arrange
+            Desicion desicionNull = null;
+            _mockUnitOfWork.Setup(uw => uw.DesicionRepository
+                    .FindByIdAsync(It.IsAny<int>())).Returns(Task.FromResult(desicionNull));
+            //Act
+            var result = await _controller.AddDesicion(inspection);
+            //Assert
+            result.Should().BeOfType<BadRequestResult>();
+        }
+
+        [TestMethod]
+        public async Task Inspection_UnexistingControl_ShouldReturnNotFound()
         {
             //Arrange
             QualityControl controlNull = null;
-            _mockRepository.Setup(r => r.FindByIdAsync(It.IsAny<int>())).Returns(Task.FromResult(controlNull));
+            _mockUnitOfWork.Setup(uw => uw.QualityControlRepository.FindByIdAsync(It.IsAny<int>()))
+                    .Returns(Task.FromResult(controlNull));
             //Act
             var result = await _controller.AddDesicion(inspection);
             //Assert

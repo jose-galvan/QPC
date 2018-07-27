@@ -24,7 +24,7 @@ namespace QPC.DataAccess.Repositories
                             .ToListAsync();
         }
 
-        public async Task<QualityControl> GetWithDetails(int id)
+        public async Task<QualityControl> GetWithDetailsAsync(int id)
         {
             return await Set.Include(c => c.Product)
                             .Include(c => c.Defect)

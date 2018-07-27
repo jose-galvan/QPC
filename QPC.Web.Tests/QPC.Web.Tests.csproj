@@ -119,7 +119,9 @@
   <ItemGroup>
     <Compile Include="Controllers\Api\InstructionControllerTests.cs" />
     <Compile Include="Controllers\Api\InspectionsControllerTests.cs" />
+    <Compile Include="Controllers\Api\ProductsControllerTests.cs" />
     <Compile Include="Controllers\Api\QualityControlControllerTests.cs" />
+    <Compile Include="Controllers\Api\DefectsControllerTests.cs" />
     <Compile Include="Controllers\ControllerBaseTests.cs" />
     <Compile Include="Controllers\MVC\QualityControlControllerTests.cs" />
     <Compile Include="Controllers\MVC\ProductControllerTests.cs" />

@@ -41,9 +41,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DTOs\DefectDto.cs" />
     <Compile Include="DTOs\InspectionDto.cs" />
     <Compile Include="DTOs\InstructionDto.cs" />
+    <Compile Include="DTOs\ProductDto.cs" />
     <Compile Include="DTOs\QualityControlDto.cs" />
+    <Compile Include="BaseModel.cs" />
     <Compile Include="Models\Claim.cs" />
     <Compile Include="Models\Defect.cs" />
     <Compile Include="Models\Desicion.cs" />

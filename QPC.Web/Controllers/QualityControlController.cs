@@ -34,7 +34,7 @@ namespace QPC.Web.Controllers
             viewModel.Header = "Results for: " + searchCriteria ?? "Quality Controls";
             viewModel.SearchCriteria = searchCriteria;
             viewModel.Controls = controls
-                    .Select(qc => _factory.CreateItem(qc));
+                    .Select(qc => _factory.CreateViewModel(qc));
 
             return View(viewModel);
         }
@@ -80,7 +80,7 @@ namespace QPC.Web.Controllers
         [HttpGet]
         public async Task<ActionResult> UpdateControl(int id)
         {
-            var qc = await _unitOfWork.QualityControlRepository.GetWithDetails(id);
+            var qc = await _unitOfWork.QualityControlRepository.GetWithDetailsAsync(id);
             if (qc == null)
                 return HttpNotFound();
 

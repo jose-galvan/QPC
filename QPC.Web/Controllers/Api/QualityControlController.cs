@@ -1,11 +1,8 @@
-﻿
-using System.Web.Http;
+﻿using System.Web.Http;
 using QPC.Core.Repositories;
 using QPC.Web.Helpers;
 using System.Threading.Tasks;
-using System.Collections;
 using System.Collections.Generic;
-using QPC.Core.Models;
 using QPC.Core.DTOs;
 using System;
 using System.Linq;
@@ -13,7 +10,7 @@ using QPC.Core.ViewModels;
 
 namespace QPC.Web.Controllers.Api
 {
-    [RoutePrefix("api/controls")]
+    [Authorize][RoutePrefix("api/controls")]
     public class QualityControlController : QualityControlWebApiBaseController
     {
         public QualityControlController(IUnitOfWork unitOfWork, QualityControlFactory factory) : base(unitOfWork, factory)
@@ -22,12 +19,12 @@ namespace QPC.Web.Controllers.Api
         }
 
         [HttpGet][Route("")]
-        public async Task<List<ListItemViewModel>> GetAll()
+        public async Task<List<ListItemViewModel>> Get()
         {
             var controls = await _unitOfWork
                     .QualityControlRepository.GetAllWithDetailsAsync();
 
-            return controls.Select(c => _factory.CreateItem(c)).ToList();
+            return controls.Select(c => _factory.CreateViewModel(c)).ToList();
         }
 
         [HttpGet][Route("{query:alpha}")]
@@ -39,15 +36,18 @@ namespace QPC.Web.Controllers.Api
                                     || c.Description.ToLower().Contains(query.ToLower()))
                                 .ToList();
 
-            return controls.Select(c => _factory.CreateItem(c)).ToList();
+            return controls.Select(c => _factory.CreateViewModel(c)).ToList();
         }
 
         [HttpGet][Route("~/api/control/{id:int}")]
-        public async Task<QualityControl> GetById(int id)
+        public async Task<IHttpActionResult> GetById(int id)
         {
-            return await _unitOfWork
-                    .QualityControlRepository.FindByIdAsync(id);
-
+            var control = await _unitOfWork
+                    .QualityControlRepository.GetWithDetailsAsync(id);
+            if (control == null)
+                return NotFound();
+            var result = _factory.Create(control);
+            return Ok(result);
         }
 
         [HttpPost][Route("")]

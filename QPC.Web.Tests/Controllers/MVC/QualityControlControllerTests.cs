@@ -37,7 +37,7 @@ namespace QPC.Web.Tests.Controllers.Mvc
             _controller.GetUserId = () => GetGuid("1571");
             
             _mockUnitOfWork.Setup(uw => uw.QualityControlRepository
-                        .GetWithDetails(It.IsAny<int>()))
+                        .GetWithDetailsAsync(It.IsAny<int>()))
                         .Returns(Task.FromResult(_mockControl));
 
 
@@ -151,7 +151,7 @@ namespace QPC.Web.Tests.Controllers.Mvc
             //Arrange
             QualityControl controlNull = null;
             _mockUnitOfWork.Setup(uw => uw.QualityControlRepository
-                            .GetWithDetails(It.IsAny<int>()))
+                            .GetWithDetailsAsync(It.IsAny<int>()))
                             .Returns(Task.FromResult(controlNull));
             //Act 
             var result = await _controller.UpdateControl(1);

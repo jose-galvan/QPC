@@ -25,7 +25,7 @@ namespace QPC.Web.Controllers
             if(!id.HasValue)
                 return RedirectToAction("Index", "QualityControl");
 
-            var control = await _unitOfWork.QualityControlRepository.GetWithDetails(id.Value);
+            var control = await _unitOfWork.QualityControlRepository.GetWithDetailsAsync(id.Value);
 
             if (control == null)
                 return HttpNotFound();
@@ -33,14 +33,14 @@ namespace QPC.Web.Controllers
             var vm = new InspectionViewModel
             {
                 QualityControlId = id.Value, 
-                Desicions = await _unitOfWork.DesicionRepository.GetAllAsync()
+                Desicions = await _unitOfWork.DesicionRepository.GetAllAsync(),
+                CanSave = !control.Instructions.Any(i => i.Status == InstructionStatus.Pending)
             };
 
             if(control.Inspection != null)
             {
                 vm.Comments = control.Inspection.Comments;
                 vm.FinalDesicison = control.Inspection.Desicion.Id;
-                vm.CanSave = control.Instructions.Any(i => i.Status == InstructionStatus.Pending);
             }
 
             return View(vm);
@@ -55,7 +55,7 @@ namespace QPC.Web.Controllers
                 return View(vm);
             }
 
-            var control = await _unitOfWork.QualityControlRepository.GetWithDetails(vm.QualityControlId);
+            var control = await _unitOfWork.QualityControlRepository.GetWithDetailsAsync(vm.QualityControlId);
             if (control == null)
                 return HttpNotFound();
 

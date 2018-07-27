@@ -6,6 +6,9 @@ using QPC.Core.Models;
 using QPC.Core.Repositories;
 using QPC.Web.Controllers.Api;
 using QPC.Web.Tests.Extensions;
+using System;
+using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 using System.Web.Http.Results;
 
@@ -22,6 +25,8 @@ namespace QPC.Web.Tests.Controllers.Api
         private InstructionDto instructionDto;
         private Instruction instruction;
         private QualityControl control;
+        private Instruction secondInstruction;
+        private List<Instruction> instructions;
 
         [TestInitialize]
         public void TestInitialize()
@@ -62,13 +67,22 @@ namespace QPC.Web.Tests.Controllers.Api
                     QualityControlId = 1,
                     Status = InstructionStatus.Performed
                 };
+            secondInstruction = new Instruction
+            {
+                Id = 1,
+                Name = "Shipping",
+                Description = "Shipping Product",
+                QualityControlId = 1,
+                Status = InstructionStatus.Pending
+            };
             control = new QualityControl
                 {
                     Id = 1,
                     Name = "High tolerances",
                     Defect = new Defect { Name = "Dimensional" },
-                    Status = QualityControlStatus.Open
-                };
+                    Status = QualityControlStatus.Open,
+                    Instructions = new List<Instruction>() { instruction, secondInstruction }
+            };
             instruction.QualityControl = control;
         }
 
@@ -201,6 +215,34 @@ namespace QPC.Web.Tests.Controllers.Api
             // Assert
             result.Should().BeOfType<NotFoundResult>();
         }
-        
+     
+        [TestMethod]
+        public async Task GetInstructionByControl_ShouldReturnOkNegotiatedContentResult()
+        {
+            //Arrange
+            _mockUnitOfWork.Setup(uw => uw.QualityControlRepository
+                           .GetWithDetailsAsync(It.IsAny<int>()))
+                           .Returns(Task.FromResult(control));
+                    
+            //Act
+            var result =await  _controller.GetByProduct(1);
+            //Assert
+            result.Should().BeOfType<OkNegotiatedContentResult<ICollection<Instruction>>>();
+        }
+
+        [TestMethod]
+        public async Task GetInstructionByControl_ShouldNotFoundResult()
+        {
+            //Arrange
+            QualityControl controlNull = null;
+            _mockUnitOfWork.Setup(uw => uw.QualityControlRepository
+                           .GetWithDetailsAsync(It.IsAny<int>()))
+                           .Returns(Task.FromResult(controlNull));
+
+            //Act
+            var result = await _controller.GetByProduct(1);
+            //Assert
+            result.Should().BeOfType<NotFoundResult>();
+        }
     }
 }
