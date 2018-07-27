@@ -1,0 +1,21 @@
+nav{
+    background-color: #41c7c7;
+    box-shadow: var(--main-shadow);
+    display: grid;
+    grid-template-columns: 20% auto;
+}
+
+.logo {
+    padding: 15px;
+    margin-left: 15px;
+    background-color: #F3F1C7;
+    color: #298383;
+    text-align:center;
+    font-weight: bold;
+    display: inline-block;
+    box-shadow: var(--main-shadow);    
+}
+nav ul li{
+    float: right;
+    display: inline-block;
+}

@@ -28,16 +28,21 @@ namespace QPC.Web.Tests.Controllers.Api
         {
             _mockRepository = new Mock<IQualityControlRepository>();
             
-            _mockUnitOfWork.SetupGet(uw => uw.QualityControlRepository).Returns(_mockRepository.Object);
+            _mockUnitOfWork.SetupGet(uw => uw.QualityControlRepository)
+                            .Returns(_mockRepository.Object);
+
             _controller = new QualityControlController(_mockUnitOfWork.Object, _mockFactory.Object);
             _controller.GetUserId = () => GetGuid("1571");
 
-            _mockUnitOfWork.Setup(uw => uw.QualityControlRepository.Update(It.IsAny<QualityControl>()));
+            _mockUnitOfWork.Setup(uw => uw.QualityControlRepository
+                           .Update(It.IsAny<QualityControl>()));
 
-            _mockUnitOfWork.Setup(uw => uw.QualityControlRepository.FindByIdAsync(It.IsAny<int>()))
+            _mockUnitOfWork.Setup(uw => uw.QualityControlRepository
+                            .FindByIdAsync(It.IsAny<int>()))
                             .Returns(Task.FromResult(control));
 
-            _mockUnitOfWork.Setup(uw => uw.QualityControlRepository.GetAllWithDetailsAsync())
+            _mockUnitOfWork.Setup(uw => uw.QualityControlRepository
+                            .GetAllWithDetailsAsync())
                             .Returns(Task.FromResult(controls));
         }
 

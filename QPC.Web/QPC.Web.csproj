@@ -323,7 +323,6 @@
     <Content Include="Scripts\app\Helpers\ErrorHelper.js" />
     <Content Include="Scripts\app\Instruction\InstructionController.js" />
     <Content Include="Scripts\app\Instruction\InstructionService.js" />
-    <Content Include="Content\Site.less" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
