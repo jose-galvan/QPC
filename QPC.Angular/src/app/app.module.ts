@@ -1,5 +1,8 @@
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AuthGuard } from './auth/auth.guard';
+import { AuthService } from './Services/auth.service';
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, ErrorHandler } from '@angular/core';
 import {FormsModule} from '@angular/forms';
 import { RouterModule} from '@angular/router';
 
@@ -8,14 +11,18 @@ import { LoginComponent } from './login/login.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { RegisterComponent } from './register/register.component';
-import { QualityControlsComponent } from './quality-controls/quality-controls.component';
-import { QualityControlDetailComponent } from './quality-control-detail/quality-control-detail.component';
 import { QualityControlService } from './Services/quality-control.service';
-import { ProductsComponent } from './products/products.component';
 import { DefectService } from './Services/defect.service';
 import { ProductService } from './Services/product.service';
 import { InspectionService } from './Services/inspection.service';
 import { InstructionService } from './Services/instruction.service';
+import { QualityControlsComponent } from './quality-controls/quality-controls.component';
+import { QualityControlDetailComponent } from './quality-control-detail/quality-control-detail.component';
+import { AppErrorHandler } from 'app/common/app-error-handler';
+import {HttpModule} from '@angular/http';
+import { HomeComponent } from './home/home.component';
+import { AuthInterceptor } from './auth/auth.interceptor';
+import { NotFoundComponent } from './not-found/not-found.component';
 
 @NgModule({
   declarations: [
@@ -27,16 +34,18 @@ import { InstructionService } from './Services/instruction.service';
     RegisterComponent,
     QualityControlsComponent,
     QualityControlDetailComponent,
-    ProductsComponent
+    HomeComponent,
+    NotFoundComponent
   ],
   imports: [
-    BrowserModule,
-    FormsModule,
+    BrowserModule, HttpClientModule,
+    FormsModule, HttpModule,
     RouterModule.forRoot([
+      { path: '', redirectTo: '/controls',  pathMatch: 'full' },
+      {path: 'controls', component: QualityControlsComponent, canActivate:[AuthGuard] },
       {path: 'login', component: LoginComponent},
       {path: 'register', component: RegisterComponent},
-      {path: 'controls', component: QualityControlsComponent},
-      {path: 'products', component: ProductsComponent}
+      {path:'**', component:NotFoundComponent}
    ])
   ],
   providers: [
@@ -44,7 +53,16 @@ import { InstructionService } from './Services/instruction.service';
     DefectService,
     ProductService,
     InspectionService,
-    InstructionService
+    InstructionService, 
+    AuthService,
+    HttpClientModule,
+    AuthGuard,
+    {
+      provide : HTTP_INTERCEPTORS,
+      useClass : AuthInterceptor,
+      multi : true
+    },
+    {provide: ErrorHandler, useClass: AppErrorHandler}
   ],
   bootstrap: [AppComponent]
 })

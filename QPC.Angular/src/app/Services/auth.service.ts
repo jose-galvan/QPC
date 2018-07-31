@@ -1,0 +1,25 @@
+import { Injectable } from '@angular/core';
+import 'rxjs/add/operator/map';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import 'rxjs/add/operator/map';
+
+@Injectable()
+export class AuthService{
+
+  rootUrl ='http://localhost:50598';
+
+  constructor(private http: HttpClient) { }
+
+
+  userAuthentication(userName, password) {
+    console.log('working here.');
+    var body = 'grant_type=password&username='+ userName +'&password=' + password;
+    var reqHeader = new HttpHeaders({ 'Content-Type': 'application/json','Accept':'application/json' });
+    return this.http.post('http://localhost:50598/token', body, { headers: reqHeader });
+  }
+
+  getUserClaims(){
+    return  this.http.get(this.rootUrl+'/api/GetUserClaims');
+  }
+
+}

@@ -1,11 +1,11 @@
 ﻿using System;
 using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security.Cookies;
-using Microsoft.Owin.Security.Google;
 using Owin;
-using QPC.Web.Models;
+using Microsoft.Owin.Security.OAuth;
+using QPC.Web.Providers;
+using Microsoft.Owin.Cors;
 
 namespace QPC.Web
 {
@@ -20,9 +20,11 @@ namespace QPC.Web
                 AuthenticationType = DefaultAuthenticationTypes.ApplicationCookie,
                 LoginPath = new PathString("/Account/Login")
             });
+
+
             // Use a cookie to temporarily store information about a user logging in with a third party login provider
             app.UseExternalSignInCookie(DefaultAuthenticationTypes.ExternalCookie);
-
+            ConfigureOAuth(app);
             // Uncomment the following lines to enable logging in with third party login providers
             //app.UseMicrosoftAccountAuthentication(
             //    clientId: "",
@@ -38,5 +40,21 @@ namespace QPC.Web
 
             //app.UseGoogleAuthentication();
         }
+
+
+        public void ConfigureOAuth(IAppBuilder app)
+	    {
+            app.UseCors(CorsOptions.AllowAll);
+            OAuthAuthorizationServerOptions oAuthServerOptions = new OAuthAuthorizationServerOptions()
+	        {
+	            AllowInsecureHttp=true,
+	            TokenEndpointPath = new PathString("/token"),
+	            AccessTokenExpireTimeSpan=TimeSpan.FromDays(1),
+	            Provider = new SimpleAuthorizationServerProvider()
+	        };
+	        //Token Generation
+	        app.UseOAuthAuthorizationServer(oAuthServerOptions);
+	        app.UseOAuthBearerAuthentication(new OAuthBearerAuthenticationOptions());
+	    }
     }
 }

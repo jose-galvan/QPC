@@ -1,6 +1,5 @@
 ﻿using Newtonsoft.Json.Serialization;
 using System.Web.Http;
-using System.Web.Http.Cors;
 
 namespace QPC.Web
 {
@@ -19,15 +18,13 @@ namespace QPC.Web
                 defaults: new { id = RouteParameter.Optional }
             );
 
-            config.Formatters.JsonFormatter.SerializerSettings.Formatting 
+            config.Formatters.JsonFormatter.SerializerSettings.Formatting
                         = Newtonsoft.Json.Formatting.Indented;
 
             config.Formatters.JsonFormatter.SerializerSettings.ContractResolver
                     = new CamelCasePropertyNamesContractResolver();
 
-            EnableCorsAttribute cors = new EnableCorsAttribute("*", "*", "GET,POST,PUT");
-            config.EnableCors(cors);
-
+            config.Filters.Add(new AuthorizeAttribute());
         }
     }
 }

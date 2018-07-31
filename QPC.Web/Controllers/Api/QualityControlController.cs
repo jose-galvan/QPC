@@ -10,7 +10,7 @@ using QPC.Core.ViewModels;
 
 namespace QPC.Web.Controllers.Api
 {
-    [Authorize][RoutePrefix("api/controls")]
+    [RoutePrefix("api/controls")][Authorize]
     public class QualityControlController : QualityControlWebApiBaseController
     {
         public QualityControlController(IUnitOfWork unitOfWork, QualityControlFactory factory) : base(unitOfWork, factory)
