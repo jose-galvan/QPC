@@ -3,8 +3,9 @@
         <span class="logo">QPC</span>
     </a>
     <ul class="nav">
+        <li *ngIf="!IsAuthenticated()" role="presentation"><a routerLink="/login">Log In</a></li>
+        <li *ngIf="IsAuthenticated()" role="presentation"><a  (click)="LogOut()">Log Out</a></li>
         <li role="presentation"><a routerLink="/products">Products</a></li>
         <li role="presentation"><a routerLink="/controls">Quality Controls</a></li>
-        <li role="presentation"><a routerLink="/login">Login</a></li>
       </ul>
 </nav>

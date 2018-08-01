@@ -8,7 +8,6 @@ namespace QPC.Web
         public static void Register(HttpConfiguration config)
         {
             // Web API configuration and services
-
             // Web API routes
             config.MapHttpAttributeRoutes();
 
@@ -23,8 +22,6 @@ namespace QPC.Web
 
             config.Formatters.JsonFormatter.SerializerSettings.ContractResolver
                     = new CamelCasePropertyNamesContractResolver();
-
-            config.Filters.Add(new AuthorizeAttribute());
         }
     }
 }

@@ -82,8 +82,8 @@
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.6\lib\net45\System.Web.Helpers.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="System.Web.Http, Version=5.2.6.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.6\lib\net45\System.Web.Http.dll</HintPath>
+    <Reference Include="System.Web.Http, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.3\lib\net45\System.Web.Http.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Web.Mvc, Version=5.2.6.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -117,19 +117,12 @@
     <Reference Include="System.Net.Http.WebRequest" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controllers\Api\InstructionControllerTests.cs" />
-    <Compile Include="Controllers\Api\InspectionsControllerTests.cs" />
-    <Compile Include="Controllers\Api\ProductsControllerTests.cs" />
-    <Compile Include="Controllers\Api\QualityControlControllerTests.cs" />
-    <Compile Include="Controllers\Api\DefectsControllerTests.cs" />
     <Compile Include="Controllers\ControllerBaseTests.cs" />
-    <Compile Include="Controllers\MVC\QualityControlControllerTests.cs" />
-    <Compile Include="Controllers\MVC\ProductControllerTests.cs" />
-    <Compile Include="Controllers\MVC\InstructionsControllerTests.cs" />
-    <Compile Include="Controllers\MVC\InspectionsControllerTests.cs" />
-    <Compile Include="Controllers\MVC\DefectsControllerTests.cs" />
-    <Compile Include="Core\Models\QualityControlTests.cs" />
-    <Compile Include="Extensions\ControllerExtensions.cs" />
+    <Compile Include="Controllers\QualityControlControllerTests.cs" />
+    <Compile Include="Controllers\ProductControllerTests.cs" />
+    <Compile Include="Controllers\InstructionsControllerTests.cs" />
+    <Compile Include="Controllers\InspectionsControllerTests.cs" />
+    <Compile Include="Controllers\DefectsControllerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -155,9 +148,7 @@
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Core\Repositories\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.

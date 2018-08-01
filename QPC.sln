@@ -11,6 +11,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QPC.DataAccess", "QPC.DataA
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QPC.Core", "QPC.Core\QPC.Core.csproj", "{8EB05178-7C21-4183-BD24-BDDCA008CB54}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QPC.Api", "QPC.Api\QPC.Api.csproj", "{36C5E9B9-45BB-484A-BCF1-19E221DDA383}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QPC.Api.Tests", "QPC.Api.Tests\QPC.Api.Tests.csproj", "{28BEA5FE-0CDF-4475-BC49-CF1814C2BF8B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +37,14 @@ Global
 		{8EB05178-7C21-4183-BD24-BDDCA008CB54}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8EB05178-7C21-4183-BD24-BDDCA008CB54}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8EB05178-7C21-4183-BD24-BDDCA008CB54}.Release|Any CPU.Build.0 = Release|Any CPU
+		{36C5E9B9-45BB-484A-BCF1-19E221DDA383}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{36C5E9B9-45BB-484A-BCF1-19E221DDA383}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{36C5E9B9-45BB-484A-BCF1-19E221DDA383}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{36C5E9B9-45BB-484A-BCF1-19E221DDA383}.Release|Any CPU.Build.0 = Release|Any CPU
+		{28BEA5FE-0CDF-4475-BC49-CF1814C2BF8B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{28BEA5FE-0CDF-4475-BC49-CF1814C2BF8B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{28BEA5FE-0CDF-4475-BC49-CF1814C2BF8B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{28BEA5FE-0CDF-4475-BC49-CF1814C2BF8B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
