@@ -1,6 +1,20 @@
 <div class="container controls">
   <div class="row">
     <div class="col-sm-12">
+      <h3 class="qpc-view-title">Quality Controls</h3>
+      <hr>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-4">
+        <div class="form-group">
+          <label for="Filter">Filter</label>        
+          <input type="text" (keyup)="onKey($event)" placeholder="Filter by control or description" class="form-control" >
+        </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-12">
       <table class="table table-hover">
         <thead>
           <th>Id</th>
@@ -12,7 +26,7 @@
           <th>Status</th>
         </thead>
         <tbody>
-          <tr *ngFor="let control of controls">
+          <tr *ngFor="let control of controls" (click)="showControl(control)">
             <td>{{control.id}}</td>
             <td>{{control.name}}</td>
             <td>{{control.description}}</td>

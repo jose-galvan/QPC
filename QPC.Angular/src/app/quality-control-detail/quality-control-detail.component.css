@@ -1,0 +1,52 @@
+.control{
+    position: absolute;
+    top: 10%;
+    left: 5%;
+    width: 90%;
+    box-shadow: var(--main-shadow);
+    display: grid;
+    grid-template-rows: 50%;
+    grid-template-columns: 50% 50%;
+    grid-template-areas:
+    "title title"
+    "control product"
+    "traceability defect"
+    "buttons buttons"; 
+}
+.control-title{
+    grid-area: title;
+}
+.control-details{
+    grid-area: control;
+    border-right: solid 1px #333 ;
+}
+.control-traceability{
+    grid-area: traceability;
+    border-right: solid 1px #333;
+}
+.product-details{
+    grid-area: product;
+}
+.defect-details{
+    grid-area: defect;
+}
+.buttons-section{
+    grid-area: buttons;
+}
+
+.buttons-section button{
+    margin-left: 0.5em;
+}
+
+
+.details-section{
+    margin-right: 1em;
+}
+.details-section p{
+    margin-left: 5px;
+}
+.details-section input, 
+.details-section textarea{
+    width: 70%;
+    margin-left: 5px;
+}

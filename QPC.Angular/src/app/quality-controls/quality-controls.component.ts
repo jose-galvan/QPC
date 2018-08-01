@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { QualityControlService } from './../Services/quality-control.service';
 import { QualityControl } from './../Models/QualityControl';
 import { Component, OnInit } from '@angular/core';
@@ -11,7 +12,7 @@ export class QualityControlsComponent implements OnInit {
 
   controls: QualityControl[];
 
-  constructor(private service : QualityControlService) { }
+  constructor(private router:Router, private service : QualityControlService) { }
 
   ngOnInit() {
     this.GetControls();
@@ -21,6 +22,16 @@ export class QualityControlsComponent implements OnInit {
     this.service.GetAll()
         .subscribe(
           controls => this.controls = controls);
+  }
+
+  onKey(event: any) { // without type info
+    this.service.Get(event.target.value)
+        .subscribe(
+          controls => this.controls = controls);
+  }
+
+  showControl(selectedControl:QualityControl){
+    this.router.navigateByUrl('/control/'+selectedControl.id);
   }
 
 }

@@ -11,7 +11,7 @@ import 'rxjs/add/observable/throw';
 @Injectable()
 export class CommonService {
   
-  constructor(private url: string, private http: HttpClient) { }
+  constructor(private url: string, protected http: HttpClient) { }
 
   GetAll(){
         return this.http.get(this.url)
@@ -21,16 +21,11 @@ export class CommonService {
 
   Create(resource){
      return this.http
-       .post(this.url, JSON.stringify(resource))
-       .map(response => response)
-       .catch(this.handleError);
+       .post(this.url, resource);
   }
 
   Update(resource){
-   return this.http
-        .patch(this.url + '/'+ resource.id, JSON.stringify(resource))
-        .map(response => response)
-        .catch(this.handleError);
+    return this.http.put(this.url, resource);
   }
 
   Delete(id){
@@ -39,7 +34,7 @@ export class CommonService {
         .catch(this.handleError);
   }
 
-  private handleError(error: Response){
+  protected handleError(error: Response){
       switch(error.status){
         case 400:
           return Observable.throw(new BadInputError());

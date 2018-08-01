@@ -8,4 +8,16 @@ export class QualityControlService extends CommonService {
   constructor(http: HttpClient) {
     super('http://localhost:49529/api/controls', http)
    }
+
+   Get(query:string){
+    return this.http.get('http://localhost:49529/api/controls/'+ query)
+    .map(response => response)
+    .catch(this.handleError);
+  }
+
+  GetById(controlId:string){
+    return this.http.get('http://localhost:49529/api/control/'+ controlId)
+    .map(response => response)
+    .catch(this.handleError);
+  }
 }

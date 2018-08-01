@@ -43,6 +43,7 @@ import { NotFoundComponent } from './not-found/not-found.component';
     RouterModule.forRoot([
       { path: '', redirectTo: '/controls',  pathMatch: 'full' },
       {path: 'controls', component: QualityControlsComponent, canActivate:[AuthGuard] },
+      {path: 'control/:id', component: QualityControlDetailComponent, canActivate:[AuthGuard] },
       {path: 'login', component: LoginComponent},
       {path: 'register', component: RegisterComponent},
       {path:'**', component:NotFoundComponent}

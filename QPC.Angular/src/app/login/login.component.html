@@ -1,6 +1,4 @@
-<div *ngIf="isLoginError" class="text-danger">
-    Incorrect username or password
-</div>
+
 <form #loginForm="ngForm" class="qpc-login-form"
 (ngSubmit)="OnSubmit(UserName.value,Password.value)" >
 
@@ -8,6 +6,9 @@
       <h3>Login</h3>
     </div>
     <hr>
+    <div *ngIf="isLoginError" class="text-danger">
+        Incorrect username or password
+    </div>
     <div class="form-group">
       <label for="email">Email</label>        
       <input type="text" #UserName ngModel name="UserName" 

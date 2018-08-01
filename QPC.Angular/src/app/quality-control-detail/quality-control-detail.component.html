@@ -1,3 +1,85 @@
-<p>
-  quality-control-detail works!
-</p>
+<form #controlForm="ngForm"
+(ngSubmit)="OnSubmit(control.id, Name.value,Description.value)">
+<div class="container control">
+    <div class="control-title">
+      <h3 class="qpc-view-title">{{control.name}}</h3>
+      <hr>
+    </div>
+    <div class="details-section control-details">
+      <div class="form-group">
+        <label for="controlName">Control</label>
+        <input type="text" id="controlName" #Name value="{{control.name}}" class="form-control">
+      </div>
+      <div class="row">
+          <div class="col-sm-6">
+            <label>Serial</label>
+            <p>{{control.serial}}</p>
+          </div>
+          <div class="col-sm-6">
+              <label>Status</label>
+              <p>{{control.status}}</p>
+          </div>
+        </div>
+      <div class="form-group">
+          <label for="controlDescription">Description</label>
+          <textarea id="controlDescription" #Description value="{{control.description}}"
+              class="form-control"> </textarea>
+      </div>
+    </div>
+    <div class="details-section control-traceability">
+      <div class="row">
+        <div class="col-sm-6">
+          <label>Created</label>
+          <p>{{control.userCreated}}</p>
+        </div>
+        <div class="col-sm-6">
+          <label>Last Modification</label>              
+          <p>{{control.lastModificationUser}}</p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-6">
+          <label>Created On</label>
+          <p>{{control.createDate}}</p>
+        </div>
+        <div class="col-sm-6">
+            <label>Modified On</label>
+            <p>{{control.lastModificationDate}}</p>
+        </div>
+      </div>
+    </div>
+    <div class="details-section product-details">
+      <div class="row">
+        <div class="col-sm-12">
+          <label>Product</label>  
+          <p>{{control.product}}</p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-12">
+          <label>Description</label>
+          <p>{{control.productDescription}}</p>
+        </div>
+      </div>
+    </div>
+    <div class="details-section defect-details">
+      <div class="row">
+        <div class="col-sm-12">
+          <label>Defect</label>
+          <p>{{control.defect}}</p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-12">
+          <label>Description</label>
+          <p>{{control.description}}</p>
+        </div>
+      </div>
+    </div>
+    <div class="buttons-section">
+        <button [disabled]="!control.canSave" class="btn btn-default" type="submit">Save</button>
+        <a routerLink="/controls" class="btn cancel">Cancel</a>
+    </div>
+</div>
+</form>
+  

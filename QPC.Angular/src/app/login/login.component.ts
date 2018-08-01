@@ -21,7 +21,7 @@ export class LoginComponent{
           .subscribe( (result: any) => {
             localStorage.setItem('userToken', result.access_token);
             this.router.navigate(['/controls']);
-          });
+          }, (error => {this.isLoginError = true;}));
 
 
 
