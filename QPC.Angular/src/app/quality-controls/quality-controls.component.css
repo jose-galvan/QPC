@@ -1,20 +1,15 @@
-.controls{
-    position: absolute;
-    top: 15%;
-    left: 5%;
-    width: 90%;
-}
-
-table{
-    box-shadow: var(--main-shadow);
-}
 
 th{
-    text-align: center;
     color: #298383;
     padding: .5em
 }
 
 td{
     margin-left: .5em;
+}
+
+tr:hover{
+    box-shadow: var(--main-shadow);
+    color: #298383;
+    cursor: pointer;
 }

@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import {Router } from '../../../node_modules/@angular/router';
 import { AuthService } from '../Services/auth.service';
-import { HttpErrorResponse } from '../../../node_modules/@angular/common/http';
 
 @Component({
   selector: 'login',
@@ -22,8 +21,5 @@ export class LoginComponent{
             localStorage.setItem('userToken', result.access_token);
             this.router.navigate(['/controls']);
           }, (error => {this.isLoginError = true;}));
-
-
-
    }
 }

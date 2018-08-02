@@ -1,14 +1,15 @@
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { AuthGuard } from './auth/auth.guard';
-import { AuthService } from './Services/auth.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, ErrorHandler } from '@angular/core';
 import {FormsModule} from '@angular/forms';
 import { RouterModule} from '@angular/router';
+import {HttpModule} from '@angular/http';
 
+
+import { AuthGuard } from './auth/auth.guard';
+import { AuthService } from './Services/auth.service';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
-import { SidebarComponent } from './sidebar/sidebar.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { RegisterComponent } from './register/register.component';
 import { QualityControlService } from './Services/quality-control.service';
@@ -19,23 +20,29 @@ import { InstructionService } from './Services/instruction.service';
 import { QualityControlsComponent } from './quality-controls/quality-controls.component';
 import { QualityControlDetailComponent } from './quality-control-detail/quality-control-detail.component';
 import { AppErrorHandler } from 'app/common/app-error-handler';
-import {HttpModule} from '@angular/http';
 import { HomeComponent } from './home/home.component';
 import { AuthInterceptor } from './auth/auth.interceptor';
 import { NotFoundComponent } from './not-found/not-found.component';
+import { ProductsComponent } from './products/products.component';
+import { ProductDetailComponent } from './product-detail/product-detail.component';
+import { DefectsComponent } from './defects/defects.component';
+import { DefectDetailComponent } from './defect-detail/defect-detail.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     NavbarComponent,
-    SidebarComponent,
     NavbarComponent,
     RegisterComponent,
     QualityControlsComponent,
     QualityControlDetailComponent,
     HomeComponent,
-    NotFoundComponent
+    NotFoundComponent,
+    ProductsComponent,
+    ProductDetailComponent,
+    DefectsComponent,
+    DefectDetailComponent
   ],
   imports: [
     BrowserModule, HttpClientModule,
@@ -44,9 +51,11 @@ import { NotFoundComponent } from './not-found/not-found.component';
       { path: '', redirectTo: '/controls',  pathMatch: 'full' },
       {path: 'controls', component: QualityControlsComponent, canActivate:[AuthGuard] },
       {path: 'control/:id', component: QualityControlDetailComponent, canActivate:[AuthGuard] },
+      {path: 'products', component: ProductsComponent, canActivate:[AuthGuard] },
+      {path: 'defects', component: DefectsComponent, canActivate:[AuthGuard] },
       {path: 'login', component: LoginComponent},
       {path: 'register', component: RegisterComponent},
-      {path:'**', component:NotFoundComponent}
+      {path:'**', component:NotFoundComponent, canActivate:[AuthGuard]}
    ])
   ],
   providers: [

@@ -1,7 +1,6 @@
 ﻿using QPC.Core.DTOs;
 using QPC.Core.Models;
 using QPC.Core.Repositories;
-using QPC.Core.ViewModels;
 using QPC.Web.Helpers;
 using System;
 using System.Collections.Generic;
@@ -39,14 +38,14 @@ namespace QPC.Api.Controllers
             return defects.Select(d => _factory.CreateDto(d)).ToList();
         }
 
-        [Route("{query:alpha}")]
+        [Route("{query}")]
         public async Task<List<DefectDto>> Get([FromUri]string query)
         {
-            Expression<Func<Defect, bool>> expr = (d =>
-                                 d.Name.ToLower().Contains(query.ToLower()) ||
-                                 d.Description.ToLower().Contains(query.ToLower()));
-
-            var defects = await _unitOfWork.DefectRepository.GetAsync(expr);
+            query = query.ToLower();
+            var defects = await _unitOfWork.DefectRepository.GetWithProductAsync();
+            defects = defects.Where(d =>
+                            d.Name.ToLower().Contains(query) ||
+                            d.Description.ToLower().Contains(query)).ToList();
             return defects.Select(d => _factory.CreateDto(d)).ToList();
         }
 

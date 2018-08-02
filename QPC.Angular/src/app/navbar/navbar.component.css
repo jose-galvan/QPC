@@ -6,7 +6,7 @@ nav{
 }
 
 .logo {
-    padding: 15px;
+    padding: 10px 25px;
     margin-left: 15px;
     background-color: #F3F1C7;
     color: #298383;
@@ -14,8 +14,10 @@ nav{
     font-weight: bold;
     display: inline-block;
     box-shadow: var(--main-shadow);    
+    font-size: 1.5em;
 }
 nav ul li{
     float: right;
     display: inline-block;
+    margin-top: 5px;
 }

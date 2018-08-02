@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute, ParamMap } from '@angular/router';
-import { switchMap } from 'rxjs/operators';
+import { Router, ActivatedRoute } from '@angular/router';
 
 import { QualityControl } from '../Models/QualityControl';
 import { QualityControlService } from '../Services/quality-control.service';
@@ -24,19 +23,12 @@ export class QualityControlDetailComponent implements OnInit {
 
   getControl(id){
     this.service.GetById(id)
-        .subscribe(result =>this.control = result);
+        .subscribe(result =>{this.control = result});
   }
 
-  OnSubmit(id, name,desccription){
-
-    var controlUpdated ={
-      id: id, 
-      name: name, 
-      description: desccription
-    }
-    console.log(controlUpdated);
-    this.service.Update(controlUpdated)
-    .subscribe(result => this.getControl(controlUpdated.id));
+  Update(){
+        this.service.Update(this.control)
+    .subscribe(result => this.getControl(this.control.id));
   }
 
 }

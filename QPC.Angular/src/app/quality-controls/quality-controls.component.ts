@@ -11,7 +11,6 @@ import { Component, OnInit } from '@angular/core';
 export class QualityControlsComponent implements OnInit {
 
   controls: QualityControl[];
-
   constructor(private router:Router, private service : QualityControlService) { }
 
   ngOnInit() {

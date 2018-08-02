@@ -1,0 +1,51 @@
+<div class="container catalog" >
+  <div class="row">
+    <div class="col-sm-12">
+      <h3 class="qpc-view-title">Defects Catalog</h3>
+      <hr>
+    </div>
+  </div>
+  <div class="catalog-grid">
+    <div class="catalog-list">
+      <div class="row">
+        <div class="col-sm-11">
+            <div class="form-group">
+              <label for="Filter">Filter</label>        
+              <input type="text" (keyup)="onKey($event)" placeholder="Filter by name or description" class="form-control" >
+            </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-12">
+          <ul>
+            <li *ngFor="let defect of defects" (click)="SelectDefect(defect)">
+              <div class="defect">
+                <div class="row">
+                  <div class="col-sm-2">
+                    <span class="badge">{{defect.id}}</span>
+                  </div>
+                  <div class="col-sm-10">
+                    <div class="row">
+                      <div class="col-sm-6">
+                        <label>Defect</label>
+                        <p>{{defect.name}}</p>
+                      </div>
+                      <div class="col-sm-6">
+                        <label>Product</label>              
+                        <p>{{defect.product}}</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="catalog-detail">
+      <defect-detail [defect]="selectedDefect"></defect-detail>
+    </div>
+  </div>
+</div>
+  

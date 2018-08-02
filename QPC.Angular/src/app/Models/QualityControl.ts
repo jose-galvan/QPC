@@ -10,4 +10,8 @@ export class QualityControl extends BaseModel{
     desicion: string;
     status: string;
 
+    createDate:string;
+    userCreated:string;
+    lastModificationUser:string;
+    lastModificationDate:string;
 }

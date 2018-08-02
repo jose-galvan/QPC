@@ -1,0 +1,27 @@
+<div class="defect" *ngIf="defect">
+    <div class="defect-title">
+        <h3 class="qpc-view-title" ><span class="badge">{{defect.id}}</span> {{defect.name | uppercase}}</h3>
+        <hr>
+    </div>
+    <div class="details-section defect-details">
+        <div class="form-group">
+            <label for="defectName">Defect</label>
+            <input type="text" id="defectName"  [(ngModel)]="defect.name"class="form-control">
+        </div>
+        <div class="form-group">
+            <label>Product</label>
+            <p>
+                {{defect.product}}
+            </p>
+        </div>
+        <div class="form-group">
+            <label for="defectDescription">Description</label>
+            <textarea id="defectDescription"  [(ngModel)]="defect.description" 
+                class="form-control"> </textarea>
+        </div>
+    </div>
+    <div class="buttons-section">
+        <button class="btn btn-default" (click)="Update()">Save</button>
+        <a class="btn cancel" (click)="Cancel()">Cancel</a>
+    </div>
+</div>

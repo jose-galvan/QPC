@@ -1,0 +1,21 @@
+<div class="product" *ngIf="product">
+    <div class="product-title">
+      <h3 class="qpc-view-title" ><span class="badge">{{product.id}}</span> {{product.name | uppercase}}</h3>
+      <hr>
+    </div>
+    <div class="details-section product-details">
+      <div class="form-group">
+        <label for="productName">Product</label>
+        <input type="text" id="productName"  [(ngModel)]="product.name"class="form-control">
+      </div>
+      <div class="form-group">
+          <label for="productDescription">Description</label>
+          <textarea id="productDescription"  [(ngModel)]="product.description" 
+              class="form-control"> </textarea>
+      </div>
+    </div>
+    <div class="buttons-section">
+        <button class="btn btn-default" (click)="Update()">Save</button>
+        <a class="btn cancel" (click)="Cancel()">Cancel</a>
+    </div>
+</div>

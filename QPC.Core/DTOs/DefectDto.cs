@@ -2,6 +2,7 @@
 {
     public class DefectDto : BaseModel
     {
-        public int Product { get; set; }
+        public string Product { get; set; }
+        public int ProductId { get; set; }
     }
 }

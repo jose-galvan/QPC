@@ -17,8 +17,12 @@ export class AuthService{
     return this.http.post('http://localhost:49529/token', body, { headers: reqHeader });
   }
 
-  getUserClaims(){
-    return  this.http.get(this.rootUrl+'/api/GetUserClaims');
+  registerUser(resource: any){
+    return this.http.post(this.rootUrl+'/api/account/register', resource);
+  }
+
+  GetUserName(){
+    return  this.http.get(this.rootUrl+'/api/account/username');
   }
 
   IsAuthenticated(){
@@ -29,6 +33,7 @@ export class AuthService{
 
   LogOut(){
     localStorage.removeItem('userToken');
+    localStorage.clear();
   }
 
 }

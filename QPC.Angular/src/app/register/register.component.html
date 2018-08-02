@@ -1,22 +1,23 @@
-<form class="qpc-login-form">
+<form #registerForm="ngForm"  class="qpc-login-form"
+(ngSubmit)="OnSubmit(email.value, password.value, confirmPassword.value)">
     <div class="qpc-login-title">
       <h3>Login</h3>
     </div>
     <hr>
     <div class="form-group">
       <label for="email">Email</label>
-      <input id="email" type="text" class="form-control">
+      <input id="email" #email type="email" class="form-control" required>
     </div>
     <div class="form-group">
       <label for="password">password</label>
-      <input id="password" type="password" class="form-control">
+      <input id="password" #password type="password" class="form-control" required>
     </div>  
     <div class="form-group">
       <label for="confirmPassword">Confirm password</label>
-      <input id="confirmPassword" type="password" class="form-control">
+      <input id="confirmPassword" #confirmPassword type="password" class="form-control" required>
     </div>
     <div class="row">
-        <input type="submit" value="Log in" class="btn btn-default" />
-        <a routerLink="/login" class="btn cancel">New Account</a>
+        <input [disabled]="!registerForm.valid" type="submit" value="Register" class="btn btn-default" />
+        <a routerLink="/login" class="btn cancel">Cancel</a>
     </div>
 </form>

@@ -19,7 +19,7 @@
       <input type="password" #Password ngModel name="Password" 
       placeholder="Password" class="form-control" required>      
     </div>
-    <div class="row">
+    <div class="form-group">
         <button [disabled]="!loginForm.valid" class="btn btn-default" type="submit">Login</button>
         <a routerLink="/register" class="btn cancel">New Account</a>
     </div>

@@ -1,0 +1,33 @@
+<div class="container catalog" >
+  <div class="row">
+    <div class="col-sm-12">
+      <h3 class="qpc-view-title">Products</h3>
+      <hr>
+    </div>
+  </div>
+  <div class="catalog-grid" (keyup)="onKey($event)">
+    <div class="catalog-list">
+      <div class="row">
+        <div class="col-sm-11">
+            <div class="form-group">
+              <label for="Filter">Filter</label>        
+              <input type="text" (keyup)="onKey($event)" placeholder="Filter by name or description" class="form-control" >
+            </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-12">
+          <ul>
+            <li *ngFor="let product of products" (click)="SelectProduct(product)">
+              <span class="badge">{{product.id}}</span>
+              {{product.name}}
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="catalog-detail">
+      <product-detail [product]="selectedProduct"></product-detail>
+    </div>
+  </div>
+</div>

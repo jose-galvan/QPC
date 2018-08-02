@@ -22,7 +22,7 @@ namespace QPC.Web.Controllers.Api
         // POST api/Account/Register
         [AllowAnonymous]
 	    [Route("Register")]
-	    public async Task<IHttpActionResult> Register(RegisterViewModel userModel)
+	    public async Task<IHttpActionResult> Register([FromBody]RegisterViewModel userModel)
 	    {
 	        if (!ModelState.IsValid)
 	            return BadRequest(ModelState);
@@ -38,12 +38,10 @@ namespace QPC.Web.Controllers.Api
 	    }
 
         [HttpGet]
-        [Route("api/GetUserClaims")]
+        [Route("Username")]
         public IHttpActionResult GetUserClaims()
         {
-            var identityClaims = (ClaimsIdentity)User.Identity;
-            IEnumerable<Claim> claims = identityClaims.Claims;
-            return Ok(identityClaims.FindFirst("Username").Value);
+            return Ok(User.Identity.Name);
         }
 
         protected override void Dispose(bool disposing)

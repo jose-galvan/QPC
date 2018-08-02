@@ -4,8 +4,5 @@ export class BaseModel{
     name: string;
     description:string;
 
-    createDate:string;
-    userCreated:string;
-    lastModificationUser:string;
-    lastModificationDate:string;
+
 }
