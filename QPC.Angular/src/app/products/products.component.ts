@@ -23,16 +23,30 @@ export class ProductsComponent implements OnInit {
       .subscribe(result => {this.products = result});
   }
 
-  onKey(event: any) { // without type info
+  onKey(event: any) { 
     console.log(event);
     
-      this.service.Get(event.target.value)
-          .subscribe(
-            products => this.products = products);
+    if((event as KeyboardEvent).code =='Escape')
+      this.SelectProduct(null);
+
+    this.service.Get(event.target.value)
+        .subscribe(
+          products => this.products = products);
   }
 
   SelectProduct(product:Product){
     this.selectedProduct = product;
   }
 
+  addProduct(){
+    var product = new Product()
+    product.id =0;
+    this.selectedProduct= product;
+
+  }
+  updateView(event: any) { // without type info
+    if((event as MouseEvent).srcElement.nodeName == "LI")
+      return;
+    this.SelectProduct(null);    
+  }
 }

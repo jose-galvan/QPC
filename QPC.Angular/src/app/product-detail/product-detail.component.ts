@@ -18,10 +18,18 @@ export class ProductDetailComponent implements OnInit {
   
   Update()
   {
-    this.service
-      .Update(this.product)
+    if(this.product.id > 0)
+    {
+      this.service
+        .Update(this.product)
+        .subscribe(result => {console.log(result);
+        });
+    }
+    else{
+      this.service.Create(this.product)
       .subscribe(result => {console.log(result);
       });
+    }
   }
 
   Cancel()

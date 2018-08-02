@@ -16,7 +16,7 @@
       <label for="confirmPassword">Confirm password</label>
       <input id="confirmPassword" #confirmPassword type="password" class="form-control" required>
     </div>
-    <div class="row">
+    <div class="form-group">
         <input [disabled]="!registerForm.valid" type="submit" value="Register" class="btn btn-default" />
         <a routerLink="/login" class="btn cancel">Cancel</a>
     </div>

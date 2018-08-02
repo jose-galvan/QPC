@@ -34,5 +34,16 @@ export class DefectsComponent implements OnInit {
     this.selectedDefect = defect;
   }
 
+  addDefect(){
+    var newdefect = new Defect();
+    newdefect.id = 0;
+    this.selectedDefect = newdefect;
+  }
+
+  updateView(event: any) { 
+    if((event as MouseEvent).srcElement.nodeName == "LI")
+      return;
+    this.SelectDefect(null);    
+  }
 
 }

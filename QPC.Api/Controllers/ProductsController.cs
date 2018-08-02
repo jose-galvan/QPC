@@ -59,6 +59,7 @@ namespace QPC.Api.Controllers
                 var user = await GetUserAsync();
                 var product = _factory.Create(dto, user);
                 _unitOfWork.ProductRepository.Add(product);
+                await _unitOfWork.SaveChangesAsync();
             }
             catch(Exception ex)
             {

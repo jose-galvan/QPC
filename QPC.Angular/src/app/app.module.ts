@@ -27,6 +27,7 @@ import { ProductsComponent } from './products/products.component';
 import { ProductDetailComponent } from './product-detail/product-detail.component';
 import { DefectsComponent } from './defects/defects.component';
 import { DefectDetailComponent } from './defect-detail/defect-detail.component';
+import { Router } from './Routes';
 
 @NgModule({
   declarations: [
@@ -47,16 +48,7 @@ import { DefectDetailComponent } from './defect-detail/defect-detail.component';
   imports: [
     BrowserModule, HttpClientModule,
     FormsModule, HttpModule,
-    RouterModule.forRoot([
-      { path: '', redirectTo: '/controls',  pathMatch: 'full' },
-      {path: 'controls', component: QualityControlsComponent, canActivate:[AuthGuard] },
-      {path: 'control/:id', component: QualityControlDetailComponent, canActivate:[AuthGuard] },
-      {path: 'products', component: ProductsComponent, canActivate:[AuthGuard] },
-      {path: 'defects', component: DefectsComponent, canActivate:[AuthGuard] },
-      {path: 'login', component: LoginComponent},
-      {path: 'register', component: RegisterComponent},
-      {path:'**', component:NotFoundComponent, canActivate:[AuthGuard]}
-   ])
+    RouterModule.forRoot(Router.routes)
   ],
   providers: [
     QualityControlService, 
