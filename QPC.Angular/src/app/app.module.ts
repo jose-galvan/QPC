@@ -28,6 +28,10 @@ import { ProductDetailComponent } from './product-detail/product-detail.componen
 import { DefectsComponent } from './defects/defects.component';
 import { DefectDetailComponent } from './defect-detail/defect-detail.component';
 import { Router } from './Routes';
+import { ControlTabComponent } from './control-tab/control-tab.component';
+import { InstructionsComponent } from './instructions/instructions.component';
+import { InspectionComponent } from './inspection/inspection.component';
+import { InstructionDetailComponent } from './instruction-detail/instruction-detail.component';
 
 @NgModule({
   declarations: [
@@ -43,7 +47,11 @@ import { Router } from './Routes';
     ProductsComponent,
     ProductDetailComponent,
     DefectsComponent,
-    DefectDetailComponent
+    DefectDetailComponent,
+    ControlTabComponent,
+    InstructionsComponent,
+    InspectionComponent,
+    InstructionDetailComponent
   ],
   imports: [
     BrowserModule, HttpClientModule,

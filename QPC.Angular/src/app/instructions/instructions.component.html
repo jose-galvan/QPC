@@ -1,0 +1,29 @@
+<div class="container control" *ngIf="control">
+    <div class="control-title">
+        <h3 class="qpc-view-title" >{{control.name | uppercase}}</h3>
+      <control-tab [id]="id"></control-tab>
+      <hr>
+    </div>
+    <div class="catalog-grid">
+        <instruction-detail [controlId]="id"></instruction-detail>  
+        <div class="catalog-list">
+            <table class="table">
+              <thead>
+                <th>Instruction</th>
+                <th>Description</th>
+                <th>Comments</th>
+                <th>Status</th>
+              </thead>
+              <tbody>
+                <tr *ngFor="let instruction of instructions">
+                  <td>{{instruction.name}}</td>
+                  <td >{{instruction.description}}</td>
+                  <td>{{instruction.comments}}</td>
+                  <td><button class="btn btn-instruction" [ngClass]="instruction.status" (click)="UpdateInstruction(instruction)"
+                    [disabled]="instruction.status =='Performed' ? true : false">{{instruction.status}}</button></td>
+                </tr>
+              </tbody>
+            </table>
+        </div> 
+    </div>
+</div>

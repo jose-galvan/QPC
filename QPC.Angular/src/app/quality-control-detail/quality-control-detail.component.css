@@ -9,10 +9,17 @@
     "traceability defect"
     "buttons buttons"; 
 }
+.control-title{
+    grid-area: title;
+}
+.control-details{
+    grid-area: control;
+    border-right: solid 1px #ddd ;
+}
 
 .control-traceability{
     grid-area: traceability;
-    border-right: solid 1px #333;
+    border-right: solid 1px #ddd;
 }
 .product-details{
     grid-area: product;

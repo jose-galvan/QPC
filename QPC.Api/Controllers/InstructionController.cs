@@ -4,6 +4,7 @@ using System.Web.Http;
 using System.Threading.Tasks;
 using System;
 using QPC.Web.Helpers;
+using System.Linq;
 
 namespace QPC.Api.Controllers
 {
@@ -16,13 +17,15 @@ namespace QPC.Api.Controllers
 
         }
 
-        [HttpGet][Route("~/api/product/{id:int}/instructions")]
+        [HttpGet][Route("~/api/control/{id}/instructions")]
         public async Task<IHttpActionResult> GetByProduct([FromUri]int id)
         {
             var control = await _unitOfWork.QualityControlRepository.GetWithDetailsAsync(id);
             if (control == null)
                 return NotFound();
-            return Ok(control.Instructions);
+
+            var instructions = control.Instructions.Select(i => _factory.Create(i));
+            return Ok(instructions);
         }
 
         [HttpPost][Route("")]
@@ -38,16 +41,16 @@ namespace QPC.Api.Controllers
                 var instruction = _factory.Create(dto, user);
                 qualityControl.AddInstruction(instruction, user);
                 await _unitOfWork.SaveChangesAsync();
+                return Ok(instruction);
             }
             catch(Exception ex)
             {
                 await LogExceptionAsync(ex);
                 return BadRequest(ex.Message);
             }
-            return Ok();
         }
 
-        [HttpPut, HttpPatch][Route("")]
+        [HttpPut, HttpPatch][Route("{id}")]
         public async Task<IHttpActionResult> UpdateInstructionAsync([FromUri]int id)
         {
             var instruction = await _unitOfWork.InstructionRepository.GetWithQualityControl(id);

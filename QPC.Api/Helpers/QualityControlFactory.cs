@@ -104,6 +104,19 @@ namespace QPC.Web.Helpers
                 Status = InstructionStatus.Pending
             };
         }
+
+        public InstructionDto Create(Instruction model)
+        {
+            return new InstructionDto
+            {
+                Id = model.Id,
+                QualityControlId = model.QualityControlId,
+                Name = model.Name,
+                Description = model.Description,
+                Comments = model.Comments ?? string.Empty,
+                Status = GetDescription(model.Status)
+            };
+        }
         #endregion
 
         #region Inspection Factory Methods

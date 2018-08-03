@@ -82,15 +82,6 @@ ul li a { color: #fff; padding: 15px; }
     font-weight: bold;
 }
 
-.control-title{
-    grid-area: title;
-}
-.control-details{
-    grid-area: control;
-    border-right: solid 1px #333 ;
-}
-
-
 .catalog ul li{
     display: block;
     border-bottom: solid 1px #ddd;
@@ -146,17 +137,17 @@ border: 2px solid #298383;
 }
 
 .plus.icon:after {
-content: '';
-position: absolute;
-width: 20px;
-height: 3px;
-background-color: currentColor;
--webkit-transform: rotate(90deg);
--o-transform: rotate(90deg);
--ms-transform: rotate(90deg);
--moz-transform: rotate(90deg);
-        transform: rotate(90deg);
-border: 2px solid #298383;
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 3px;
+    background-color: currentColor;
+    -webkit-transform: rotate(90deg);
+    -o-transform: rotate(90deg);
+    -ms-transform: rotate(90deg);
+    -moz-transform: rotate(90deg);
+            transform: rotate(90deg);
+    border: 2px solid #298383;
 
 }
 

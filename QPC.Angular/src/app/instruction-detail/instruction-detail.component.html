@@ -1,0 +1,26 @@
+<div class="catalog-detail" *ngIf="instruction">
+    <div class="instruction-title">
+      <h4 class="qpc-view-title" >{{instruction.name | uppercase}}</h4>
+      <hr>
+    </div>
+    <div class="details-section instruction-details">
+      <div class="form-group">
+        <label for="instructionName">instruction</label>
+        <input type="text" id="instructionName"  [(ngModel)]="instruction.name"class="form-control">
+      </div>
+      <div class="form-group">
+          <label for="instructionDescription">Description</label>
+          <textarea id="instructionDescription"  [(ngModel)]="instruction.description" 
+              class="form-control"> </textarea>
+      </div>
+      <div class="form-group">
+          <label for="instructionComments">Comments</label>
+          <textarea id="instructionComments"  [(ngModel)]="instruction.comments" 
+          class="form-control"> </textarea>
+      </div>
+    </div>
+    <div class="buttons-section">
+        <button class="btn btn-default" (click)="Save()">Save</button>
+        <a class="btn cancel" routerLink="/controls">Cancel</a>
+    </div>
+</div>

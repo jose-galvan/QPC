@@ -7,6 +7,6 @@ namespace QPC.Core.DTOs
     {
         public string Comments { get; set; }
         public int QualityControlId { get; set; }
-        public InstructionStatus? Status { get; set; }
+        public string Status { get; set; }
     }
 }

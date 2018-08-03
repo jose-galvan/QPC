@@ -14,15 +14,11 @@ export class CommonService {
   constructor(private url: string, protected http: HttpClient) { }
 
   Get(query:string){
-    return this.http.get( this.url +'/'+ query)
-    .map(response => response)
-    .catch(this.handleError);
+    return this.http.get( this.url +'/'+ query);
   }
 
   GetAll(){
-        return this.http.get(this.url)
-        .map(response => response)
-        .catch(this.handleError);
+        return this.http.get(this.url);
   }
 
   Create(resource){
@@ -35,9 +31,7 @@ export class CommonService {
   }
 
   Delete(id){
-    return this.http.delete(this.url + '/'+ id)
-        .map(response => response)
-        .catch(this.handleError);
+    return this.http.delete(this.url + '/'+ id);
   }
 
   protected handleError(error: Response){
