@@ -60,7 +60,7 @@ namespace QPC.Api.Tests.Controllers
             defects = new List<Defect>() { firstDefect, secondDefect };
             defectUpdated = new Defect { Id = 2, Name = "CO410", Description = "x35 Blade F10", Product = firstProduct };
 
-            dto = new DefectDto { Id = 1, Name = "DI230", Description = "x35 Blade F12", Product = firstProduct.Id };
+            dto = new DefectDto { Id = 1, Name = "DI230", Description = "x35 Blade F12", ProductId = firstProduct.Id };
         }
 
         [TestMethod]

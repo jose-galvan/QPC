@@ -24,7 +24,7 @@ export class InstructionsComponent implements OnInit {
   ngOnInit() { 
     this.id = this.route.snapshot.paramMap.get('id');
     this.controlService.GetById(this.id)
-        .subscribe((result : QualityControl) => this.control = result);
+        .subscribe(control => this.control = control);
     this.getInstructions();
   }
 

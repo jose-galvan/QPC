@@ -1,6 +1,8 @@
+import { QualityControlService } from './../Services/quality-control.service';
 import { InstructionService } from './../Services/instruction.service';
 import { Instruction } from './../Models/Instruction';
 import { Component, OnInit, Input } from '@angular/core';
+import { QualityControl } from '../Models/QualityControl';
 
 @Component({
   selector: 'instruction-detail',
@@ -12,12 +14,16 @@ export class InstructionDetailComponent implements OnInit {
   @Input() controlId: number;
 
   instruction: Instruction;
+  control : QualityControl;
 
-  constructor(private service: InstructionService) { }
+  constructor(private service: InstructionService, private controlService: QualityControlService) { }
 
   ngOnInit() {
-    console.log('QC:' +this.controlId);
-    
+    this.controlService.GetById(this.controlId.toString())
+    .subscribe(control =>{
+        this.control = control;
+      });
+
     this.instruction = new Instruction();
     this.instruction.name ='New Instruction'
     this.instruction.QualityControlId = this.controlId;
@@ -28,10 +34,6 @@ export class InstructionDetailComponent implements OnInit {
       .subscribe((data : any) =>{ 
         console.log(data);
         this.instruction = null});
-  }
-
-  Cancel(){
-    
   }
 
 }

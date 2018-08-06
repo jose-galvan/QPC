@@ -172,7 +172,7 @@ namespace QPC.Web.Helpers
             {
                 Name = dto.Name,
                 Description = dto.Description,
-                ProductId = dto.Product
+                ProductId = dto.ProductId
             };
         }
 
@@ -194,7 +194,8 @@ namespace QPC.Web.Helpers
                 Id = defect.Id,
                 Name = defect.Name,
                 Description = defect.Description,
-                Product = defect.ProductId
+                ProductId = defect.ProductId,
+                Product = defect.Product.Name
             };
         }
 

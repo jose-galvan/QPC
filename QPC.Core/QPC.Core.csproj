@@ -42,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DTOs\DefectDto.cs" />
+    <Compile Include="DTOs\DesicionDto.cs" />
     <Compile Include="DTOs\InspectionDto.cs" />
     <Compile Include="DTOs\InstructionDto.cs" />
     <Compile Include="DTOs\ProductDto.cs" />

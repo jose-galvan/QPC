@@ -20,7 +20,7 @@ export class ProductsComponent implements OnInit {
   GetProducts(){
 
     this.service.GetAll()
-      .subscribe(result => {this.products = result});
+      .subscribe(products => {this.products = products});
   }
 
   onKey(event: any) { 
@@ -31,7 +31,7 @@ export class ProductsComponent implements OnInit {
 
     this.service.Get(event.target.value)
         .subscribe(
-          products => this.products = products);
+          products=> this.products = products);
   }
 
   SelectProduct(product:Product){
@@ -44,7 +44,7 @@ export class ProductsComponent implements OnInit {
     this.selectedProduct= product;
 
   }
-  updateView(event: any) { // without type info
+  updateView(event: any) { 
     if((event as MouseEvent).srcElement.nodeName == "LI")
       return;
     this.SelectProduct(null);    

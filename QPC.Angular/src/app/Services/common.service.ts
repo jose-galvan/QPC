@@ -14,11 +14,15 @@ export class CommonService {
   constructor(private url: string, protected http: HttpClient) { }
 
   Get(query:string){
-    return this.http.get( this.url +'/'+ query);
+    return this.http.get( this.url +'/'+ query)
+          .map(response => response)
+          .catch(this.handleError);
   }
 
   GetAll(){
-        return this.http.get(this.url);
+    return this.http.get(this.url)   
+      .map(response => response)
+      .catch(this.handleError);
   }
 
   Create(resource){

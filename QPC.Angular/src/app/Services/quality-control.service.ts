@@ -10,6 +10,8 @@ export class QualityControlService extends CommonService {
    }
    
   GetById(controlId:string){
-    return this.http.get('http://localhost:49529/api/control/'+ controlId);
+    return this.http.get('http://localhost:49529/api/control/'+ controlId)
+              .map(response => response)
+              .catch(this.handleError);
   }
 }

@@ -20,7 +20,7 @@
       </div>
     </div>
     <div class="buttons-section">
-        <button class="btn btn-default" (click)="Save()">Save</button>
+        <button class="btn btn-default" [disabled]="control.status == 'Closed'" (click)="Save()">Save</button>
         <a class="btn cancel" routerLink="/controls">Cancel</a>
     </div>
 </div>

@@ -214,6 +214,17 @@ namespace QPC.Web.Helpers
 
         #endregion
 
+        #region Desicions
+        public DesicionDto Create(Desicion desicion)
+        {
+            return new DesicionDto
+            {
+                Id = desicion.Id,
+                Name = desicion.Name
+            };
+        }    
+        #endregion
+
         #region Helpers
         private string GetDescription<T>(T enumerationValue)
         where T : struct

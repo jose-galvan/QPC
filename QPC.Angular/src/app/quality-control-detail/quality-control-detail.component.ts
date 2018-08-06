@@ -23,12 +23,13 @@ export class QualityControlDetailComponent implements OnInit {
 
   getControl(id){
     this.service.GetById(id)
-        .subscribe(result =>{this.control = result});
+        .subscribe( result  => this.control = result);
   }
 
   Update(){
         this.service.Update(this.control)
-    .subscribe(result => this.getControl(this.control.id));
+            .subscribe(() => 
+              this.getControl(this.control.id));
   }
 
 }

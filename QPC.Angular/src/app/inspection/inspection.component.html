@@ -1,9 +1,26 @@
-<div class="container control">
+<div class="container control" *ngIf="control">
     <div class="control-title">
-      <h3 class="qpc-view-title" >...</h3>
+      <h3 class="qpc-view-title">{{control.name | uppercase}}</h3>
       <control-tab [id]="id"></control-tab>
       <hr>
     </div>
-    <div class="details-section control-details"> </div>
+    <div class="details-section control-details">
+      <div class="form-group">
+        <label for="desicions">Desicion</label>
+        <select name="desicions"  id="desicions" [(ngModel)]="inspection.desicion" class="form-control" [disabled]="control.status == 'Closed'" >
+            <option *ngFor="let desicion of desicions" value="{{desicion.id}}" [selected]="desicion.id == inspection.desicion">
+              {{desicion.name}}</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="comments">Comments</label>
+        <textarea id="comments"  [(ngModel)]="inspection.comments"  [disabled]="control.status == 'Closed'"
+            class="form-control"> </textarea>
+      </div>
+    <div class="buttons-section">
+      <button class="btn btn-default" [disabled]="control.status == 'Closed'" (click)="Save()">Save</button>
+      <a routerLink="/controls" class="btn cancel">Cancel</a>
+    </div>
+    </div>
 </div>
   

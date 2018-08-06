@@ -31,6 +31,7 @@ namespace QPC.DataAccess.Repositories
                             .Include(c => c.Instructions)
                             .Include(c => c.UserCreated)
                             .Include(c => c.Inspection)
+                            .Include(c => c.Inspection.Desicion)
                             .Include(c => c.LastModificationUser)
                             .SingleOrDefaultAsync(c =>c.Id ==id);
         }

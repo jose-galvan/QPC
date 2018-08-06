@@ -1,6 +1,6 @@
-<div class="container control" *ngIf="control">
+<div class="container control" *ngIf="control && instructions">
     <div class="control-title">
-        <h3 class="qpc-view-title" >{{control.name | uppercase}}</h3>
+      <h3 class="qpc-view-title" >{{control.name | uppercase}}</h3>
       <control-tab [id]="id"></control-tab>
       <hr>
     </div>
