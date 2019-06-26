@@ -49,6 +49,13 @@ namespace QPC.Api.Controllers
             return defects.Select(d => _factory.CreateDto(d)).ToList();
         }
 
+        [Route("~/api/product/{product:int}/defects")]
+        public async Task<List<DefectDto>> GetByProduct([FromUri]int product)
+        {
+            var defects = await _unitOfWork.DefectRepository.GetByProductAsync(product);
+            return defects.Select(d => _factory.CreateDto(d)).ToList();
+        }
+
         [HttpPost][Route("")]
         public async Task<IHttpActionResult> Add([FromBody]DefectDto dto)
         {

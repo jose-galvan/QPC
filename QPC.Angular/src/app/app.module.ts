@@ -5,7 +5,6 @@ import {FormsModule} from '@angular/forms';
 import { RouterModule} from '@angular/router';
 import {HttpModule} from '@angular/http';
 
-
 import { AuthGuard } from './auth/auth.guard';
 import { AuthService } from './Services/auth.service';
 import { AppComponent } from './app.component';
@@ -32,6 +31,7 @@ import { ControlTabComponent } from './control-tab/control-tab.component';
 import { InstructionsComponent } from './instructions/instructions.component';
 import { InspectionComponent } from './inspection/inspection.component';
 import { InstructionDetailComponent } from './instruction-detail/instruction-detail.component';
+import { ControlRequestComponent } from './control-request/control-request.component';
 
 @NgModule({
   declarations: [
@@ -51,7 +51,8 @@ import { InstructionDetailComponent } from './instruction-detail/instruction-det
     ControlTabComponent,
     InstructionsComponent,
     InspectionComponent,
-    InstructionDetailComponent
+    InstructionDetailComponent,
+    ControlRequestComponent
   ],
   imports: [
     BrowserModule, HttpClientModule,

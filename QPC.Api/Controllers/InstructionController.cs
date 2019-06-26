@@ -25,6 +25,7 @@ namespace QPC.Api.Controllers
                 return NotFound();
 
             var instructions = control.Instructions.Select(i => _factory.Create(i));
+
             return Ok(instructions);
         }
 

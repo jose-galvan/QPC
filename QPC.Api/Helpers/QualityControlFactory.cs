@@ -207,7 +207,7 @@ namespace QPC.Web.Helpers
                 Id = defect.Id,
                 Name = defect.Name,
                 Description = defect.Description,
-                Product = defect.Product.Name,
+                Product = defect.Product.Name ?? string.Empty,
                 ProductId = defect.ProductId
             };
         }

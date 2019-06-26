@@ -1,0 +1,40 @@
+
+<div class="control">
+    <div class="control-title">
+    <h3 class="qpc-view-title" >{{control.name | uppercase}}</h3>
+    <hr>
+    </div>
+    <div class="details-section control-details">
+    <div class="form-group">
+        <label for="controlName">Control</label>
+        <input type="text" id="controlName"[(ngModel)]="control.name"class="form-control">
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+        <label for="serial">Serial</label>
+        <input type="text" id="serial"  [(ngModel)]="control.serial"class="form-control">
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="controlDescription">Description</label>
+        <textarea id="controlDescription"  [(ngModel)]="control.description"  
+            class="form-control"> </textarea>
+    </div>
+    <div class="form-group">
+        <label for="products">Product</label>
+        <select name="products"  id="products" class="form-control" (change)="onChange($event)"  [(ngModel)]="selectedProduct">
+            <option *ngFor="let product of products" value="{{product.id}}">{{product.name}}</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="defects">Defect</label>
+        <select name="defects"  id="defects" class="form-control" [(ngModel)]="selectedDefect">
+            <option *ngFor="let defect of defects" value="{{defect.id}}">{{defect.name}}</option>
+        </select>
+    </div>
+    </div>
+    <div class="buttons-section">
+        <button class="btn btn-default" (click)="Save()">Save</button>
+        <a (click)="popup.close()" class="btn cancel">Cancel</a>
+    </div>
+</div>
